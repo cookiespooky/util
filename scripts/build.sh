@@ -25,11 +25,20 @@ fi
 rm -rf dist .notepub
 mkdir -p dist
 
-echo "Проверяю frontmatter, маршруты, ссылки и Markdown"
-"$NOTEPUB_BIN" validate --config ./config.yaml --rules ./rules.yaml --links --markdown
+echo "Проверяю frontmatter и маршруты"
+"$NOTEPUB_BIN" validate --config ./config.yaml --rules ./rules.yaml
 
-echo "Строю индекс"
+echo "Строю индекс и карту разрешения ссылок"
 "$NOTEPUB_BIN" index --config ./config.yaml --rules ./rules.yaml
+
+RESOLVE_FILE="./.notepub/artifacts/resolve.json"
+if [[ ! -f "$RESOLVE_FILE" ]]; then
+  echo "Ошибка: после index не создан $RESOLVE_FILE" >&2
+  exit 1
+fi
+
+echo "Проверяю wikilinks и Markdown по созданной карте"
+"$NOTEPUB_BIN" validate --config ./config.yaml --rules ./rules.yaml --resolve "$RESOLVE_FILE" --links --markdown
 
 echo "Собираю статический сайт"
 "$NOTEPUB_BIN" build --config ./config.yaml --rules ./rules.yaml --dist ./dist
