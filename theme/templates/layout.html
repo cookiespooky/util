@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru" data-base-url="{{ .BaseURL }}">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <meta name="theme-color" content="#123c2f" />
+  {{- if .Page.Description }}
+  <meta name="description" content="{{ .Page.Description }}" />
+  {{- end }}
+  {{- if .Meta.Robots }}
+  <meta name="robots" content="{{ .Meta.Robots }}" />
+  {{- end }}
+  {{- if .Canonical }}
+  <link rel="canonical" href="{{ .Canonical }}" />
+  {{- end }}
+  {{- range .Meta.OpenGraph }}
+  <meta property="{{ .Key }}" content="{{ .Value }}" />
+  {{- end }}
+  {{- if .Meta.JSONLD }}
+  <script type="application/ld+json">{{ .Meta.JSONLD }}</script>
+  {{- end }}
+  <link rel="stylesheet" href="{{ .AssetsBase }}/styles.css" />
+  <script>window.__notepubSearchMode = "{{ .SearchMode }}";</script>
+  <title>{{ .Title }}</title>
+</head>
+<body>
+  <a class="skip-link" href="#content">К содержанию</a>
+  {{ template "header.html" . }}
+  <main id="content" class="site-main">
+    {{ .Body }}
+  </main>
+  {{ template "footer.html" . }}
+  {{ template "search_trigger.html" . }}
+  <script src="{{ .AssetsBase }}/main.js" defer></script>
+</body>
+</html>

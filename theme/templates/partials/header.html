@@ -1,0 +1,32 @@
+<header class="site-header" data-site-header>
+  <div class="shell header-row">
+    <a class="brand" href="{{ .BaseURL }}/" aria-label="Утилитсервис — главная">
+      <span class="brand-mark" aria-hidden="true">У</span>
+      <span class="brand-copy"><strong>Утилитсервис</strong><small>Обращение с отходами</small></span>
+    </a>
+
+    <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="main-nav">Меню</button>
+
+    <nav id="main-nav" class="main-nav" data-main-nav aria-label="Основная навигация">
+      <a href="{{ .BaseURL }}/services/">Услуги</a>
+      <a href="{{ .BaseURL }}/about/">О компании</a>
+      <a href="{{ .BaseURL }}/licenses/">Лицензии</a>
+      <a href="{{ .BaseURL }}/faq/">Вопросы</a>
+      <a href="{{ .BaseURL }}/contacts/">Контакты</a>
+    </nav>
+
+    <div class="header-actions">
+      <label class="city-control">
+        <span>Город</span>
+        <select data-city-select aria-label="Выберите город">
+          <option value="surgut">Сургут и Белый Яр</option>
+          <option value="tyumen">Тюмень</option>
+          <option value="novosibirsk">Новосибирск</option>
+          <option value="nyagan">Нягань</option>
+        </select>
+      </label>
+      <a class="phone-link" href="tel:+73462555897">+7 3462 55-58-97</a>
+      <a class="button button-small" href="{{ .BaseURL }}/contacts/#request">Оставить заявку</a>
+    </div>
+  </div>
+</header>

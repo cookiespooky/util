@@ -1,0 +1,13 @@
+<div class="shell page-layout">
+  <aside class="page-aside">
+    <span class="eyebrow">Утилитсервис</span>
+    <nav class="section-nav" aria-label="Раздел о компании">
+      <a href="{{ .BaseURL }}/about/">О компании</a>
+      <a href="{{ .BaseURL }}/licenses/">Лицензии</a>
+      <a href="{{ .BaseURL }}/partners/">Партнёры и клиенты</a>
+      <a href="{{ .BaseURL }}/faq/">Вопросы</a>
+      <a href="{{ .BaseURL }}/contacts/">Контакты</a>
+    </nav>
+  </aside>
+  <article class="prose prose-company" data-prose>{{ .Body }}</article>
+</div>

@@ -1,0 +1,143 @@
+version: 1
+
+fields:
+  required: ["type", "slug", "title"]
+  optional:
+    - description
+    - draft
+    - layout
+    - page_kind
+    - nav_order
+    - section
+    - city
+    - service_key
+    - related
+    - noindex
+    - updated_at
+  defaults:
+    draft: false
+    noindex: false
+
+fm_schema:
+  draft: boolean
+  noindex: boolean
+  nav_order: number
+  related: string[]
+
+# Тип страницы определяется напрямую frontmatter-полем type.
+types:
+  home:
+    template: "home.html"
+    permalink: "/"
+    include_in: { sitemap: true, search: false }
+  catalog:
+    template: "catalog.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: true, search: true }
+  service:
+    template: "service.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: true, search: true }
+  city:
+    template: "city.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: true, search: true }
+  company:
+    template: "company.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: true, search: true }
+  legal:
+    template: "legal.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: true, search: true }
+  partial:
+    template: "page.html"
+    permalink: "/_partials/{{ slug }}/"
+    include_in: { sitemap: false, search: false }
+  system:
+    template: "system.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: false, search: false }
+
+links:
+  - name: "related"
+    kind: "field"
+    field: "related"
+    from_types: ["home", "catalog", "service", "city", "company", "legal", "system"]
+    to_types: ["home", "catalog", "service", "city", "company", "legal", "system"]
+    to: "slug"
+    value_syntax: "auto"
+    resolve:
+      order: ["path", "filename", "slug"]
+      ambiguity: "error"
+      missing: "warn_skip"
+      case: "insensitive"
+  - name: "wiki"
+    kind: "wikilinks"
+    from_types: ["home", "catalog", "service", "city", "company", "legal", "partial", "system"]
+    resolve_by: "wikimap"
+    to_types: ["home", "catalog", "service", "city", "company", "legal", "partial", "system"]
+    resolve:
+      order: ["path", "filename", "slug"]
+      ambiguity: "error"
+      missing: "warn_skip"
+      case: "insensitive"
+
+collections:
+  services:
+    kind: "filter"
+    materialize: true
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["service"]
+    sort: { by: "fm.nav_order", dir: "asc", nulls_last: true }
+    limit: 50
+  cities:
+    kind: "filter"
+    materialize: true
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["city"]
+    sort: { by: "fm.nav_order", dir: "asc", nulls_last: true }
+    limit: 20
+  company_pages:
+    kind: "filter"
+    materialize: false
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["company", "legal"]
+    sort: { by: "fm.nav_order", dir: "asc", nulls_last: true }
+    limit: 50
+
+sitemap:
+  include_types: ["home", "catalog", "service", "city", "company", "legal"]
+  exclude_drafts: true
+
+search:
+  include_types: ["catalog", "service", "city", "company", "legal"]
+  exclude_drafts: true
+  fields_boost:
+    title: 3
+    description: 2
+    body: 1
+  preview:
+    from: "description"
+    max_len: 180
+
+artifacts:
+  collections:
+    enabled: true
+    dir: "collections"
+
+validation:
+  single_page_of_type: { home: 1 }
+  duplicate_route: { action: "error" }
+  unknown_type: { action: "error" }
+  unique_slug: { action: "error" }
+  permalink_requires_slug: { action: "error" }
+  missing_template: { action: "error" }
+  materialize_requires_limit: true
+  materialize_group_by_requires_item_limit: true

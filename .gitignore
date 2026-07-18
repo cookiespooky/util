@@ -1,0 +1,6 @@
+.dist/
+dist/
+.notepub/
+.bin/
+.DS_Store
+*.log
