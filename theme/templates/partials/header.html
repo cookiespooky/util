@@ -1,33 +1,26 @@
-<header class="site-header" data-site-header>
-  <div class="shell header-row">
-    <a class="brand" href="{{ .BaseURL }}/" aria-label="Утилитсервис — главная">
-      <img class="brand-logo" src="https://utiltumen.ru/favicon.ico" alt="Логотип Утилитсервис" width="48" height="48" onerror="this.hidden=true;this.nextElementSibling.hidden=false" />
-      <span class="brand-logo-fallback" aria-hidden="true" hidden>У</span>
-      <span class="brand-copy"><strong>Утилитсервис</strong><small>Обращение с отходами</small></span>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="home-button" href="{{ .BaseURL }}/" aria-label="Главная">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
+      </svg>
     </a>
 
-    <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="main-nav">Меню</button>
-
-    <nav id="main-nav" class="main-nav" data-main-nav aria-label="Основная навигация">
+    <nav class="nav" aria-label="Основная навигация">
       <a href="{{ .BaseURL }}/services/">Услуги</a>
       <a href="{{ .BaseURL }}/about/">О компании</a>
-      <a href="{{ .BaseURL }}/licenses/">Лицензии</a>
-      <a href="{{ .BaseURL }}/faq/">Вопросы</a>
+      <a href="{{ .BaseURL }}/licenses/">Документы</a>
       <a href="{{ .BaseURL }}/contacts/">Контакты</a>
     </nav>
 
     <div class="header-actions">
-      <label class="city-control">
-        <span>Город</span>
-        <select data-city-select aria-label="Выберите город">
-          <option value="surgut">Сургут и Белый Яр</option>
-          <option value="tyumen">Тюмень</option>
-          <option value="novosibirsk">Новосибирск</option>
-          <option value="nyagan">Нягань</option>
-        </select>
-      </label>
-      <a class="phone-link" href="tel:+73462555897">+7 3462 55-58-97</a>
-      <a class="button button-small" href="{{ .BaseURL }}/contacts/#request">Оставить заявку</a>
+      <a class="header-phone" href="tel:+73462555897">+7 3462 55-58-97</a>
+      <button class="icon-button" type="button" data-search-open aria-label="Открыть поиск">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+        </svg>
+      </button>
+      <noscript><a class="search-link" href="{{ .BaseURL }}/search/">Поиск</a></noscript>
     </div>
   </div>
 </header>
