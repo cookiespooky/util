@@ -3,8 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="light" />
-  <meta name="theme-color" content="#123c2f" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#212121" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Nunito+Sans:wght@300;400;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Nunito+Sans:wght@300;400;600;700&display=swap" /></noscript>
   {{- if .Page.Description }}
   <meta name="description" content="{{ .Page.Description }}" />
   {{- end }}
@@ -21,7 +25,10 @@
   <script type="application/ld+json">{{ .Meta.JSONLD }}</script>
   {{- end }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/styles.css" />
-  <script>window.__notepubSearchMode = "{{ .SearchMode }}";</script>
+  <script>
+    window.__notepubSearchMode = "{{ .SearchMode }}";
+    window.__notepubBaseURL = "{{ .BaseURL }}";
+  </script>
   <title>{{ .Title }}</title>
 </head>
 <body>
