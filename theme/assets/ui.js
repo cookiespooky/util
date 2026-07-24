@@ -26,12 +26,18 @@
   if (form && actions && !form.querySelector('.ds-consent')) {
     var consent = document.createElement('label');
     consent.className = 'ds-consent';
-    consent.innerHTML = '<input type="checkbox" name="privacy-consent" required>' +
+    consent.innerHTML = '<input type="checkbox" name="privacy-consent" autocomplete="off" required>' +
       '<span class="ds-consent-copy">Я согласен на <a href="' +
       ((window.__notepubBaseURL || '').replace(/\/$/, '')) +
       '/privacy/">обработку персональных данных</a>. Согласие не отмечено заранее: пользователь принимает решение самостоятельно.</span>';
     actions.parentNode.insertBefore(consent, actions);
   }
+
+  var consentInput = document.querySelector('.ds-consent input[type="checkbox"]');
+  if (consentInput) consentInput.checked = false;
+  window.addEventListener('pageshow', function () {
+    if (consentInput) consentInput.checked = false;
+  });
 
   var swatches = document.querySelectorAll('.ds-swatches .ds-swatch');
   if (swatches.length >= 6) {
