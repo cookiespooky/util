@@ -1,0 +1,56 @@
+.ds-form input,
+.ds-form select {
+  height: 48px;
+  min-height: 48px;
+  line-height: 1.2;
+  appearance: none;
+}
+.ds-form select {
+  padding-right: 42px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #77817d 50%),
+    linear-gradient(135deg, #77817d 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) 21px,
+    calc(100% - 13px) 21px;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+.ds-form textarea { min-height: 112px; resize: vertical; }
+.ds-consent {
+  grid-column: 1 / -1;
+  display: grid !important;
+  grid-template-columns: 22px 1fr;
+  gap: 10px !important;
+  align-items: start;
+  cursor: pointer;
+}
+.ds-consent input[type="checkbox"] {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  min-height: 22px;
+  margin: 1px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  background: #e4ebe7;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.ds-consent input[type="checkbox"]::after {
+  content: "";
+  width: 10px;
+  height: 6px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg) scale(0);
+  transition: transform .12s ease;
+}
+.ds-consent input[type="checkbox"]:checked { background: #3c8b58; }
+.ds-consent input[type="checkbox"]:checked::after { transform: rotate(-45deg) scale(1); }
+.ds-consent input[type="checkbox"]:focus-visible { outline: 3px solid rgba(76,144,194,.22); outline-offset: 2px; }
+.ds-consent-copy { color: #4f5d57; font-size: 13px; line-height: 1.5; }
+.ds-consent-copy a { color: #1e2925; text-underline-offset: 2px; }
+.ds-form-actions { align-items: flex-start; }
