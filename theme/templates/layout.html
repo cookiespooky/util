@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="{{ .AssetsBase }}/forms.css" />
   {{- if eq .Page.Type "design" }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/design-system.css" />
+  <link rel="stylesheet" href="{{ .AssetsBase }}/visual-components.css" />
   {{- end }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/palette.css" />
   <script>
@@ -47,5 +48,8 @@
   {{ template "search_trigger.html" . }}
   <script src="{{ .AssetsBase }}/main.js" defer></script>
   <script src="{{ .AssetsBase }}/ui.js" defer></script>
+  {{- if eq .Page.Type "design" }}
+  <script src="{{ .AssetsBase }}/visual-components.js" defer></script>
+  {{- end }}
 </body>
 </html>
