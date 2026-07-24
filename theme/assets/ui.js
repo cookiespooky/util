@@ -32,4 +32,12 @@
       '/privacy/">обработку персональных данных</a>. Согласие не отмечено заранее: пользователь принимает решение самостоятельно.</span>';
     actions.parentNode.insertBefore(consent, actions);
   }
+
+  var swatches = document.querySelectorAll('.ds-swatches .ds-swatch');
+  if (swatches.length >= 6) {
+    var blueCode = swatches[4].querySelector('code');
+    var greenCode = swatches[5].querySelector('code');
+    if (blueCode) blueCode.textContent = '#5AAEE6';
+    if (greenCode) greenCode.textContent = '#5BC873';
+  }
 })();
