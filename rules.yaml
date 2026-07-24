@@ -24,7 +24,6 @@ fm_schema:
   nav_order: number
   related: string[]
 
-# Тип страницы определяется напрямую frontmatter-полем type.
 types:
   home:
     template: "home.html"
@@ -50,6 +49,10 @@ types:
     template: "legal.html"
     permalink: "/{{ slug }}/"
     include_in: { sitemap: true, search: true }
+  design:
+    template: "design-system.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: true, search: true }
   partial:
     template: "page.html"
     permalink: "/_partials/{{ slug }}/"
@@ -63,8 +66,8 @@ links:
   - name: "related"
     kind: "field"
     field: "related"
-    from_types: ["home", "catalog", "service", "city", "company", "legal", "system"]
-    to_types: ["home", "catalog", "service", "city", "company", "legal", "system"]
+    from_types: ["home", "catalog", "service", "city", "company", "legal", "design", "system"]
+    to_types: ["home", "catalog", "service", "city", "company", "legal", "design", "system"]
     to: "slug"
     value_syntax: "auto"
     resolve:
@@ -74,9 +77,9 @@ links:
       case: "insensitive"
   - name: "wiki"
     kind: "wikilinks"
-    from_types: ["home", "catalog", "service", "city", "company", "legal", "partial", "system"]
+    from_types: ["home", "catalog", "service", "city", "company", "legal", "design", "partial", "system"]
     resolve_by: "wikimap"
-    to_types: ["home", "catalog", "service", "city", "company", "legal", "partial", "system"]
+    to_types: ["home", "catalog", "service", "city", "company", "legal", "design", "partial", "system"]
     resolve:
       order: ["path", "filename", "slug"]
       ambiguity: "error"
@@ -108,16 +111,16 @@ collections:
     where:
       all:
         - fm_eq: { key: "draft", value: false }
-        - type_in: ["company", "legal"]
+        - type_in: ["company", "legal", "design"]
     sort: { by: "fm.nav_order", dir: "asc", nulls_last: true }
     limit: 50
 
 sitemap:
-  include_types: ["home", "catalog", "service", "city", "company", "legal"]
+  include_types: ["home", "catalog", "service", "city", "company", "legal", "design"]
   exclude_drafts: true
 
 search:
-  include_types: ["catalog", "service", "city", "company", "legal"]
+  include_types: ["catalog", "service", "city", "company", "legal", "design"]
   exclude_drafts: true
   fields_boost:
     title: 3
