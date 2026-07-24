@@ -31,3 +31,5 @@
 .ds-logo-mark .ds-drop { background: var(--brand-blue-clean); }
 .ds-logo-mark .ds-tree { background: var(--brand-green-clean); }
 .ds-consent input[type="checkbox"]:checked { background: var(--brand-green-clean); }
+.ds-swatches .ds-swatch:nth-child(5) > span { background: var(--brand-blue-clean) !important; }
+.ds-swatches .ds-swatch:nth-child(6) > span { background: var(--brand-green-clean) !important; }
