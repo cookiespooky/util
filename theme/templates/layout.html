@@ -25,6 +25,10 @@
   <script type="application/ld+json">{{ .Meta.JSONLD }}</script>
   {{- end }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/styles.css" />
+  <link rel="stylesheet" href="{{ .AssetsBase }}/overrides.css" />
+  {{- if eq .Page.Type "design" }}
+  <link rel="stylesheet" href="{{ .AssetsBase }}/design-system.css" />
+  {{- end }}
   <script>
     window.__notepubSearchMode = "{{ .SearchMode }}";
     window.__notepubBaseURL = "{{ .BaseURL }}";
