@@ -1,0 +1,33 @@
+:root {
+  --brand-blue-clean: #5AAEE6;
+  --brand-blue-deep: #3F8FC8;
+  --brand-blue-soft: #EAF6FD;
+  --brand-green-clean: #5BC873;
+  --brand-green-deep: #42A95B;
+  --brand-green-soft: #ECF9EF;
+}
+
+.site-logo-mark {
+  background: linear-gradient(135deg, var(--brand-blue-clean) 0 49%, var(--brand-green-clean) 51%);
+}
+.city-control::before { background: var(--brand-blue-clean); }
+.drawer-nav a span { color: var(--brand-blue-deep); }
+
+.ds-page {
+  --ds-blue: var(--brand-blue-clean);
+  --ds-blue-soft: var(--brand-blue-soft);
+  --ds-green: var(--brand-green-clean);
+  --ds-green-soft: var(--brand-green-soft);
+}
+.ds-kicker,
+.ds-label,
+.ds-index,
+.ds-process span { color: var(--brand-blue-deep); }
+.ds-button-primary { background: var(--brand-blue-clean); }
+.ds-button-primary:hover { background: var(--brand-blue-deep); }
+.ds-tabs button.is-active { background: var(--brand-blue-soft); color: var(--brand-blue-deep); }
+.ds-info { background: var(--brand-blue-soft); }
+.ds-success { background: var(--brand-green-soft); }
+.ds-logo-mark .ds-drop { background: var(--brand-blue-clean); }
+.ds-logo-mark .ds-tree { background: var(--brand-green-clean); }
+.ds-consent input[type="checkbox"]:checked { background: var(--brand-green-clean); }
