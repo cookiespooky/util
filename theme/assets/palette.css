@@ -13,6 +13,17 @@
 .city-control::before { background: var(--brand-blue-clean); }
 .drawer-nav a span { color: var(--brand-blue-deep); }
 
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.ds-page h1,
+.ds-page h2,
+.ds-page h3,
+.ds-page h4 {
+  line-height: 1.4 !important;
+}
+
 .ds-page {
   --ds-blue: var(--brand-blue-clean);
   --ds-blue-soft: var(--brand-blue-soft);
@@ -33,3 +44,15 @@
 .ds-consent input[type="checkbox"]:checked { background: var(--brand-green-clean); }
 .ds-swatches .ds-swatch:nth-child(5) > span { background: var(--brand-blue-clean) !important; }
 .ds-swatches .ds-swatch:nth-child(6) > span { background: var(--brand-green-clean) !important; }
+
+.ds-form-actions {
+  display: block !important;
+  width: 100%;
+}
+.ds-form-actions .ds-button {
+  width: 100%;
+  min-height: 48px;
+}
+.ds-form-actions small {
+  display: none !important;
+}
