@@ -1,31 +1,44 @@
-<footer class="site-footer">
-  <div class="container">
-    <hr class="footer-separator" />
-  </div>
-  <div class="container footer-inner">
-    <div class="footer-column">
-      <strong>ООО «Утилитсервис»</strong>
-      <p class="muted">Сбор, транспортирование и обезвреживание отходов для организаций.</p>
-      <p><a href="tel:+73462555897">+7 3462 55-58-97</a><br><a href="mailto:555897sur@bk.ru">555897sur@bk.ru</a></p>
+<footer class="site-footer ds-site-footer">
+  <div class="container ds-footer-main">
+    <div class="ds-footer-brand">
+      <a class="site-logo site-logo-footer" href="{{ .BaseURL }}/">
+        <span class="site-logo-mark" aria-hidden="true">У</span>
+        <span class="site-logo-text">Утилитсервис</span>
+      </a>
+      <p>Сбор, транспортирование и обезвреживание отходов для организаций.</p>
+      <div class="ds-footer-contacts">
+        <a href="tel:+73462555897">+7 3462 55-58-97</a>
+        <a href="mailto:555897sur@bk.ru">555897sur@bk.ru</a>
+      </div>
     </div>
-    <div class="footer-column">
-      <strong>Разделы</strong>
+
+    <div class="ds-footer-column">
+      <span class="ds-footer-title">Разделы</span>
       <a href="{{ .BaseURL }}/services/">Услуги</a>
       <a href="{{ .BaseURL }}/about/">О компании</a>
       <a href="{{ .BaseURL }}/licenses/">Лицензии и документы</a>
+      <a href="{{ .BaseURL }}/faq/">Вопросы и ответы</a>
       <a href="{{ .BaseURL }}/contacts/">Контакты</a>
-      <a href="{{ .BaseURL }}/design-system/">Дизайн-система</a>
     </div>
-    <div class="footer-column">
-      <strong>Города</strong>
-      <a href="{{ .BaseURL }}/surgut/">Сургут</a>
+
+    <div class="ds-footer-column">
+      <span class="ds-footer-title">Города</span>
+      <a href="{{ .BaseURL }}/surgut/">Сургут и Белый Яр</a>
       <a href="{{ .BaseURL }}/tyumen/">Тюмень</a>
       <a href="{{ .BaseURL }}/novosibirsk/">Новосибирск</a>
       <a href="{{ .BaseURL }}/nyagan/">Нягань</a>
     </div>
+
+    <div class="ds-footer-column">
+      <span class="ds-footer-title">Информация</span>
+      <a href="{{ .BaseURL }}/privacy/">Персональные данные</a>
+      <a href="{{ .BaseURL }}/design-system/">Дизайн-система</a>
+      <span class="ds-footer-note">Информация на сайте не является публичной офертой.</span>
+    </div>
   </div>
-  <div class="container footer-bottom">
+
+  <div class="container ds-footer-bottom">
     <span>© 2005–2026 ООО «Утилитсервис»</span>
-    <a href="{{ .BaseURL }}/privacy/">Обработка персональных данных</a>
+    <span>Спокойная инфраструктура для сложных процессов</span>
   </div>
 </footer>
