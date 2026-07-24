@@ -29,6 +29,9 @@
   --ds-blue-soft: var(--brand-blue-soft);
   --ds-green: var(--brand-green-clean);
   --ds-green-soft: var(--brand-green-soft);
+  --ds-muted: #43504B;
+  --ds-faint: #69756F;
+  --ds-surface-soft: #F3F6F5;
 }
 .ds-kicker,
 .ds-label,
@@ -36,7 +39,12 @@
 .ds-process span { color: var(--brand-blue-deep); }
 .ds-button-primary { background: var(--brand-blue-clean); }
 .ds-button-primary:hover { background: var(--brand-blue-deep); }
-.ds-tabs button.is-active { background: var(--brand-blue-soft); color: var(--brand-blue-deep); }
+.ds-tabs button { color: #43504B; }
+.ds-tabs button.is-active {
+  background: var(--brand-blue-soft);
+  color: var(--brand-blue-deep);
+  font-weight: 700;
+}
 .ds-info { background: var(--brand-blue-soft); }
 .ds-success { background: var(--brand-green-soft); }
 .ds-logo-mark .ds-drop { background: var(--brand-blue-clean); }
