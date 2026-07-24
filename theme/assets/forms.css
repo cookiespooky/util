@@ -4,17 +4,26 @@
   min-height: 48px;
   line-height: 1.2;
   appearance: none;
+  -webkit-appearance: none;
+  box-shadow: none;
+  transition: none;
 }
 .ds-form select {
-  padding-right: 42px;
+  padding-right: 44px !important;
+  background-color: var(--ds-surface-soft) !important;
   background-image:
-    linear-gradient(45deg, transparent 50%, #77817d 50%),
-    linear-gradient(135deg, #77817d 50%, transparent 50%);
+    linear-gradient(45deg, transparent 50%, #66736d 50%),
+    linear-gradient(135deg, #66736d 50%, transparent 50%) !important;
   background-position:
-    calc(100% - 18px) 21px,
-    calc(100% - 13px) 21px;
-  background-size: 5px 5px, 5px 5px;
-  background-repeat: no-repeat;
+    calc(100% - 19px) 20px,
+    calc(100% - 13px) 20px !important;
+  background-size: 6px 6px, 6px 6px !important;
+  background-repeat: no-repeat !important;
+}
+.ds-form select:focus,
+.ds-form select:active {
+  box-shadow: none !important;
+  transition: none !important;
 }
 .ds-form textarea { min-height: 112px; resize: vertical; }
 .ds-consent {
@@ -27,6 +36,8 @@
 }
 .ds-consent input[type="checkbox"] {
   appearance: none;
+  -webkit-appearance: none;
+  position: relative;
   width: 22px;
   height: 22px;
   min-height: 22px;
@@ -36,20 +47,22 @@
   border-radius: 7px;
   background: #e4ebe7;
   cursor: pointer;
-  display: grid;
-  place-items: center;
 }
 .ds-consent input[type="checkbox"]::after {
   content: "";
-  width: 10px;
-  height: 6px;
-  border-left: 2px solid #fff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 10px;
+  border-right: 2px solid #fff;
   border-bottom: 2px solid #fff;
-  transform: rotate(-45deg) scale(0);
+  transform: translate(-50%, -58%) rotate(45deg) scale(0);
+  transform-origin: center;
   transition: transform .12s ease;
 }
 .ds-consent input[type="checkbox"]:checked { background: #3c8b58; }
-.ds-consent input[type="checkbox"]:checked::after { transform: rotate(-45deg) scale(1); }
+.ds-consent input[type="checkbox"]:checked::after { transform: translate(-50%, -58%) rotate(45deg) scale(1); }
 .ds-consent input[type="checkbox"]:focus-visible { outline: 3px solid rgba(76,144,194,.22); outline-offset: 2px; }
 .ds-consent-copy { color: #4f5d57; font-size: 13px; line-height: 1.5; }
 .ds-consent-copy a { color: #1e2925; text-underline-offset: 2px; }
