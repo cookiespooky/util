@@ -1,0 +1,27 @@
+<section class="service-hero section section--surface" aria-labelledby="service-title">
+  <div class="container service-hero__layout">
+    <div class="service-hero__copy">
+      <span class="eyebrow">Услуга для организаций</span>
+      <h1 id="service-title" class="service-hero__title">{{ .Page.Title }}</h1>
+      {{- if .Page.Description }}
+      <p class="service-hero__lead">{{ .Page.Description }}</p>
+      {{- end }}
+      <div class="service-hero__actions cluster">
+        <a class="button button--primary" href="#service-request">Получить расчёт</a>
+        <a class="button button--secondary" href="{{ .BaseURL }}/contacts/">Задать вопрос</a>
+      </div>
+    </div>
+
+    <aside class="service-hero__summary card card--muted" aria-label="Что влияет на расчёт">
+      <span class="eyebrow">Для расчёта</span>
+      <h2>Достаточно описать задачу</h2>
+      <ul>
+        <li>вид или название отхода;</li>
+        <li>примерный объём;</li>
+        <li>адрес и город;</li>
+        <li>разовый или регулярный вывоз.</li>
+      </ul>
+      <p>Класс опасности, код ФККО и требования к документам специалист поможет уточнить.</p>
+    </aside>
+  </div>
+</section>
