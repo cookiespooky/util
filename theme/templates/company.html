@@ -1,13 +1,37 @@
-<div class="shell page-layout">
-  <aside class="page-aside">
-    <span class="eyebrow">Утилитсервис</span>
-    <nav class="section-nav" aria-label="Раздел о компании">
-      <a href="{{ .BaseURL }}/about/">О компании</a>
-      <a href="{{ .BaseURL }}/licenses/">Лицензии</a>
-      <a href="{{ .BaseURL }}/partners/">Партнёры и клиенты</a>
-      <a href="{{ .BaseURL }}/faq/">Вопросы</a>
-      <a href="{{ .BaseURL }}/contacts/">Контакты</a>
-    </nav>
-  </aside>
-  <article class="prose prose-company" data-prose>{{ .Body }}</article>
-</div>
+<article class="page page-company page-company--components">
+  <section class="section section--surface company-hero">
+    <div class="container company-hero__layout">
+      <div>
+        <span class="eyebrow">Утилитсервис</span>
+        <h1 class="company-hero__title">{{ .Page.Title }}</h1>
+        {{- if .Page.Description }}
+        <p class="company-hero__lead">{{ .Page.Description }}</p>
+        {{- end }}
+      </div>
+      <nav class="company-nav card card--muted" aria-label="Раздел о компании">
+        <a href="{{ .BaseURL }}/about/">О компании</a>
+        <a href="{{ .BaseURL }}/licenses/">Лицензии</a>
+        <a href="{{ .BaseURL }}/partners/">Партнёры и клиенты</a>
+        <a href="{{ .BaseURL }}/faq/">Вопросы</a>
+        <a href="{{ .BaseURL }}/contacts/">Контакты</a>
+      </nav>
+    </div>
+  </section>
+
+  <section class="section company-content">
+    <div class="container">
+      <div class="prose prose-company" data-prose>{{ .Body }}</div>
+    </div>
+  </section>
+
+  <section class="section section--strong company-cta">
+    <div class="container company-cta__layout">
+      <div>
+        <span class="eyebrow">Обращение</span>
+        <h2>Обсудить задачу со специалистом</h2>
+        <p>Опишите отход, объём и город. Мы проверим возможность работы и подскажем следующий шаг.</p>
+      </div>
+      <a class="button button--primary" href="{{ .BaseURL }}/contacts/#request">Оставить заявку</a>
+    </div>
+  </section>
+</article>
