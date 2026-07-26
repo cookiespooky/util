@@ -1,0 +1,35 @@
+<section class="section section--strong service-request" id="service-request" aria-labelledby="service-request-title">
+  <div class="container service-request__layout">
+    <header class="section-heading">
+      <span class="section-heading__eyebrow">Расчёт</span>
+      <h2 id="service-request-title" class="section-heading__title">Получить расчёт по услуге</h2>
+      <p class="section-heading__description">Опишите отход и условия вывоза. Заявка не подтверждает возможность выполнения работ до проверки лицензии и технических условий.</p>
+    </header>
+
+    <form class="request-form card" action="#" method="post">
+      <input type="hidden" name="service" value="{{ .Page.Title }}" />
+      <label class="request-form__field">
+        <span>Город</span>
+        <select class="control" name="city" required>
+          <option value="">Выберите город</option>
+          <option value="surgut">Сургут</option>
+          <option value="tyumen">Тюмень</option>
+          <option value="novosibirsk">Новосибирск</option>
+          <option value="nyagan">Нягань</option>
+        </select>
+      </label>
+      <label class="request-form__field">
+        <span>Телефон</span>
+        <input class="control" type="tel" name="phone" autocomplete="tel" placeholder="+7 ___ ___-__-__" required />
+      </label>
+      <label class="request-form__field request-form__field--wide">
+        <span>Описание задачи</span>
+        <textarea class="control" name="comment" placeholder="Вид отхода, объём, адрес и желаемый график"></textarea>
+      </label>
+      <div class="request-form__footer request-form__field--wide">
+        <p>После отправки специалист уточнит недостающие сведения.</p>
+        <button class="button button--primary" type="submit">Отправить заявку</button>
+      </div>
+    </form>
+  </div>
+</section>
