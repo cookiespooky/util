@@ -31,13 +31,29 @@
     <header class="section-heading">
       <span class="section-heading__eyebrow">Заявка</span>
       <h2 id="home-request-title" class="section-heading__title">Получить расчёт</h2>
-      <p class="section-heading__description">Опишите задачу в свободной форме. Специалист проверит сведения, лицензию и техническую возможность выполнения работ.</p>
+      <p class="section-heading__description">Выбранные выше услуга и город уже подставлены в форму. Добавьте контакты и сведения, которые известны сейчас.</p>
     </header>
 
-    <form class="request-form card" action="#" method="post">
+    <form class="request-form request-form--full card" action="#" method="post" data-request-form>
+      <label class="request-form__field">
+        <span>Организация</span>
+        <input class="control" type="text" name="organization" autocomplete="organization" placeholder="ООО «Компания»" />
+      </label>
+      <label class="request-form__field">
+        <span>Контактное лицо</span>
+        <input class="control" type="text" name="contact_name" autocomplete="name" placeholder="Имя" />
+      </label>
+      <label class="request-form__field">
+        <span>Телефон</span>
+        <input class="control" type="tel" name="phone" autocomplete="tel" placeholder="+7 ___ ___-__-__" required />
+      </label>
+      <label class="request-form__field">
+        <span>Email</span>
+        <input class="control" type="email" name="email" autocomplete="email" placeholder="mail@company.ru" />
+      </label>
       <label class="request-form__field">
         <span>Город</span>
-        <select class="control" name="city" required>
+        <select class="control" name="city" required data-request-city>
           <option value="">Выберите город</option>
           <option value="surgut">Сургут</option>
           <option value="tyumen">Тюмень</option>
@@ -47,27 +63,28 @@
       </label>
       <label class="request-form__field">
         <span>Услуга</span>
-        <select class="control" name="service" required>
+        <select class="control" name="service" required data-request-service>
           <option value="">Выберите направление</option>
-          <option>Медицинские отходы</option>
-          <option>Промышленные отходы</option>
-          <option>Пищевые отходы и продукция</option>
-          <option>Биологические отходы</option>
-          <option>Уничтожение документов</option>
-          <option>Паспорта отходов</option>
+          <option value="Медицинские отходы">Медицинские отходы</option>
+          <option value="Промышленные отходы I–IV классов">Промышленные отходы I–IV классов</option>
+          <option value="Пищевые отходы и продукция">Пищевые отходы и продукция</option>
+          <option value="Биологические отходы">Биологические отходы</option>
+          <option value="Уничтожение документов">Уничтожение документов</option>
+          <option value="Паспорта отходов">Паспорта отходов</option>
+          <option value="Подбор услуги специалистом">Подбор услуги специалистом</option>
         </select>
-      </label>
-      <label class="request-form__field">
-        <span>Телефон</span>
-        <input class="control" type="tel" name="phone" autocomplete="tel" placeholder="+7 ___ ___-__-__" required />
       </label>
       <label class="request-form__field request-form__field--wide">
         <span>Описание задачи</span>
-        <textarea class="control" name="comment" placeholder="Вид отхода, объём, адрес и желаемый график"></textarea>
+        <textarea class="control" name="comment" placeholder="Вид отхода, объём, адрес, периодичность и другие детали"></textarea>
+      </label>
+      <label class="request-form__consent request-form__field--wide">
+        <input type="checkbox" name="consent" required />
+        <span>Согласен на обработку персональных данных для ответа на заявку.</span>
       </label>
       <div class="request-form__footer request-form__field--wide">
         <p>Отправка заявки не подтверждает возможность приёма отхода.</p>
-        <button class="button button--primary" type="submit">Отправить заявку</button>
+        <button class="button button--primary" type="submit">Получить расчёт</button>
       </div>
     </form>
   </div>
