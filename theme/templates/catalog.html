@@ -1,22 +1,21 @@
 <article class="page page-catalog page-catalog--components">
-  <section class="section section--surface catalog-hero">
+  <section class="section catalog-hero" aria-labelledby="catalog-title">
     <div class="container catalog-hero__layout">
-      <div>
-        <span class="eyebrow">Каталог</span>
-        <h1 class="catalog-hero__title">Услуги по обращению с отходами</h1>
-        <p class="catalog-hero__lead">Выберите направление или опишите отход специалисту. Возможность выполнения работ определяется после проверки вида отхода, класса опасности, адреса и технических условий.</p>
+      <div class="catalog-hero__copy">
+        <span class="eyebrow">Каталог услуг</span>
+        <h1 id="catalog-title" class="catalog-hero__title">Обращение с отходами для организаций</h1>
+        <ul class="catalog-hero__points">
+          <li><strong>Не нужно знать точное название услуги</strong><span>Достаточно описать отход, объём и задачу.</span></li>
+          <li><strong>Разовый и регулярный формат</strong><span>Подбираем условия под конкретный объект и график.</span></li>
+          <li><strong>Проверка до начала работ</strong><span>Сверяем класс, лицензию и техническую возможность.</span></li>
+        </ul>
+        <div class="catalog-hero__actions cluster">
+          <a class="button button--primary" href="#catalog-services-title">Выбрать направление</a>
+          <a class="button button--secondary" href="{{ .BaseURL }}/#request">Описать задачу</a>
+        </div>
       </div>
-      <aside class="card card--muted catalog-hero__aside">
-        <h2>Не знаете, что выбрать?</h2>
-        <p>Отправьте описание отхода, примерный объём и город. Специалист определит подходящее направление.</p>
-        <a class="button button--primary" href="{{ .BaseURL }}/contacts/#request">Получить консультацию</a>
-      </aside>
     </div>
   </section>
 
-  <section class="section catalog-content">
-    <div class="container">
-      <div class="prose prose-catalog" data-prose>{{ .Body }}</div>
-    </div>
-  </section>
+  {{ template "catalog_services.html" . }}
 </article>
