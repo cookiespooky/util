@@ -62,10 +62,10 @@
   /* Sizing and layout */
   --control-height: 48px;
   --header-height: 72px;
-  --content-width: 1180px;
-  --content-width-wide: 1360px;
+  --content-width: 1240px;
+  --content-width-wide: 1480px;
   --text-width: 760px;
-  --page-gutter: clamp(16px, 3vw, 28px);
+  --page-gutter: clamp(16px, 3vw, 32px);
   --section-space: clamp(56px, 8vw, 96px);
   --section-space-compact: clamp(36px, 5vw, 56px);
   --card-padding: clamp(18px, 2.4vw, 28px);
@@ -74,6 +74,14 @@
   --duration-fast: 150ms;
   --duration-base: 220ms;
   --ease-standard: ease;
+}
+
+@media (min-width: 1600px) {
+  :root {
+    --content-width: 1320px;
+    --content-width-wide: 1560px;
+    --page-gutter: 40px;
+  }
 }
 
 /* Semantic aliases retained for existing components */
@@ -98,7 +106,7 @@
 .ui-control { min-height: var(--control-height); border: 0; border-radius: var(--radius-control); background: var(--color-surface-muted); color: var(--color-text); font: var(--font-weight-medium) var(--font-size-md)/1.2 var(--font-family-base); }
 .ui-button { min-height: var(--control-height); padding-inline: var(--space-4); border: 0; border-radius: var(--radius-control); font: var(--font-weight-medium) var(--font-size-md)/1 var(--font-family-base); }
 .ui-button--primary { background: var(--color-brand-blue); color: #fff; }
-.ui-button--secondary { background: var(--color-surface-muted); color: var(--color-text); }
+.ui-button--secondary { background: var(--color-brand-green-soft); color: var(--color-brand-green-strong); }
 .ui-card { padding: var(--card-padding); border-radius: var(--radius-card); background: var(--color-surface); }
 .ui-card--muted { background: var(--color-surface-muted); }
 .ui-divider { border: 0; border-top: 1px solid var(--color-divider); }
