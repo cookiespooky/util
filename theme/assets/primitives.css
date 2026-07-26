@@ -107,8 +107,8 @@ a:hover { color: var(--color-link-hover); }
 .button:hover { transform: translateY(-1px); }
 .button--primary { background: var(--color-brand-blue); color: #fff; }
 .button--primary:hover { background: var(--color-brand-blue-strong); color: #fff; }
-.button--secondary { background: var(--color-brand-green-soft); color: var(--color-brand-green-strong); }
-.button--secondary:hover { background: rgba(91, 200, 115, .22); color: #2f8146; }
+.button--secondary { background: var(--color-brand-green-soft); color: var(--color-text); }
+.button--secondary:hover { background: rgba(91, 200, 115, .24); color: var(--color-text); }
 .button--block { width: 100%; }
 
 .control {
