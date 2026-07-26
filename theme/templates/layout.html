@@ -32,6 +32,9 @@
   {{- if eq .Page.Type "home" }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/home-page.css" />
   {{- end }}
+  {{- if eq .Page.Type "service" }}
+  <link rel="stylesheet" href="{{ .AssetsBase }}/service-page.css" />
+  {{- end }}
   {{- if eq .Page.Type "design" }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/design-system.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/visual-components.css" />
