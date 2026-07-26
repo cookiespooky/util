@@ -16,19 +16,27 @@
   --color-text-muted: #43504b;
   --color-text-subtle: #69756f;
   --color-divider: rgba(30, 41, 37, .08);
+  --color-link: var(--color-brand-blue-strong);
+  --color-link-hover: #2f79af;
+  --color-focus-ring: rgba(90, 174, 230, .28);
 
   /* Typography */
   --font-family-base: "Manrope", "Segoe UI", sans-serif;
   --font-size-xs: 12px;
   --font-size-sm: 13px;
   --font-size-md: 15px;
-  --font-size-lg: 17px;
-  --font-size-xl: 24px;
+  --font-size-body: 17px;
+  --font-size-lead: clamp(18px, 1.8vw, 21px);
+  --font-size-h4: clamp(20px, 2vw, 24px);
+  --font-size-h3: clamp(24px, 2.8vw, 32px);
+  --font-size-h2: clamp(32px, 4.2vw, 48px);
+  --font-size-h1: clamp(42px, 6vw, 72px);
   --font-weight-regular: 400;
   --font-weight-medium: 600;
   --font-weight-bold: 700;
   --line-height-heading: 1.4;
   --line-height-body: 1.65;
+  --letter-spacing-heading: -.025em;
 
   /* Spacing */
   --space-1: 4px;
@@ -41,18 +49,26 @@
   --space-10: 40px;
   --space-12: 48px;
   --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
 
   /* Radius */
   --radius-control: 12px;
   --radius-card: 18px;
   --radius-section: 22px;
   --radius-brand: 13px;
+  --radius-pill: 999px;
 
-  /* Sizing */
+  /* Sizing and layout */
   --control-height: 48px;
   --header-height: 72px;
   --content-width: 1180px;
+  --content-width-wide: 1360px;
   --text-width: 760px;
+  --page-gutter: clamp(16px, 3vw, 28px);
+  --section-space: clamp(56px, 8vw, 96px);
+  --section-space-compact: clamp(36px, 5vw, 56px);
+  --card-padding: clamp(18px, 2.4vw, 28px);
 
   /* Motion */
   --duration-fast: 150ms;
@@ -70,10 +86,10 @@
   --brand-green-soft: var(--color-brand-green-soft);
 }
 
-/* Consistent component primitives */
+/* Temporary compatibility primitives. New templates use primitives.css classes. */
 .ui-surface { background: var(--color-surface); border-radius: var(--radius-card); }
 .ui-surface--muted { background: var(--color-surface-muted); }
-.ui-section { padding-block: var(--space-14); }
+.ui-section { padding-block: var(--section-space); }
 .ui-stack { display: grid; gap: var(--space-4); }
 .ui-cluster { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
 .ui-label { color: var(--color-brand-blue-strong); font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); letter-spacing: .08em; text-transform: uppercase; }
@@ -83,6 +99,6 @@
 .ui-button { min-height: var(--control-height); padding-inline: var(--space-4); border: 0; border-radius: var(--radius-control); font: var(--font-weight-medium) var(--font-size-md)/1 var(--font-family-base); }
 .ui-button--primary { background: var(--color-brand-blue); color: #fff; }
 .ui-button--secondary { background: var(--color-surface-muted); color: var(--color-text); }
-.ui-card { padding: var(--space-6); border-radius: var(--radius-card); background: var(--color-surface); }
+.ui-card { padding: var(--card-padding); border-radius: var(--radius-card); background: var(--color-surface); }
 .ui-card--muted { background: var(--color-surface-muted); }
 .ui-divider { border: 0; border-top: 1px solid var(--color-divider); }
