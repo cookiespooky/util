@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  {{- if or (eq .Page.Type "home") (eq .Page.Type "service") }}
+  {{- if or (or (eq .Page.Type "home") (eq .Page.Type "service")) (or (eq .Page.Type "catalog") (eq .Page.Type "city")) }}
   <meta name="color-scheme" content="light" />
   <meta name="theme-color" content="#F2F5F4" />
   {{- else }}
@@ -40,13 +40,16 @@
   {{- if eq .Page.Type "service" }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/service-page.css" />
   {{- end }}
+  {{- if or (eq .Page.Type "catalog") (eq .Page.Type "city") }}
+  <link rel="stylesheet" href="{{ .AssetsBase }}/catalog-city-page.css" />
+  {{- end }}
   {{- if eq .Page.Type "design" }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/design-system.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/visual-components.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/token-showcase.css" />
   {{- end }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/palette.css" />
-  {{- if or (eq .Page.Type "home") (eq .Page.Type "service") }}
+  {{- if or (or (eq .Page.Type "home") (eq .Page.Type "service")) (or (eq .Page.Type "catalog") (eq .Page.Type "city")) }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/component-theme.css" />
   {{- end }}
   <script>
