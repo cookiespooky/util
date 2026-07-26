@@ -1,0 +1,24 @@
+.page[class*="--components"] .prose a.button,
+.page[class*="--components"] .prose .button {
+  border: 0 !important;
+  background: var(--color-brand-green-soft) !important;
+  color: var(--color-text) !important;
+  text-decoration: none !important;
+}
+
+.page[class*="--components"] .prose a.button:hover,
+.page[class*="--components"] .prose .button:hover {
+  background: rgba(91, 200, 115, .24) !important;
+  color: var(--color-text) !important;
+}
+
+.page-service--components .service-content__body > p:has(a.button),
+.page-service--components .service-content__body > p:has(.button),
+.page-service--components .service-content__body > a.button {
+  display: none !important;
+}
+
+.page-service--components .service-content__body > h2:last-of-type,
+.page-service--components .service-content__body > h2:last-of-type ~ * {
+  display: revert !important;
+}
