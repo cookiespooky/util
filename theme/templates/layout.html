@@ -3,8 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  {{- if or (eq .Page.Type "home") (eq .Page.Type "service") }}
+  <meta name="color-scheme" content="light" />
+  <meta name="theme-color" content="#F2F5F4" />
+  {{- else }}
   <meta name="color-scheme" content="dark" />
   <meta name="theme-color" content="#212121" />
+  {{- end }}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Nunito+Sans:wght@300;400;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
@@ -41,6 +46,9 @@
   <link rel="stylesheet" href="{{ .AssetsBase }}/token-showcase.css" />
   {{- end }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/palette.css" />
+  {{- if or (eq .Page.Type "home") (eq .Page.Type "service") }}
+  <link rel="stylesheet" href="{{ .AssetsBase }}/component-theme.css" />
+  {{- end }}
   <script>
     window.__notepubSearchMode = "{{ .SearchMode }}";
     window.__notepubBaseURL = "{{ .BaseURL }}";
