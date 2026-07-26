@@ -4,7 +4,7 @@
   var CONFIG = {
     cycle: {
       title: 'Цикл обращения с отходами',
-      description: 'Интерактивная схема показывает услугу как управляемый процесс. Количество этапов меняется только в массиве steps.',
+      description: 'Статичный таймлайн показывает услугу как последовательный управляемый процесс. Количество этапов меняется только в массиве steps.',
       steps: [
         { id: 'source', title: 'Образование отходов', text: 'Отходы появляются у клиента и первично идентифицируются по виду, классу и объёму.' },
         { id: 'collection', title: 'Сбор и упаковка', text: 'Подбираются требования к таре, маркировке, накоплению и подготовке к передаче.' },
@@ -72,43 +72,26 @@
   function renderCycle() {
     var cfg = CONFIG.cycle;
     var section = makeSection('09', cfg.title, cfg.description);
-    var shell = el('div', 'viz-shell waste-cycle');
-    var scroll = el('div', 'waste-cycle-scroll');
-    var track = el('div', 'waste-cycle-track');
-    track.style.setProperty('--count', cfg.steps.length);
-    var detail = el('aside', 'waste-cycle-detail');
-    var detailTop = el('div');
-    var counter = el('div', 'waste-cycle-counter');
-    detail.appendChild(detailTop);
-    detail.appendChild(counter);
-
-    function activate(index) {
-      Array.prototype.forEach.call(track.children, function (button, i) {
-        button.classList.toggle('is-active', i === index);
-      });
-      var step = cfg.steps[index];
-      detailTop.innerHTML = '';
-      detailTop.appendChild(el('span', 'viz-label', 'Этап процесса'));
-      detailTop.appendChild(el('h3', '', step.title));
-      detailTop.appendChild(el('p', '', step.text));
-      counter.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(cfg.steps.length).padStart(2, '0');
-    }
+    var shell = el('div', 'viz-shell waste-timeline');
 
     cfg.steps.forEach(function (step, index) {
-      var button = el('button', 'waste-cycle-step');
-      button.type = 'button';
-      button.appendChild(el('span', 'waste-cycle-node', String(index + 1).padStart(2, '0')));
-      button.appendChild(el('strong', '', step.title));
-      button.addEventListener('click', function () { activate(index); });
-      track.appendChild(button);
+      var item = el('article', 'waste-timeline-item');
+      var marker = el('div', 'waste-timeline-marker');
+      marker.appendChild(el('span', 'waste-cycle-node', String(index + 1).padStart(2, '0')));
+
+      var card = el('div', 'waste-cycle-card');
+      card.appendChild(el('span', 'viz-label', 'Этап процесса'));
+      card.appendChild(el('h3', '', step.title));
+      card.appendChild(el('p', '', step.text));
+      card.appendChild(el('div', 'waste-cycle-counter', String(index + 1).padStart(2, '0') + ' / ' + String(cfg.steps.length).padStart(2, '0')));
+
+      item.appendChild(marker);
+      item.appendChild(card);
+      shell.appendChild(item);
     });
 
-    scroll.appendChild(track);
-    shell.appendChild(scroll);
-    shell.appendChild(detail);
     section.appendChild(shell);
-    section.appendChild(el('p', 'viz-caption', 'Параметры: cycle.steps[]. Добавление или удаление элемента автоматически перестраивает сетку и счётчик.'));
-    activate(0);
+    section.appendChild(el('p', 'viz-caption', 'Параметры: cycle.steps[]. Добавление или удаление элемента автоматически перестраивает таймлайн и счётчики.'));
     return section;
   }
 
