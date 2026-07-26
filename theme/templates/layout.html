@@ -24,11 +24,16 @@
   {{- if .Meta.JSONLD }}
   <script type="application/ld+json">{{ .Meta.JSONLD }}</script>
   {{- end }}
+
   <link rel="stylesheet" href="{{ .AssetsBase }}/design-tokens.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/primitives.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/styles.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/overrides.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/forms.css" />
+  <link rel="stylesheet" href="{{ .AssetsBase }}/palette.css" />
+  <link rel="stylesheet" href="{{ .AssetsBase }}/component-theme.css" />
+  <link rel="stylesheet" href="{{ .AssetsBase }}/site-shell.css" />
+
   {{- if eq .Page.Type "home" }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/home-page.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/action-components.css" />
@@ -36,7 +41,10 @@
   {{- if eq .Page.Type "service" }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/service-page.css" />
   {{- end }}
-  {{- if or (eq .Page.Type "catalog") (eq .Page.Type "city") }}
+  {{- if eq .Page.Type "catalog" }}
+  <link rel="stylesheet" href="{{ .AssetsBase }}/catalog-page.css" />
+  {{- end }}
+  {{- if eq .Page.Type "city" }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/catalog-city-page.css" />
   {{- end }}
   {{- if or (eq .Page.Type "company") (eq .Page.Type "legal") }}
@@ -47,9 +55,7 @@
   <link rel="stylesheet" href="{{ .AssetsBase }}/visual-components.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/token-showcase.css" />
   {{- end }}
-  <link rel="stylesheet" href="{{ .AssetsBase }}/palette.css" />
-  <link rel="stylesheet" href="{{ .AssetsBase }}/component-theme.css" />
-  <link rel="stylesheet" href="{{ .AssetsBase }}/site-shell.css" />
+
   <script>
     window.__notepubSearchMode = "{{ .SearchMode }}";
     window.__notepubBaseURL = "{{ .BaseURL }}";
