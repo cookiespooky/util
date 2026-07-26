@@ -1,0 +1,74 @@
+<section class="section home-faq" aria-labelledby="home-faq-title">
+  <div class="container home-faq__layout">
+    <header class="section-heading">
+      <span class="section-heading__eyebrow">Вопросы</span>
+      <h2 id="home-faq-title" class="section-heading__title">Что важно знать до заявки</h2>
+    </header>
+
+    <div class="faq-list">
+      <details class="faq-item card card--muted">
+        <summary>Вы работаете с физическими лицами?</summary>
+        <p>Основные направления рассчитаны на юридических лиц и индивидуальных предпринимателей. Для физических лиц доступна кремация домашних животных.</p>
+      </details>
+      <details class="faq-item card card--muted">
+        <summary>Что нужно для расчёта стоимости?</summary>
+        <p>На первом этапе достаточно выбрать город и услугу, указать телефон и кратко описать задачу. Остальные сведения специалист уточнит после получения заявки.</p>
+      </details>
+      <details class="faq-item card card--muted">
+        <summary>Можно заказать разовый вывоз?</summary>
+        <p>Да. Компания работает как по разовым заявкам, так и по регулярному графику.</p>
+      </details>
+      <details class="faq-item card card--muted">
+        <summary>Какие документы вы предоставляете?</summary>
+        <p>После оказания услуги предоставляются документы, предусмотренные договором. Их состав зависит от конкретной услуги и операции.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="section section--strong home-request" id="request" aria-labelledby="home-request-title">
+  <div class="container home-request__layout">
+    <header class="section-heading">
+      <span class="section-heading__eyebrow">Заявка</span>
+      <h2 id="home-request-title" class="section-heading__title">Получить расчёт</h2>
+      <p class="section-heading__description">Опишите задачу в свободной форме. Специалист проверит сведения, лицензию и техническую возможность выполнения работ.</p>
+    </header>
+
+    <form class="request-form card" action="#" method="post">
+      <label class="request-form__field">
+        <span>Город</span>
+        <select class="control" name="city" required>
+          <option value="">Выберите город</option>
+          <option value="surgut">Сургут</option>
+          <option value="tyumen">Тюмень</option>
+          <option value="novosibirsk">Новосибирск</option>
+          <option value="nyagan">Нягань</option>
+        </select>
+      </label>
+      <label class="request-form__field">
+        <span>Услуга</span>
+        <select class="control" name="service" required>
+          <option value="">Выберите направление</option>
+          <option>Медицинские отходы</option>
+          <option>Промышленные отходы</option>
+          <option>Пищевые отходы и продукция</option>
+          <option>Биологические отходы</option>
+          <option>Уничтожение документов</option>
+          <option>Паспорта отходов</option>
+        </select>
+      </label>
+      <label class="request-form__field">
+        <span>Телефон</span>
+        <input class="control" type="tel" name="phone" autocomplete="tel" placeholder="+7 ___ ___-__-__" required />
+      </label>
+      <label class="request-form__field request-form__field--wide">
+        <span>Описание задачи</span>
+        <textarea class="control" name="comment" placeholder="Вид отхода, объём, адрес и желаемый график"></textarea>
+      </label>
+      <div class="request-form__footer request-form__field--wide">
+        <p>Отправка заявки не подтверждает возможность приёма отхода.</p>
+        <button class="button button--primary" type="submit">Отправить заявку</button>
+      </div>
+    </form>
+  </div>
+</section>
