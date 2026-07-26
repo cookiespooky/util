@@ -1,9 +1,50 @@
-<div class="shell page-layout">
-  <aside class="page-aside sticky-card city-card">
-    <span class="eyebrow">Подразделение</span>
-    <p>Контакты и доступность услуг уточняются для выбранного города.</p>
-    <a class="button" href="{{ .BaseURL }}/contacts/#request">Оставить заявку</a>
-    <a class="text-link" href="tel:+73462555897">+7 3462 55-58-97 →</a>
-  </aside>
-  <article class="prose prose-city" data-prose>{{ .Body }}</article>
-</div>
+<article class="page page-city page-city--components">
+  <section class="section section--surface city-hero">
+    <div class="container city-hero__layout">
+      <div>
+        <span class="eyebrow">Подразделение</span>
+        <h1 class="city-hero__title">{{ .Page.Title }}</h1>
+        {{- if .Page.Description }}
+        <p class="city-hero__lead">{{ .Page.Description }}</p>
+        {{- end }}
+        <div class="cluster city-hero__actions">
+          <a class="button button--primary" href="#city-request">Оставить заявку</a>
+          <a class="button button--secondary" href="tel:+73462555897">Позвонить</a>
+        </div>
+      </div>
+
+      <aside class="card card--muted city-hero__contact">
+        <span class="eyebrow">Контакты</span>
+        <a class="city-hero__phone" href="tel:+73462555897">+7 3462 55-58-97</a>
+        <p>Контакты, адрес и доступность конкретной операции уточняются для выбранного подразделения.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section city-content">
+    <div class="container city-content__layout">
+      <aside class="city-nav card card--muted">
+        <span class="eyebrow">На странице</span>
+        <nav aria-label="Разделы подразделения">
+          <a href="#city-details">Информация</a>
+          <a href="#city-request">Оставить заявку</a>
+          <a href="{{ .BaseURL }}/services/">Все услуги</a>
+          <a href="{{ .BaseURL }}/contacts/">Все контакты</a>
+        </nav>
+      </aside>
+
+      <div id="city-details" class="city-content__body prose prose-city" data-prose>{{ .Body }}</div>
+    </div>
+  </section>
+
+  <section class="section section--strong city-request" id="city-request" aria-labelledby="city-request-title">
+    <div class="container city-request__layout">
+      <header class="section-heading">
+        <span class="section-heading__eyebrow">Заявка</span>
+        <h2 id="city-request-title" class="section-heading__title">Уточнить возможность работы</h2>
+        <p class="section-heading__description">Опишите отход, объём и адрес. Специалист проверит техническую возможность и состав документов.</p>
+      </header>
+      <a class="button button--primary" href="{{ .BaseURL }}/contacts/#request">Перейти к форме</a>
+    </div>
+  </section>
+</article>
