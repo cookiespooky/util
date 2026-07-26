@@ -1,4 +1,22 @@
-<div class="shell narrow-page">
-  <div class="legal-note">Юридический текст требует утверждения Заказчиком до боевой публикации.</div>
-  <article class="prose prose-legal" data-prose>{{ .Body }}</article>
-</div>
+<article class="page page-legal page-legal--components">
+  <section class="section section--surface legal-hero">
+    <div class="container legal-hero__layout">
+      <div>
+        <span class="eyebrow">Документы</span>
+        <h1 class="legal-hero__title">{{ .Page.Title }}</h1>
+        {{- if .Page.Description }}
+        <p class="legal-hero__lead">{{ .Page.Description }}</p>
+        {{- end }}
+      </div>
+      <aside class="legal-note card card--muted">
+        Юридический текст и реквизиты требуют финального утверждения заказчиком до публикации на основном домене.
+      </aside>
+    </div>
+  </section>
+
+  <section class="section legal-content">
+    <div class="container container--text">
+      <div class="prose prose-legal" data-prose>{{ .Body }}</div>
+    </div>
+  </section>
+</article>
