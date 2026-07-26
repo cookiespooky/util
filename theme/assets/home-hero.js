@@ -24,7 +24,22 @@
     svg.setAttribute('class', 'hero-route__svg');
     svg.setAttribute('viewBox', '0 0 500 500');
     svg.setAttribute('aria-hidden', 'true');
-    svg.innerHTML = '<defs><linearGradient id="hero-route-gradient" x1="65" y1="65" x2="435" y2="435" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5AAEE6" stop-opacity="0"/><stop offset="0.46" stop-color="#5AAEE6" stop-opacity="0.92"/><stop offset="1" stop-color="#5BC873" stop-opacity="1"/></linearGradient></defs><circle class="hero-route__arc" cx="250" cy="250" r="176"/>';
+    svg.innerHTML = [
+      '<defs>',
+      '<linearGradient id="hero-route-gradient" x1="72" y1="72" x2="428" y2="428" gradientUnits="userSpaceOnUse">',
+      '<stop offset="0" stop-color="#5AAEE6" stop-opacity="0.18"/>',
+      '<stop offset="0.46" stop-color="#5AAEE6" stop-opacity="0.96"/>',
+      '<stop offset="1" stop-color="#5BC873" stop-opacity="1"/>',
+      '</linearGradient>',
+      '<marker id="hero-arrow-blue" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M1 1 10 6 1 11Z" fill="#5AAEE6"/></marker>',
+      '<marker id="hero-arrow-teal" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M1 1 10 6 1 11Z" fill="#58B7A2"/></marker>',
+      '<marker id="hero-arrow-green" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M1 1 10 6 1 11Z" fill="#5BC873"/></marker>',
+      '</defs>',
+      '<path class="hero-route__arrow" d="M250 70 A180 180 0 0 1 430 250" marker-end="url(#hero-arrow-blue)"/>',
+      '<path class="hero-route__arrow" d="M430 250 A180 180 0 0 1 250 430" marker-end="url(#hero-arrow-teal)"/>',
+      '<path class="hero-route__arrow" d="M250 430 A180 180 0 0 1 70 250" marker-end="url(#hero-arrow-green)"/>',
+      '<path class="hero-route__arrow" d="M70 250 A180 180 0 0 1 250 70" marker-end="url(#hero-arrow-blue)"/>'
+    ].join('');
     stage.appendChild(svg);
 
     var center = el('div', 'hero-route__center');
