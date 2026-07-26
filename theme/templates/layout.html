@@ -24,12 +24,14 @@
   {{- if .Meta.JSONLD }}
   <script type="application/ld+json">{{ .Meta.JSONLD }}</script>
   {{- end }}
+  <link rel="stylesheet" href="{{ .AssetsBase }}/design-tokens.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/styles.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/overrides.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/forms.css" />
   {{- if eq .Page.Type "design" }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/design-system.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/visual-components.css" />
+  <link rel="stylesheet" href="{{ .AssetsBase }}/token-showcase.css" />
   {{- end }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/palette.css" />
   <script>
@@ -51,6 +53,7 @@
   {{- if eq .Page.Type "design" }}
   <script src="{{ .AssetsBase }}/visual-components.js" defer></script>
   <script src="{{ .AssetsBase }}/map-fixes.js" defer></script>
+  <script src="{{ .AssetsBase }}/token-showcase.js" defer></script>
   {{- end }}
 </body>
 </html>
