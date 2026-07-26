@@ -2,26 +2,10 @@
   'use strict';
 
   var steps = [
-    {
-      title: 'Определяем',
-      text: 'Вид, класс, объём и требования.',
-      icon: '<path d="M10.5 3.5a7 7 0 1 0 4.95 11.95L20 20"/><circle cx="10.5" cy="10.5" r="2.5"/>'
-    },
-    {
-      title: 'Организуем',
-      text: 'Тару, график, вывоз и транспортирование.',
-      icon: '<path d="M4 7h10v9H4z"/><path d="M14 10h3l3 3v3h-6z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>'
-    },
-    {
-      title: 'Обрабатываем',
-      text: 'Обезвреживание, утилизация или уничтожение.',
-      icon: '<path d="M12 3v4M12 17v4M4.2 6.2l2.8 2.8M17 15l2.8 2.8M3 12h4M17 12h4M4.2 17.8 7 15M17 9l2.8-2.8"/><circle cx="12" cy="12" r="4"/>'
-    },
-    {
-      title: 'Подтверждаем',
-      text: 'Акты и предусмотренные договором документы.',
-      icon: '<path d="M6 3h9l3 3v15H6z"/><path d="M15 3v4h4M9 12l2 2 4-4"/>'
-    }
+    { title: 'Определяем', text: 'Вид, класс, объём и требования.' },
+    { title: 'Организуем', text: 'Тару, график, вывоз и транспортирование.' },
+    { title: 'Обрабатываем', text: 'Обезвреживание, утилизация или уничтожение.' },
+    { title: 'Подтверждаем', text: 'Акты и договорные документы.' }
   ];
 
   function el(tag, className, text) {
@@ -29,19 +13,6 @@
     if (className) node.className = className;
     if (text !== undefined) node.textContent = text;
     return node;
-  }
-
-  function makeIcon(markup) {
-    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('viewBox', '0 0 24 24');
-    svg.setAttribute('aria-hidden', 'true');
-    svg.setAttribute('fill', 'none');
-    svg.setAttribute('stroke', 'currentColor');
-    svg.setAttribute('stroke-width', '1.8');
-    svg.setAttribute('stroke-linecap', 'round');
-    svg.setAttribute('stroke-linejoin', 'round');
-    svg.innerHTML = markup;
-    return svg;
   }
 
   function makeVisual() {
@@ -53,7 +24,7 @@
     svg.setAttribute('class', 'hero-route__svg');
     svg.setAttribute('viewBox', '0 0 500 500');
     svg.setAttribute('aria-hidden', 'true');
-    svg.innerHTML = '<defs><linearGradient id="hero-route-gradient" x1="60" y1="60" x2="440" y2="440" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5AAEE6" stop-opacity="0"/><stop offset="0.42" stop-color="#5AAEE6" stop-opacity="0.9"/><stop offset="1" stop-color="#5BC873" stop-opacity="1"/></linearGradient></defs><circle class="hero-route__arc" cx="250" cy="250" r="190"/>';
+    svg.innerHTML = '<defs><linearGradient id="hero-route-gradient" x1="65" y1="65" x2="435" y2="435" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5AAEE6" stop-opacity="0"/><stop offset="0.46" stop-color="#5AAEE6" stop-opacity="0.92"/><stop offset="1" stop-color="#5BC873" stop-opacity="1"/></linearGradient></defs><circle class="hero-route__arc" cx="250" cy="250" r="176"/>';
     stage.appendChild(svg);
 
     var center = el('div', 'hero-route__center');
@@ -64,15 +35,10 @@
     stage.appendChild(center);
 
     steps.forEach(function (step, index) {
-      var item = el('div', 'hero-route__item hero-route__item--' + (index + 1));
-      var node = el('div', 'hero-route__node');
-      node.appendChild(makeIcon(step.icon));
-      var bubble = el('div', 'hero-route__bubble');
+      var bubble = el('div', 'hero-route__bubble hero-route__bubble--' + (index + 1));
       bubble.appendChild(el('strong', '', step.title));
       bubble.appendChild(el('span', '', step.text));
-      item.appendChild(node);
-      item.appendChild(bubble);
-      stage.appendChild(item);
+      stage.appendChild(bubble);
     });
 
     root.appendChild(stage);
