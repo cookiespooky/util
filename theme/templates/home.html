@@ -1,5 +1,7 @@
-<article class="page page-home">
-  <div class="prose prose-home" data-prose>
-    {{ .Body }}
-  </div>
+<article class="page page-home page-home--components">
+  {{ template "home_hero.html" . }}
+  {{ template "home_services.html" . }}
+  {{ template "home_process.html" . }}
+  {{ template "home_trust.html" . }}
+  {{ template "home_faq_request.html" . }}
 </article>
