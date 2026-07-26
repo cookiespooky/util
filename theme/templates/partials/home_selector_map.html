@@ -1,0 +1,74 @@
+<section class="section section--surface service-selector-section" aria-labelledby="service-selector-title">
+  <div class="container">
+    <header class="section-heading">
+      <span class="section-heading__eyebrow">Подбор услуги</span>
+      <h2 id="service-selector-title" class="section-heading__title">Опишите ситуацию, а не название услуги</h2>
+      <p class="section-heading__description">Выберите тип организации и задачу. Результат автоматически попадёт в форму расчёта.</p>
+    </header>
+
+    <div class="service-selector" data-service-selector>
+      <fieldset class="service-selector__group">
+        <legend>Кто вы?</legend>
+        <div class="service-selector__options">
+          <button type="button" class="service-selector__option is-active" data-org="clinic">Клиника или лаборатория</button>
+          <button type="button" class="service-selector__option" data-org="factory">Производство</button>
+          <button type="button" class="service-selector__option" data-org="retail">Магазин или склад</button>
+          <button type="button" class="service-selector__option" data-org="food">Общепит</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="service-selector__group">
+        <legend>Что нужно сделать?</legend>
+        <div class="service-selector__options">
+          <button type="button" class="service-selector__option is-active" data-task="regular">Регулярный вывоз</button>
+          <button type="button" class="service-selector__option" data-task="single">Разовая партия</button>
+          <button type="button" class="service-selector__option" data-task="destroy">Уничтожение продукции</button>
+          <button type="button" class="service-selector__option" data-task="documents">Паспорта и документы</button>
+        </div>
+      </fieldset>
+
+      <article class="service-selector__result" aria-live="polite">
+        <div>
+          <span class="eyebrow">Подходящее направление</span>
+          <h3 data-selector-title>Медицинские отходы</h3>
+          <p data-selector-description>Регулярный вывоз отходов медицинских организаций по согласованному графику.</p>
+          <div class="service-selector__requirements" data-selector-requirements>
+            <span>Класс отходов</span><span>Объём</span><span>Адрес</span><span>Периодичность</span>
+          </div>
+        </div>
+        <a class="button button--primary" href="#request" data-selector-action>Получить расчёт</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section presence-section" aria-labelledby="presence-title">
+  <div class="container">
+    <header class="section-heading">
+      <span class="section-heading__eyebrow">География</span>
+      <h2 id="presence-title" class="section-heading__title">Выберите подразделение</h2>
+      <p class="section-heading__description">Выбранный город автоматически подставится в форму. Возможность конкретной операции проверяется после получения заявки.</p>
+    </header>
+
+    <div class="presence-component" data-presence-map>
+      <div class="presence-component__canvas" aria-label="Схема расположения подразделений">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M18 36 L42 24 L40 62 L72 74" /></svg>
+        <button type="button" class="presence-component__city is-active" style="--x:42;--y:24" data-city="surgut" data-title="Сургут" data-link="{{ .BaseURL }}/surgut/">Сургут</button>
+        <button type="button" class="presence-component__city" style="--x:18;--y:36" data-city="nyagan" data-title="Нягань" data-link="{{ .BaseURL }}/nyagan/">Нягань</button>
+        <button type="button" class="presence-component__city" style="--x:40;--y:62" data-city="tyumen" data-title="Тюмень" data-link="{{ .BaseURL }}/tyumen/">Тюмень</button>
+        <button type="button" class="presence-component__city" style="--x:72;--y:74" data-city="novosibirsk" data-title="Новосибирск" data-link="{{ .BaseURL }}/novosibirsk/">Новосибирск</button>
+      </div>
+
+      <aside class="presence-component__info card card--muted">
+        <span class="eyebrow">Подразделение</span>
+        <h3 data-presence-title>Сургут</h3>
+        <p>Основные направления доступны во всех четырёх городах. Точные условия зависят от отхода, адреса и технической возможности.</p>
+        <div class="presence-component__services"><span>Разовые заявки</span><span>Регулярный график</span><span>Документы</span></div>
+        <div class="cluster">
+          <a class="button button--secondary" href="{{ .BaseURL }}/surgut/" data-presence-link>Страница подразделения</a>
+          <a class="button button--primary" href="#request">Оставить заявку</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
