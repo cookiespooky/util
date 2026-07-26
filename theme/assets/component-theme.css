@@ -1,0 +1,161 @@
+html:has(.page-home--components),
+html:has(.page-service--components) {
+  color-scheme: light;
+  background: var(--color-page);
+}
+
+body:has(.page-home--components),
+body:has(.page-service--components) {
+  background: var(--color-page);
+  color: var(--color-text);
+  font-family: var(--font-family-base);
+}
+
+body:has(.page-home--components) .site-main,
+body:has(.page-service--components) .site-main {
+  background: var(--color-page);
+  color: var(--color-text);
+}
+
+.page-home--components,
+.page-service--components,
+.page-home--components section,
+.page-service--components section {
+  color: var(--color-text);
+}
+
+.page-home--components h1,
+.page-home--components h2,
+.page-home--components h3,
+.page-home--components h4,
+.page-service--components h1,
+.page-service--components h2,
+.page-service--components h3,
+.page-service--components h4 {
+  color: var(--color-text);
+  opacity: 1;
+}
+
+.page-home--components p,
+.page-home--components li,
+.page-home--components span,
+.page-service--components p,
+.page-service--components li,
+.page-service--components span {
+  opacity: 1;
+}
+
+.page-home--components .section--surface,
+.page-service--components .section--surface {
+  background: var(--color-surface);
+}
+
+.page-home--components .section--muted,
+.page-service--components .section--muted {
+  background: var(--color-surface-muted);
+}
+
+.page-home--components .section--strong,
+.page-service--components .section--strong {
+  background: var(--color-surface-strong);
+}
+
+.page-home--components .card,
+.page-service--components .card {
+  border: 0;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.page-home--components .card--muted,
+.page-service--components .card--muted {
+  background: var(--color-surface-muted);
+}
+
+.page-home--components a,
+.page-service--components a {
+  color: var(--color-link);
+  text-decoration-color: currentColor;
+}
+
+.page-home--components .button,
+.page-service--components .button {
+  min-height: var(--control-height);
+  padding-inline: var(--space-5);
+  border: 0;
+  border-radius: var(--radius-control);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+}
+
+.page-home--components .button--primary,
+.page-service--components .button--primary {
+  background: var(--color-brand-blue);
+  color: #fff;
+}
+
+.page-home--components .button--primary:hover,
+.page-service--components .button--primary:hover {
+  background: var(--color-brand-blue-strong);
+  color: #fff;
+}
+
+.page-home--components .button--secondary,
+.page-service--components .button--secondary {
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+}
+
+.page-home--components .button--secondary:hover,
+.page-service--components .button--secondary:hover {
+  background: var(--color-surface-strong);
+  color: var(--color-text);
+}
+
+.page-home--components .eyebrow,
+.page-service--components .eyebrow,
+.page-home--components .section-heading__eyebrow,
+.page-service--components .section-heading__eyebrow {
+  color: var(--color-brand-blue-strong);
+  opacity: 1;
+}
+
+.page-home--components .section-heading__title,
+.page-service--components .section-heading__title {
+  color: var(--color-text);
+  opacity: 1;
+}
+
+.page-home--components .section-heading__description,
+.page-service--components .section-heading__description {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+.page-home--components .control,
+.page-service--components .control {
+  border: 0;
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+}
+
+.page-home--components .prose,
+.page-service--components .prose {
+  color: var(--color-text-muted);
+}
+
+.page-home--components .prose strong,
+.page-service--components .prose strong {
+  color: var(--color-text);
+}
+
+.page-home--components .prose h1,
+.page-home--components .prose h2,
+.page-home--components .prose h3,
+.page-home--components .prose h4,
+.page-service--components .prose h1,
+.page-service--components .prose h2,
+.page-service--components .prose h3,
+.page-service--components .prose h4 {
+  color: var(--color-text);
+}
