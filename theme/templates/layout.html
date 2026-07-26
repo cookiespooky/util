@@ -31,6 +31,7 @@
   <link rel="stylesheet" href="{{ .AssetsBase }}/forms.css" />
   {{- if eq .Page.Type "home" }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/home-page.css" />
+  <link rel="stylesheet" href="{{ .AssetsBase }}/action-components.css" />
   {{- end }}
   {{- if eq .Page.Type "service" }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/service-page.css" />
@@ -66,6 +67,9 @@
   <script src="{{ .AssetsBase }}/main.js" defer></script>
   <script src="{{ .AssetsBase }}/ui.js" defer></script>
   <script src="{{ .AssetsBase }}/component-classes.js" defer></script>
+  {{- if eq .Page.Type "home" }}
+  <script src="{{ .AssetsBase }}/action-components.js" defer></script>
+  {{- end }}
   {{- if eq .Page.Type "design" }}
   <script src="{{ .AssetsBase }}/visual-components.js" defer></script>
   <script src="{{ .AssetsBase }}/map-fixes.js" defer></script>
