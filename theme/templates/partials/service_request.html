@@ -3,11 +3,23 @@
     <header class="section-heading">
       <span class="section-heading__eyebrow">Расчёт</span>
       <h2 id="service-request-title" class="section-heading__title">Получить расчёт по услуге</h2>
-      <p class="section-heading__description">Опишите отход и условия вывоза. Заявка не подтверждает возможность выполнения работ до проверки лицензии и технических условий.</p>
+      <p class="section-heading__description">Название услуги уже выбрано. Добавьте город, контакты и известные параметры отхода.</p>
     </header>
 
-    <form class="request-form card" action="#" method="post">
+    <form class="request-form request-form--service card" action="#" method="post">
       <input type="hidden" name="service" value="{{ .Page.Title }}" />
+      <div class="request-form__selected request-form__field--wide">
+        <span class="eyebrow">Выбранная услуга</span>
+        <strong>{{ .Page.Title }}</strong>
+      </div>
+      <label class="request-form__field">
+        <span>Организация</span>
+        <input class="control" type="text" name="organization" autocomplete="organization" placeholder="ООО «Компания»" />
+      </label>
+      <label class="request-form__field">
+        <span>Контактное лицо</span>
+        <input class="control" type="text" name="contact_name" autocomplete="name" placeholder="Имя" />
+      </label>
       <label class="request-form__field">
         <span>Город</span>
         <select class="control" name="city" required>
@@ -24,10 +36,18 @@
       </label>
       <label class="request-form__field request-form__field--wide">
         <span>Описание задачи</span>
-        <textarea class="control" name="comment" placeholder="Вид отхода, объём, адрес и желаемый график"></textarea>
+        <textarea class="control" name="comment" placeholder="Вид отхода, объём, адрес, периодичность и другие детали"></textarea>
+      </label>
+      <label class="request-form__file request-form__field--wide">
+        <span>Файл или фотография <small>необязательно</small></span>
+        <input type="file" name="attachment" />
+      </label>
+      <label class="request-form__consent request-form__field--wide">
+        <input type="checkbox" name="consent" required />
+        <span>Согласен на обработку персональных данных для ответа на заявку.</span>
       </label>
       <div class="request-form__footer request-form__field--wide">
-        <p>После отправки специалист уточнит недостающие сведения.</p>
+        <p>Отправка заявки не подтверждает возможность приёма отхода.</p>
         <button class="button button--primary" type="submit">Отправить заявку</button>
       </div>
     </form>
