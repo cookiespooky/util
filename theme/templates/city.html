@@ -9,14 +9,14 @@
         {{- end }}
         <div class="cluster city-hero__actions">
           <a class="button button--primary" href="#city-request">Оставить заявку</a>
-          <a class="button button--secondary" href="tel:+73462555897">Позвонить</a>
+          <a class="button button--secondary" href="#city-details">Контакты подразделения</a>
         </div>
       </div>
 
       <aside class="card card--muted city-hero__contact">
-        <span class="eyebrow">Контакты</span>
-        <a class="city-hero__phone" href="tel:+73462555897">+7 3462 55-58-97</a>
-        <p>Контакты, адрес и доступность конкретной операции уточняются для выбранного подразделения.</p>
+        <span class="eyebrow">Перед обращением</span>
+        <h2>Подготовьте описание задачи</h2>
+        <p>Укажите вид отхода, примерный объём, адрес и желаемую дату. Телефон, email и адрес выбранного подразделения размещены ниже.</p>
       </aside>
     </div>
   </section>
@@ -26,10 +26,10 @@
       <aside class="city-nav card card--muted">
         <span class="eyebrow">На странице</span>
         <nav aria-label="Разделы подразделения">
-          <a href="#city-details">Информация</a>
+          <a href="#city-details">Информация и контакты</a>
           <a href="#city-request">Оставить заявку</a>
           <a href="{{ .BaseURL }}/services/">Все услуги</a>
-          <a href="{{ .BaseURL }}/contacts/">Все контакты</a>
+          <a href="{{ .BaseURL }}/contacts/">Все подразделения</a>
         </nav>
       </aside>
 
