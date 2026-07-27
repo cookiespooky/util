@@ -1,4 +1,4 @@
-<article class="page page-company page-company--components page-company--{{ .Page.Slug }}">
+<article class="page page-company page-company--components">
   <section class="section section--surface company-hero">
     <div class="container company-hero__layout">
       <div>
@@ -24,7 +24,7 @@
     </div>
   </section>
 
-  {{- if eq .Page.Slug "licenses" }}
+  {{- if eq .Page.Title "Лицензии и документы" }}
   {{ template "license_request_form.html" . }}
   {{- else }}
   <section class="section section--strong company-cta">
