@@ -1,0 +1,37 @@
+:root {
+  --site-layout-width: var(--content-width);
+}
+
+.site-header .header-inner,
+.site-footer > .container,
+.site-main .container:not(.container--text) {
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--site-layout-width));
+  max-width: var(--site-layout-width);
+  margin-inline: auto;
+}
+
+.site-main .section,
+.site-main .page,
+.site-main article {
+  width: 100%;
+  max-width: 100%;
+}
+
+.site-main .section > .container,
+.site-main .page > .container {
+  min-width: 0;
+}
+
+@media (min-width: 1600px) {
+  :root {
+    --site-layout-width: var(--content-width-wide);
+  }
+}
+
+@media (max-width: 620px) {
+  .site-header .header-inner,
+  .site-footer > .container,
+  .site-main .container:not(.container--text) {
+    width: calc(100% - 24px);
+  }
+}
