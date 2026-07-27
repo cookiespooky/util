@@ -14,26 +14,10 @@
   }
 
   var cityContacts = {
-    surgut: {
-      phone: '+7 3462 55-58-97',
-      phoneLink: '+73462555897',
-      email: 'utilit@bk.ru'
-    },
-    tyumen: {
-      phone: '+7 3452 59-38-17',
-      phoneLink: '+73452593817',
-      email: 'utilit_tyumen@bk.ru'
-    },
-    novosibirsk: {
-      phone: '+7 383 218-21-84',
-      phoneLink: '+73832182184',
-      email: 'nsk@utilit.tw1.ru.ru'
-    },
-    nyagan: {
-      phone: '+7 3462 55-58-97',
-      phoneLink: '+73462555897',
-      email: 'utilit@bk.ru'
-    }
+    surgut: { phone: '+7 3462 55-58-97', phoneLink: '+73462555897', email: 'utilit@bk.ru' },
+    tyumen: { phone: '+7 3452 59-38-17', phoneLink: '+73452593817', email: 'utilit_tyumen@bk.ru' },
+    novosibirsk: { phone: '+7 383 218-21-84', phoneLink: '+73832182184', email: 'nsk@utilit.tw1.ru.ru' },
+    nyagan: { phone: '+7 3462 55-58-97', phoneLink: '+73462555897', email: 'utilit@bk.ru' }
   };
 
   var citySelect = document.querySelector('[data-city-select]');
@@ -61,6 +45,8 @@
       });
       if (hasOption) select.value = city;
     });
+
+    document.dispatchEvent(new CustomEvent('utilit:citychange', { detail: { city: city } }));
   }
 
   if (citySelect) {
@@ -190,15 +176,4 @@
       paragraph.replaceWith(row);
     }
   });
-
-  var contactHeading = Array.from(document.querySelectorAll('[data-prose] h2')).find(function (heading) {
-    return /что сообщить|форма|заявк|расч[её]т/i.test(heading.textContent);
-  });
-  if (contactHeading && /contacts\/?$/.test(window.location.pathname.replace(/\/$/, ''))) {
-    contactHeading.id = 'request';
-    var panel = document.createElement('section');
-    panel.className = 'request-panel';
-    panel.innerHTML = '<h2>Связаться с компанией</h2><p>Оставьте заявку на сайте или свяжитесь с головным подразделением. Для первичной проверки достаточно назвать город, вид отхода и примерный объём.</p><p><a href="tel:+73462555897">+7 3462 55-58-97</a><br><a href="mailto:utilit@bk.ru?subject=Заявка%20с%20сайта%20Утилитсервис">utilit@bk.ru</a></p>';
-    contactHeading.parentNode.insertBefore(panel, contactHeading.nextSibling);
-  }
 })();
