@@ -1,0 +1,147 @@
+:where(
+  .home-process__layout,
+  .home-cities__layout,
+  .home-faq__layout,
+  .home-request__layout,
+  .presence-component,
+  .service-hero__layout,
+  .service-cycle__layout,
+  .service-content__layout,
+  .service-request__layout,
+  .city-hero__layout,
+  .city-content__layout,
+  .company-hero__layout,
+  .legal-hero__layout,
+  .company-cta__layout,
+  .general-request__layout,
+  .license-request__layout,
+  .catalog-request__layout
+) {
+  align-items: start !important;
+}
+
+:where(
+  .home-process__layout,
+  .home-cities__layout,
+  .home-faq__layout,
+  .home-request__layout,
+  .service-cycle__layout,
+  .service-content__layout,
+  .service-request__layout,
+  .city-content__layout,
+  .company-cta__layout,
+  .general-request__layout,
+  .license-request__layout,
+  .catalog-request__layout
+) > * {
+  align-self: start;
+}
+
+:where(
+  .faq-item,
+  .service-card,
+  .catalog-service-card,
+  .catalog-process__steps li,
+  .service-overview__card,
+  .service-cycle__steps li > div,
+  .city-content__body > ul:has(a) a,
+  .company-content .prose > ul:has(a) a,
+  .company-content .prose > ol:has(a) a,
+  .process-timeline__card,
+  .fact-card,
+  .capability-card,
+  .city-card
+) {
+  border: 0 !important;
+  outline: 0;
+  border-radius: var(--radius-card) !important;
+  box-shadow: none !important;
+}
+
+.faq-item,
+.city-content__body > ul:has(a) a,
+.company-content .prose > ul:has(a) a,
+.company-content .prose > ol:has(a) a {
+  background: var(--color-surface-muted) !important;
+  color: var(--color-text) !important;
+}
+
+.faq-item {
+  overflow: clip;
+}
+
+.faq-item summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  list-style: none;
+  color: var(--color-text) !important;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::before {
+  content: "+";
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+  border-radius: 8px;
+  background: var(--color-brand-blue-soft);
+  color: var(--color-brand-blue-strong);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.faq-item[open] summary::before {
+  content: "−";
+  background: var(--color-brand-green-soft);
+  color: var(--color-brand-green-strong);
+}
+
+.city-content__body > ul:has(a) a,
+.company-content .prose > ul:has(a) a,
+.company-content .prose > ol:has(a) a {
+  transition: background var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard);
+}
+
+.city-content__body > ul:has(a) a:hover,
+.company-content .prose > ul:has(a) a:hover,
+.company-content .prose > ol:has(a) a:hover {
+  background: var(--color-brand-blue-soft) !important;
+  transform: translateY(-2px);
+}
+
+.section-heading,
+.section-heading__title,
+.section-heading__description {
+  align-self: start;
+}
+
+@media (max-width: 1000px) {
+  :where(
+    .home-process__layout,
+    .home-cities__layout,
+    .home-faq__layout,
+    .home-request__layout,
+    .presence-component,
+    .service-hero__layout,
+    .service-cycle__layout,
+    .service-content__layout,
+    .service-request__layout,
+    .city-hero__layout,
+    .city-content__layout,
+    .company-hero__layout,
+    .legal-hero__layout,
+    .company-cta__layout,
+    .general-request__layout,
+    .license-request__layout,
+    .catalog-request__layout
+  ) {
+    align-items: stretch !important;
+  }
+}
