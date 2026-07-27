@@ -1,0 +1,78 @@
+<section class="section section--strong general-request" id="request" aria-labelledby="general-request-title">
+  <div class="container general-request__layout">
+    <header class="section-heading">
+      <span class="section-heading__eyebrow">Заявка</span>
+      <h2 id="general-request-title" class="section-heading__title">Обсудить задачу со специалистом</h2>
+      <p class="section-heading__description">Укажите город, вид отхода и примерный объём. Для первичной проверки достаточно известных сейчас сведений.</p>
+    </header>
+
+    <form class="request-form general-request__form card" action="#" method="post" data-request-form>
+      <input type="hidden" name="source_page" value="{{ .Page.Title }}" />
+
+      <label class="request-form__field">
+        <span>Организация</span>
+        <input class="control" type="text" name="organization" autocomplete="organization" placeholder="ООО «Компания»" />
+      </label>
+
+      <label class="request-form__field">
+        <span>Контактное лицо</span>
+        <input class="control" type="text" name="contact_name" autocomplete="name" placeholder="Имя" />
+      </label>
+
+      <label class="request-form__field">
+        <span>Телефон</span>
+        <input class="control" type="tel" name="phone" autocomplete="tel" placeholder="+7 ___ ___-__-__" required />
+      </label>
+
+      <label class="request-form__field">
+        <span>Email</span>
+        <input class="control" type="email" name="email" autocomplete="email" placeholder="mail@company.ru" />
+      </label>
+
+      <label class="request-form__field">
+        <span>Город</span>
+        <select class="control" name="city" required data-request-city>
+          <option value="">Выберите город</option>
+          <option value="surgut">Сургут</option>
+          <option value="tyumen">Тюмень</option>
+          <option value="novosibirsk">Новосибирск</option>
+          <option value="nyagan">Нягань</option>
+        </select>
+      </label>
+
+      <label class="request-form__field">
+        <span>Направление</span>
+        <select class="control" name="service">
+          <option value="">Подберёт специалист</option>
+          <option value="medical">Медицинские отходы</option>
+          <option value="industrial">Промышленные отходы I–IV классов</option>
+          <option value="food">Пищевые отходы и продукция</option>
+          <option value="biological">Биологические отходы</option>
+          <option value="documents">Уничтожение документов</option>
+          <option value="passports">Паспорта отходов</option>
+          <option value="pet">Кремация домашних животных</option>
+        </select>
+      </label>
+
+      <label class="request-form__field request-form__field--wide">
+        <span>Описание задачи</span>
+        <textarea class="control" name="comment" placeholder="Вид отхода, объём, адрес, желаемый график и другие известные сведения"></textarea>
+      </label>
+
+      <label class="request-form__file request-form__field--wide">
+        <span>Файл или фотография <small>необязательно</small></span>
+        <input type="file" name="attachment" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.webp" />
+      </label>
+
+      <label class="request-form__consent request-form__field--wide">
+        <input type="checkbox" name="consent" required />
+        <span>Согласен на обработку персональных данных для ответа на заявку.</span>
+      </label>
+
+      <div class="request-form__footer request-form__field--wide">
+        <p>Отправка заявки не подтверждает возможность приёма отхода.</p>
+        <button class="button button--primary" type="submit">Оставить заявку</button>
+      </div>
+    </form>
+  </div>
+</section>
