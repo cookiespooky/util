@@ -2,8 +2,8 @@
   <div class="container">
     <header class="section-heading">
       <span class="section-heading__eyebrow">Подбор услуги</span>
-      <h2 id="service-selector-title" class="section-heading__title">Опишите ситуацию, а не название услуги</h2>
-      <p class="section-heading__description">Выберите тип организации и задачу. Результат автоматически попадёт в форму расчёта.</p>
+      <h2 id="service-selector-title" class="section-heading__title">Опишите вашу ситуацию</h2>
+      <p class="section-heading__description">Выберите тип организации и задачу. Подходящее направление автоматически попадёт в форму расчёта.</p>
     </header>
     <div class="service-selector" data-service-selector>
       <fieldset class="service-selector__group"><legend>Кто вы?</legend><div class="service-selector__options"><button type="button" class="service-selector__option is-active" data-org="clinic">Клиника или лаборатория</button><button type="button" class="service-selector__option" data-org="factory">Производство</button><button type="button" class="service-selector__option" data-org="retail">Магазин или склад</button><button type="button" class="service-selector__option" data-org="food">Общепит</button></div></fieldset>
@@ -15,7 +15,7 @@
 
 <section class="section presence-section" aria-labelledby="presence-title">
   <div class="container">
-    <header class="section-heading"><span class="section-heading__eyebrow">География</span><h2 id="presence-title" class="section-heading__title">Выберите подразделение</h2><p class="section-heading__description">Контакты взяты с действующих сайтов подразделений. Выбранный город автоматически подставится в форму.</p></header>
+    <header class="section-heading"><span class="section-heading__eyebrow">География</span><h2 id="presence-title" class="section-heading__title">Выберите подразделение</h2><p class="section-heading__description">Выберите город — контакты подразделения и город в форме обновятся автоматически.</p></header>
     <div class="presence-component" data-presence-map>
       <div class="presence-component__canvas" aria-label="Схема расположения подразделений"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M18 36 L42 24 L40 62 L72 74" /></svg>
         <button type="button" class="presence-component__city is-active" style="--x:42;--y:24" data-city="surgut" data-title="Сургут" data-phone="+7 (3462) 55-58-97" data-phone-link="+73462555897" data-email="utilit@bk.ru" data-address="628400, Сургутский район, п.г.т. Белый Яр, ул. Некрасова, 24а" data-hours="Ежедневно, 08:00–17:00" data-link="{{ .BaseURL }}/surgut/">Сургут</button>
