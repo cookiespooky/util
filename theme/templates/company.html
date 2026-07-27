@@ -27,15 +27,6 @@
   {{- if eq .Page.Title "Лицензии и документы" }}
   {{ template "license_request_form.html" . }}
   {{- else }}
-  <section class="section section--strong company-cta">
-    <div class="container company-cta__layout">
-      <div>
-        <span class="eyebrow">Обращение</span>
-        <h2>Обсудить задачу со специалистом</h2>
-        <p>Опишите отход, объём и город. Мы проверим возможность работы и подскажем следующий шаг.</p>
-      </div>
-      <a class="button button--primary" href="{{ .BaseURL }}/contacts/#request">Оставить заявку</a>
-    </div>
-  </section>
+  {{ template "general_request_form.html" . }}
   {{- end }}
 </article>
