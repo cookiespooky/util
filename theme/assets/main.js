@@ -13,14 +13,62 @@
     });
   }
 
+  var cityContacts = {
+    surgut: {
+      phone: '+7 3462 55-58-97',
+      phoneLink: '+73462555897',
+      email: 'utilit@bk.ru'
+    },
+    tyumen: {
+      phone: '+7 3452 59-38-17',
+      phoneLink: '+73452593817',
+      email: 'utilit_tyumen@bk.ru'
+    },
+    novosibirsk: {
+      phone: '+7 383 218-21-84',
+      phoneLink: '+73832182184',
+      email: 'nsk@utilit.tw1.ru.ru'
+    },
+    nyagan: {
+      phone: '+7 3462 55-58-97',
+      phoneLink: '+73462555897',
+      email: 'utilit@bk.ru'
+    }
+  };
+
   var citySelect = document.querySelector('[data-city-select]');
+
+  function applyCity(city) {
+    var contact = cityContacts[city] || cityContacts.surgut;
+    localStorage.setItem('utilit-city', city);
+    root.setAttribute('data-selected-city', city);
+
+    if (citySelect && citySelect.value !== city) citySelect.value = city;
+
+    document.querySelectorAll('[data-city-phone]').forEach(function (link) {
+      link.textContent = contact.phone;
+      link.href = 'tel:' + contact.phoneLink;
+    });
+
+    document.querySelectorAll('[data-city-email]').forEach(function (link) {
+      link.textContent = contact.email;
+      link.href = 'mailto:' + contact.email;
+    });
+
+    document.querySelectorAll('[data-request-city]').forEach(function (select) {
+      var hasOption = Array.prototype.some.call(select.options || [], function (option) {
+        return option.value === city;
+      });
+      if (hasOption) select.value = city;
+    });
+  }
+
   if (citySelect) {
     var savedCity = localStorage.getItem('utilit-city');
-    if (savedCity) citySelect.value = savedCity;
+    var initialCity = cityContacts[savedCity] ? savedCity : citySelect.value || 'surgut';
+    applyCity(initialCity);
     citySelect.addEventListener('change', function () {
-      localStorage.setItem('utilit-city', citySelect.value);
-      var routes = { surgut: 'surgut', tyumen: 'tyumen', novosibirsk: 'novosibirsk', nyagan: 'nyagan' };
-      if (routes[citySelect.value]) window.location.href = base + '/' + routes[citySelect.value] + '/';
+      applyCity(citySelect.value);
     });
   }
 
@@ -37,18 +85,21 @@
     document.body.style.overflow = 'hidden';
     setTimeout(function () { if (input) input.focus(); }, 30);
   }
+
   function closeSearch() {
     if (!modal) return;
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   }
+
   openButtons.forEach(function (button) { button.addEventListener('click', openSearch); });
   closeButtons.forEach(function (button) { button.addEventListener('click', closeSearch); });
   document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') closeSearch();
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
-      event.preventDefault(); openSearch();
+      event.preventDefault();
+      openSearch();
     }
   });
 
@@ -57,6 +108,7 @@
       return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char];
     });
   }
+
   function renderResults(items) {
     if (!results) return;
     if (!items.length) {
@@ -70,6 +122,7 @@
         (item.snippet ? '<p>' + escapeHTML(item.snippet) + '</p>' : '') + '</li>';
     }).join('') + '</ul>';
   }
+
   if (input) {
     var timer;
     input.addEventListener('input', function () {
@@ -81,7 +134,10 @@
       }
       timer = setTimeout(function () {
         fetch(base + '/search.json')
-          .then(function (response) { if (!response.ok) throw new Error('search'); return response.json(); })
+          .then(function (response) {
+            if (!response.ok) throw new Error('search');
+            return response.json();
+          })
           .then(function (data) {
             var items = (data.items || []).filter(function (item) {
               return ((item.title || '') + ' ' + (item.snippet || '')).toLowerCase().indexOf(query) !== -1;
@@ -108,7 +164,7 @@
     'посмотреть лицензии': '/licenses/',
     'посмотреть документы': '/licenses/',
     'о компании': '/about/',
-    'запросить документы': '/contacts/#request',
+    'запросить документы': '/licenses/#document-request',
     'на главную': '/',
     'контакты': '/contacts/'
   };
