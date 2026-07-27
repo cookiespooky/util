@@ -8,7 +8,7 @@
         <p class="city-hero__lead">{{ .Page.Description }}</p>
         {{- end }}
         <div class="cluster city-hero__actions">
-          <a class="button button--primary" href="#city-request">Оставить заявку</a>
+          <a class="button button--primary" href="#request">Оставить заявку</a>
           <a class="button button--secondary" href="#city-details">Контакты подразделения</a>
         </div>
       </div>
@@ -27,24 +27,15 @@
         <span class="eyebrow">На странице</span>
         <nav aria-label="Разделы подразделения">
           <a href="#city-details">Информация и контакты</a>
-          <a href="#city-request">Оставить заявку</a>
+          <a href="#request">Оставить заявку</a>
           <a href="{{ .BaseURL }}/services/">Все услуги</a>
           <a href="{{ .BaseURL }}/contacts/">Все подразделения</a>
         </nav>
       </aside>
 
-      <div id="city-details" class="city-content__body prose prose-city" data-prose>{{ .Body }}</div>
+      <div id="city-details" class="city-content__body prose prose-city card" data-prose>{{ .Body }}</div>
     </div>
   </section>
 
-  <section class="section section--strong city-request" id="city-request" aria-labelledby="city-request-title">
-    <div class="container city-request__layout">
-      <header class="section-heading">
-        <span class="section-heading__eyebrow">Заявка</span>
-        <h2 id="city-request-title" class="section-heading__title">Уточнить возможность работы</h2>
-        <p class="section-heading__description">Опишите отход, объём и адрес. Специалист проверит техническую возможность и состав документов.</p>
-      </header>
-      <a class="button button--primary" href="{{ .BaseURL }}/contacts/#request">Перейти к форме</a>
-    </div>
-  </section>
+  {{ template "general_request_form.html" . }}
 </article>
