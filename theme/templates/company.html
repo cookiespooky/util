@@ -1,4 +1,4 @@
-<article class="page page-company page-company--components">
+<article class="page page-company page-company--components page-company--{{ .Page.Slug }}">
   <section class="section section--surface company-hero">
     <div class="container company-hero__layout">
       <div>
@@ -24,6 +24,9 @@
     </div>
   </section>
 
+  {{- if eq .Page.Slug "licenses" }}
+  {{ template "license_request_form.html" . }}
+  {{- else }}
   <section class="section section--strong company-cta">
     <div class="container company-cta__layout">
       <div>
@@ -34,4 +37,5 @@
       <a class="button button--primary" href="{{ .BaseURL }}/contacts/#request">Оставить заявку</a>
     </div>
   </section>
+  {{- end }}
 </article>
