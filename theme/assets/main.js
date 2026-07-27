@@ -136,13 +136,13 @@
   });
 
   var contactHeading = Array.from(document.querySelectorAll('[data-prose] h2')).find(function (heading) {
-    return /форма|заявк|расч[её]т/i.test(heading.textContent);
+    return /что сообщить|форма|заявк|расч[её]т/i.test(heading.textContent);
   });
   if (contactHeading && /contacts\/?$/.test(window.location.pathname.replace(/\/$/, ''))) {
     contactHeading.id = 'request';
     var panel = document.createElement('section');
     panel.className = 'request-panel';
-    panel.innerHTML = '<h2>Связаться с компанией</h2><p>На этапе текстового прототипа заявки принимаются по общим контактам. После подключения обработчика форма будет отправлять данные без открытия почтового клиента.</p><p><a href="tel:+73462555897">+7 3462 55-58-97</a><br><a href="mailto:555897sur@bk.ru?subject=Заявка%20с%20сайта%20Утилитсервис">555897sur@bk.ru</a></p>';
+    panel.innerHTML = '<h2>Связаться с компанией</h2><p>Оставьте заявку на сайте или свяжитесь с головным подразделением. Для первичной проверки достаточно назвать город, вид отхода и примерный объём.</p><p><a href="tel:+73462555897">+7 3462 55-58-97</a><br><a href="mailto:utilit@bk.ru?subject=Заявка%20с%20сайта%20Утилитсервис">utilit@bk.ru</a></p>';
     contactHeading.parentNode.insertBefore(panel, contactHeading.nextSibling);
   }
 })();
