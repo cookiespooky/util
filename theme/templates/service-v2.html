@@ -1,0 +1,345 @@
+<article class="page v2-page service-v2">
+
+  <!-- 01 · Что это за услуга, для кого и ключевые параметры -->
+  <section class="v2-subhero" aria-labelledby="v2-subhero-title">
+    <div class="v2-shell">
+      <nav class="v2-crumbs" aria-label="Хлебные крошки">
+        <a href="{{ .BaseURL }}/home-v2/">Главная</a>
+        <span aria-hidden="true">/</span>
+        <a href="{{ .BaseURL }}/services-v2/">Услуги</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{{ .FM.hero_title }}</span>
+      </nav>
+
+      <div class="v2-subhero__layout">
+        <div class="v2-subhero__copy">
+          <span class="v2-eyebrow v2-eyebrow--accent">{{ .FM.hero_kicker }}</span>
+          <h1 id="v2-subhero-title">{{ .FM.hero_title }}</h1>
+          <p class="v2-subhero__lead">{{ .FM.hero_lead }}</p>
+          <div class="v2-subhero__actions">
+            <a class="v2-button v2-button--primary" href="#request">Задать вопрос специалисту</a>
+          </div>
+          {{- if .FM.hero_note }}
+          <p class="v2-subhero__note">{{ .FM.hero_note }}</p>
+          {{- end }}
+        </div>
+
+        <aside class="v2-facts" aria-label="Ключевые параметры услуги">
+          {{- range .FM.facts }}
+          <div class="v2-fact">
+            <span class="v2-fact__icon v2-fact__icon--{{ .icon }}" aria-hidden="true">
+              {{- if eq .icon "layers" }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8 2.5 7.4 12 12l9.5-4.6z"/><path d="M2.5 12.4 12 17l9.5-4.6"/><path d="M2.5 17.2 12 21.8l9.5-4.6"/></svg>
+              {{- else if eq .icon "calendar" }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 2.5v4M16 2.5v4"/><path d="M7.5 14h3M7.5 17.5h9"/></svg>
+              {{- else if eq .icon "document" }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2.5h8l4.5 4.5V21.5H6z"/><path d="M14 2.5V7h4.5"/><path d="M9 13.6l2.1 2.1 4.2-4.2"/></svg>
+              {{- else if eq .icon "search" }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg>
+              {{- else if eq .icon "route" }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="5.5" r="2.5"/><circle cx="19" cy="18.5" r="2.5"/><path d="M7.5 5.5h6a4 4 0 0 1 0 8h-3a4 4 0 0 0 0 8h6"/></svg>
+              {{- else if eq .icon "truck" }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 16.5V6h13v10.5"/><path d="M14.5 9.5h4l4 4v3h-3"/><circle cx="7" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/><path d="M9.5 17.5h5.5"/></svg>
+              {{- else if eq .icon "shield" }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 4 5.6v6c0 5 3.4 8.6 8 9.9 4.6-1.3 8-4.9 8-9.9v-6z"/><path d="M9.2 12.1l2 2 3.6-3.8"/></svg>
+              {{- else if eq .icon "flame" }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c4 5.4 6.4 7.8 6.4 11.6a6.4 6.4 0 0 1-12.8 0c0-2.4 1.2-4.4 2.8-6 .3 2.4 1.4 3.4 2.4 3.4 1.3 0 1.7-1.8 1.7-3.5 0-2.2-.9-3.8-.5-5.5z"/></svg>
+              {{- else if eq .icon "camera" }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5h4l1.6-2.6h7.8L17.5 7.5h4v13h-19z"/><circle cx="12" cy="13.5" r="4"/></svg>
+              {{- else }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.2 12 3.5l9 4.7v7.6L12 20.5l-9-4.7z"/><path d="M3 8.2 12 13l9-4.8M12 13v7.5"/></svg>
+              {{- end }}
+            </span>
+            <div class="v2-fact__body">
+              <strong>{{ .value }}</strong>
+              <span>{{ .label }}</span>
+            </div>
+          </div>
+          {{- end }}
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · Кому подходит и в каком формате -->
+  <section class="v2-section sv2-scope" aria-labelledby="sv2-scope-title">
+    <div class="v2-shell sv2-scope__layout">
+      <div class="sv2-scope__audience">
+        <header class="v2-heading">
+          <span class="v2-eyebrow">Кому подходит</span>
+          <h2 id="sv2-scope-title">Для каких организаций</h2>
+        </header>
+        <ul class="v2-chips sv2-audience">
+          {{- range .FM.audience }}
+          <li>{{ . }}</li>
+          {{- end }}
+        </ul>
+      </div>
+
+      <div class="sv2-scope__formats">
+        <header class="v2-heading">
+          <span class="v2-eyebrow">Формат работы</span>
+          <h2>Как можно заказать</h2>
+        </header>
+        <div class="sv2-formats">
+          {{- range .FM.formats }}
+          <article class="sv2-format">
+            <strong>{{ .title }}</strong>
+            <p>{{ .text }}</p>
+          </article>
+          {{- end }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · Главный разделитель услуг: с чем именно работаем -->
+  <section class="v2-section v2-section--surface sv2-kinds-section" id="kinds" aria-labelledby="sv2-kinds-title">
+    <div class="v2-shell">
+      <header class="v2-heading">
+        <span class="v2-eyebrow">Состав услуги</span>
+        <h2 id="sv2-kinds-title">{{ .FM.kinds_title }}</h2>
+        {{- if .FM.kinds_note }}
+        <p>{{ .FM.kinds_note }}</p>
+        {{- end }}
+      </header>
+
+      <div class="sv2-kinds">
+        {{- range .FM.kinds }}
+        <article class="sv2-kind">
+          {{- if .code }}
+          <span class="sv2-kind__code sv2-kind__code--{{ .level }}">{{ .code }}</span>
+          {{- end }}
+          <div class="sv2-kind__body">
+            <h3>{{ .title }}</h3>
+            <p>{{ .text }}</p>
+          </div>
+        </article>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · Как это происходит по шагам -->
+  <section class="v2-section sv2-process-section" id="process" aria-labelledby="sv2-process-title">
+    <div class="v2-shell">
+      <header class="v2-heading">
+        <span class="v2-eyebrow">Порядок работы</span>
+        <h2 id="sv2-process-title">Как проходит работа</h2>
+        <p>Полный перечень сведений специалист уточняет после обращения — на первом шаге достаточно описать задачу.</p>
+      </header>
+
+      <ol class="sv2-process">
+        {{- range .FM.process }}
+        <li class="sv2-step">
+          <strong>{{ .title }}</strong>
+          <small>{{ .text }}</small>
+        </li>
+        {{- end }}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 05 · Обмен: что от заказчика и что он получает -->
+  <section class="v2-section v2-section--muted sv2-io-section" aria-labelledby="sv2-io-title">
+    <div class="v2-shell">
+      <header class="v2-heading">
+        <span class="v2-eyebrow">Обмен данными и документами</span>
+        <h2 id="sv2-io-title">Что нужно от вас и что вы получаете</h2>
+      </header>
+
+      <div class="sv2-io">
+        <div class="sv2-io__col sv2-io__col--in">
+          <span class="sv2-io__title">Нужно для расчёта</span>
+          <ul class="v2-chips">
+            {{- range .FM.inputs }}
+            <li>{{ . }}</li>
+            {{- end }}
+          </ul>
+        </div>
+
+        <div class="sv2-io__arrow" aria-hidden="true">
+          <svg viewBox="0 0 48 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h40"/><path d="M35 5l7 7-7 7"/></svg>
+        </div>
+
+        <div class="sv2-io__col sv2-io__col--out">
+          <span class="sv2-io__title">Вы получаете</span>
+          <ul class="v2-chips v2-chips--result">
+            {{- range .FM.outputs }}
+            <li>{{ . }}</li>
+            {{- end }}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 · Снятие возражений: подготовка и честные ограничения -->
+  <section class="v2-section sv2-rules" aria-labelledby="sv2-rules-title">
+    <div class="v2-shell sv2-rules__layout">
+      <div class="sv2-rules__col">
+        <header class="v2-heading">
+          <span class="v2-eyebrow">Подготовка</span>
+          <h2 id="sv2-rules-title">Как подготовить к передаче</h2>
+        </header>
+        <ol class="sv2-prepare">
+          {{- range .FM.prepare }}
+          <li>
+            <span class="sv2-prepare__check" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.4l3 3 6-6.4"/></svg>
+            </span>
+            <div><strong>{{ .title }}</strong><small>{{ .text }}</small></div>
+          </li>
+          {{- end }}
+        </ol>
+      </div>
+
+      <div class="sv2-rules__col">
+        <header class="v2-heading">
+          <span class="v2-eyebrow">Важно учесть</span>
+          <h2>Что проверяется отдельно</h2>
+        </header>
+        <ul class="sv2-limits">
+          {{- range .FM.limits }}
+          <li>{{ . }}</li>
+          {{- end }}
+        </ul>
+        <p class="sv2-limits__note">Публикация услуги на сайте не означает автоматический приём любого отхода: специалист проверяет сведения, действующую лицензию и техническую возможность.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 · Частые вопросы по услуге -->
+  <section class="v2-section v2-section--surface v2-faq" aria-labelledby="sv2-faq-title">
+    <div class="v2-shell v2-faq__layout">
+      <header class="v2-heading">
+        <span class="v2-eyebrow">Частые вопросы</span>
+        <h2 id="sv2-faq-title">Коротко о главном</h2>
+        <p>Остальные вопросы разобраны в отдельном разделе.</p>
+        <a class="v2-button v2-button--secondary" href="{{ .BaseURL }}/faq-v2/">Все вопросы и ответы</a>
+      </header>
+
+      <div class="v2-faq__list">
+        {{- range .FM.faq }}
+        <details class="v2-faq__item">
+          <summary>{{ .q }}</summary>
+          <p>{{ .a }}</p>
+        </details>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 · Соседние услуги, если посетитель ошибся разделом -->
+  <section class="v2-section sv2-related" aria-labelledby="sv2-related-title">
+    <div class="v2-shell">
+      <header class="v2-heading">
+        <span class="v2-eyebrow">Другие направления</span>
+        <h2 id="sv2-related-title">Нужна другая услуга?</h2>
+        <p>Если отход относится к другому направлению, специалист подскажет подходящий маршрут работ.</p>
+      </header>
+
+      <div class="sv2-related__grid">
+        {{- range .Collections.services_v2.Items }}
+        {{- if ne .Slug $.Page.Slug }}
+        <a class="sv2-related__card" href="{{ $.BaseURL }}/{{ .Slug }}/">
+          <span class="sv2-related__label">{{ .FM.hero_kicker }}</span>
+          <strong>{{ .FM.hero_title }}</strong>
+          <span class="sv2-related__arrow" aria-hidden="true">→</span>
+        </a>
+        {{- end }}
+        {{- end }}
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 · Конверсия: услуга уже подставлена -->
+  <section class="v2-section v2-request" id="request" aria-labelledby="sv2-request-title">
+    <div class="v2-shell v2-request__layout">
+      <div class="v2-request__aside">
+        <header class="v2-heading">
+          <span class="v2-eyebrow">Заявка</span>
+          <h2 id="sv2-request-title">Опишите задачу — рассчитаем стоимость</h2>
+          <p>Услуга уже выбрана. Остальные сведения уточним после обращения.</p>
+        </header>
+
+        <div class="sv2-pricing">
+          <span class="v2-eyebrow">От чего зависит стоимость</span>
+          <ul class="sv2-pricing__list">
+            {{- range .FM.pricing }}
+            <li>{{ . }}</li>
+            {{- end }}
+          </ul>
+        </div>
+
+        <div class="v2-request__contact">
+          <span class="v2-eyebrow">Если удобнее позвонить</span>
+          <a class="v2-request__phone" href="tel:+73462555897" data-city-phone>+7 3462 55-58-97</a>
+          <a href="mailto:utilit@bk.ru" data-city-email>utilit@bk.ru</a>
+        </div>
+      </div>
+
+      <form class="v2-form" method="post" action="#" novalidate data-v2-form data-service-preset="{{ .FM.service_key }}">
+        <label class="v2-field">
+          <span>Город</span>
+          <select class="v2-control" name="city" data-request-city>
+            <option value="surgut">Сургут</option>
+            <option value="tyumen">Тюмень</option>
+            <option value="nyagan">Нягань</option>
+          </select>
+        </label>
+
+        <label class="v2-field">
+          <span>Услуга</span>
+          <select class="v2-control" name="service" data-request-service>
+            <option value="">Не знаю — подберите</option>
+            <option value="medical">Медицинские отходы</option>
+            <option value="industrial">Промышленные отходы I–IV классов</option>
+            <option value="food">Пищевые отходы и продукция</option>
+            <option value="biological">Биологические отходы</option>
+            <option value="documents">Уничтожение документов</option>
+            <option value="passports">Паспорта отходов</option>
+            <option value="cremation">Кремация домашних животных</option>
+          </select>
+        </label>
+
+        <div class="v2-field v2-field--wide v2-form__dynamic" data-dynamic-fields hidden></div>
+
+        <label class="v2-field">
+          <span>Телефон</span>
+          <input class="v2-control" type="tel" name="phone" placeholder="+7 ___ ___-__-__" required />
+        </label>
+
+        <label class="v2-field">
+          <span>Email</span>
+          <input class="v2-control" type="email" name="email" placeholder="name@company.ru" />
+        </label>
+
+        <label class="v2-field v2-field--wide">
+          <span>Организация — необязательно</span>
+          <input class="v2-control" type="text" name="company" placeholder="Название организации" />
+        </label>
+
+        <label class="v2-field v2-field--wide">
+          <span>Комментарий</span>
+          <textarea class="v2-control" name="comment" placeholder="Вид отхода, объём, адрес объекта, периодичность вывоза"></textarea>
+        </label>
+
+        <label class="v2-form__consent">
+          <input type="checkbox" name="privacy-consent" required />
+          <span class="v2-checkbox" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.4l3 3 6-6.4"/></svg>
+          </span>
+          <span class="v2-form__consent-copy">Согласен на <a href="{{ .BaseURL }}/privacy/">обработку персональных данных</a>.</span>
+        </label>
+
+        <div class="v2-form__footer">
+          <button class="v2-button v2-button--primary" type="submit">Отправить заявку</button>
+          <p>Отправка заявки не подтверждает возможность приёма отхода. Специалист проверит сведения, действующую лицензию и техническую возможность выполнения работ.</p>
+        </div>
+
+        <p class="v2-form__status" data-form-status role="status" hidden></p>
+      </form>
+    </div>
+  </section>
+</article>

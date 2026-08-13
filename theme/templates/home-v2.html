@@ -1,0 +1,596 @@
+<article class="page v2-page home-v2">
+
+  <!-- 01 · Внимание: что делаем, для кого, как выглядит цикл работы -->
+  <section class="v2-hero" aria-labelledby="v2-hero-title">
+    <div class="v2-shell v2-hero__layout">
+      <div class="v2-hero__copy">
+        <span class="v2-eyebrow v2-eyebrow--accent">Полный цикл обращения с отходами</span>
+        <h1 id="v2-hero-title">Сбор, транспортирование и обезвреживание отходов</h1>
+        <p class="v2-hero__lead">
+          Организуем разовый и регулярный вывоз отходов для юридических лиц и индивидуальных предпринимателей
+          в Сургуте, Тюмени и Нягани. Проверяем вид и класс отхода, согласовываем требования
+          к упаковке и перевозке, выполняем обезвреживание и передаём документы для учёта и отчётности.
+        </p>
+        <div class="v2-hero__actions">
+          <a class="v2-button v2-button--primary" href="#request">Задать вопрос специалисту</a>
+          <a class="v2-button v2-button--secondary" href="#services">Виды отходов</a>
+        </div>
+        <p class="v2-hero__note">
+          Не знаете точное название или класс отхода? Пришлите описание, фотографию или код ФККО —
+          специалист проверит возможность работы.
+        </p>
+      </div>
+
+      <figure class="v2-cycle" aria-labelledby="v2-cycle-title">
+        <!-- Узкие экраны: круговая схема нечитаема, показываем те же шесть этапов списком -->
+        <ol class="v2-cycle__list">
+          <li><span>01</span><div><strong>Проверка</strong><small>вид, класс, ФККО, лицензия</small></div></li>
+          <li><span>02</span><div><strong>Сбор</strong><small>тара, маркировка, накопление</small></div></li>
+          <li><span>03</span><div><strong>Вывоз</strong><small>транспортирование спецтранспортом</small></div></li>
+          <li><span>04</span><div><strong>Обезвреживание</strong><small>операция по действующей лицензии</small></div></li>
+          <li><span>05</span><div><strong>Передача</strong><small>остаток — специализированной организации</small></div></li>
+          <li><span>06</span><div><strong>Документы</strong><small>акт, УПД, фиксация</small></div></li>
+        </ol>
+
+        <!-- viewBox расширен за пределы 0…720: центр остаётся в 360,360,
+             а поля вокруг дают внешнему кольцу отойти от узлов. -->
+        <svg class="v2-cycle__diagram" viewBox="-40 -40 800 800" role="img" aria-labelledby="v2-cycle-title v2-cycle-desc">
+          <title id="v2-cycle-title">Цикл работы с отходами</title>
+          <desc id="v2-cycle-desc">Шесть последовательных этапов: проверка, сбор, вывоз, обезвреживание, передача остатка специализированной организации, документы.</desc>
+          <defs>
+            <!-- Одна дорожка вместо сегментов: узлы её перекрывают, поэтому
+                 промежутки между ними получаются сами и ничего не надо считать. -->
+            <linearGradient id="v2Track" x1="360" y1="104" x2="360" y2="616" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#4C91CA" /><stop offset="1" stop-color="#46B749" />
+            </linearGradient>
+          </defs>
+
+          <g class="v2-cycle__rings" aria-hidden="true">
+            <circle class="v2-cycle__ring v2-cycle__ring--blue" cx="360" cy="360" r="392" />
+            <circle class="v2-cycle__ring v2-cycle__ring--green" cx="360" cy="360" r="282" />
+            <circle class="v2-cycle__ring v2-cycle__ring--green" cx="360" cy="360" r="178" />
+            <circle class="v2-cycle__ring v2-cycle__ring--ink" cx="360" cy="360" r="116" />
+          </g>
+
+          <circle class="v2-cycle__track" cx="360" cy="360" r="256" stroke="url(#v2Track)" />
+
+          <g class="v2-cycle__center">
+            <circle cx="360" cy="360" r="92" />
+            <image href="{{ .AssetsBase }}/logo.svg" x="323.5" y="331" width="73" height="58" preserveAspectRatio="xMidYMid meet" />
+          </g>
+
+          <g class="v2-cycle__node v2-cycle__node--1" transform="translate(138.3 232)">
+            <circle r="96" />
+            <foreignObject x="-96" y="-60" width="192" height="120">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><span>01</span><strong>Проверка</strong><small>вид, класс, ФККО, лицензия</small></div>
+            </foreignObject>
+          </g>
+          <g class="v2-cycle__node v2-cycle__node--2" transform="translate(360 104)">
+            <circle r="96" />
+            <foreignObject x="-96" y="-60" width="192" height="120">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><span>02</span><strong>Сбор</strong><small>тара, маркировка, накопление</small></div>
+            </foreignObject>
+          </g>
+          <g class="v2-cycle__node v2-cycle__node--3" transform="translate(581.7 232)">
+            <circle r="96" />
+            <foreignObject x="-96" y="-60" width="192" height="120">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><span>03</span><strong>Вывоз</strong><small>транспортирование спецтранспортом</small></div>
+            </foreignObject>
+          </g>
+          <g class="v2-cycle__node v2-cycle__node--4" transform="translate(581.7 488)">
+            <circle r="96" />
+            <foreignObject x="-96" y="-60" width="192" height="120">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><span>04</span><strong>Обезвреживание</strong><small>операция по действующей лицензии</small></div>
+            </foreignObject>
+          </g>
+          <g class="v2-cycle__node v2-cycle__node--5" transform="translate(360 616)">
+            <circle r="96" />
+            <foreignObject x="-96" y="-60" width="192" height="120">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><span>05</span><strong>Передача</strong><small>остаток — специализированной организации</small></div>
+            </foreignObject>
+          </g>
+          <g class="v2-cycle__node v2-cycle__node--6" transform="translate(138.3 488)">
+            <circle r="96" />
+            <foreignObject x="-96" y="-60" width="192" height="120">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><span>06</span><strong>Документы</strong><small>акт, УПД, фиксация</small></div>
+            </foreignObject>
+          </g>
+        </svg>
+      </figure>
+    </div>
+
+    <div class="v2-shell">
+      <ul class="v2-trust" aria-label="Ключевые сведения о компании">
+        <li>
+          <span class="v2-trust__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.4 2"/></svg>
+          </span>
+          <div><strong>с 2005 года</strong><span>работа в сфере обращения с отходами</span></div>
+        </li>
+        <li>
+          <span class="v2-trust__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s7-6.6 7-11.2A7 7 0 1 0 5 10.3c0 4.6 7 11.2 7 11.2z"/><circle cx="12" cy="10" r="2.7"/></svg>
+          </span>
+          <div><strong>3 подразделения</strong><span>Сургут, Тюмень, Нягань</span></div>
+        </li>
+        <li>
+          <span class="v2-trust__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 20V12l5 3v-3l5 3V7h4l.5 13z"/><path d="M17 7V3h3v4"/><path d="M2 20h20"/></svg>
+          </span>
+          <div><strong>своя база</strong><span>площадки, оборудование, спецтранспорт</span></div>
+        </li>
+        <li>
+          <span class="v2-trust__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2.5h8l4.5 4.5V21.5H6z"/><path d="M14 2.5V7h4.5"/><path d="M9 13.6l2.1 2.1 4.2-4.2"/></svg>
+          </span>
+          <div><strong>44-ФЗ · 223-ФЗ</strong><span>работа с закупками и ЭДО</span></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 02 · Узнавание: посетитель находит свой тип организации -->
+  <section class="v2-section v2-audience" aria-labelledby="v2-audience-title">
+    <div class="v2-shell">
+      <header class="v2-heading">
+        <span class="v2-eyebrow">Кому подходит</span>
+        <h2 id="v2-audience-title">Работаем с организациями, у которых образуются отходы</h2>
+        <p>Компания обслуживает государственных, муниципальных и частных заказчиков. Найдите свой профиль — от него зависит перечень сведений для расчёта. Нажатие на карточку открывает форму с подставленной услугой, её можно изменить.</p>
+      </header>
+
+      <!-- Ссылка растянута на всю карточку через ::after, поэтому кликабельна
+           вся площадь, а в порядок обхода с клавиатуры попадает один элемент.
+           data-audience-service — услуга, которую v2.js подставит в форму. -->
+      <ul class="v2-audience__grid">
+        <li><span class="v2-audience__index">01</span><strong><a class="v2-audience__link" href="#request" data-audience-service="medical">Медицинские организации</a></strong><small>клиники, стоматологии, лаборатории, реабилитационные и ветеринарные центры</small></li>
+        <li><span class="v2-audience__index">02</span><strong><a class="v2-audience__link" href="#request" data-audience-service="industrial">Производственные предприятия</a></strong><small>отходы производства I–IV классов опасности после проверки состава</small></li>
+        <li><span class="v2-audience__index">03</span><strong><a class="v2-audience__link" href="#request" data-audience-service="food">Торговля и общественное питание</a></strong><small>магазины, склады, кафе и производства продуктов питания</small></li>
+        <li><span class="v2-audience__index">04</span><strong><a class="v2-audience__link" href="#request" data-audience-service="biological">Фермерские хозяйства</a></strong><small>животноводческие и птицеводческие хозяйства, ветеринарные службы</small></li>
+        <li><span class="v2-audience__index">05</span><strong><a class="v2-audience__link" href="#request" data-audience-service="documents">Организации с архивами</a></strong><small>банки, страховые компании, административные и бухгалтерские архивы</small></li>
+        <!-- Профиль закупки, а не вид отхода: услугу не навязываем, ведём
+             к «Не знаю — подберите» и полю описания. -->
+        <li><span class="v2-audience__index">06</span><strong><a class="v2-audience__link" href="#request" data-audience-service="">Государственные заказчики</a></strong><small>учреждения, работающие по 44-ФЗ и 223-ФЗ, с документооборотом через ЭДО</small></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 03 · Интерес: конкретные направления и классы отходов -->
+  <section class="v2-section v2-section--surface v2-services" id="services" aria-labelledby="v2-services-title">
+    <div class="v2-shell">
+      <header class="v2-heading">
+        <span class="v2-eyebrow">Услуги</span>
+        <h2 id="v2-services-title">Выберите вид отходов</h2>
+        <p>Семь направлений работы. Конкретный перечень принимаемых отходов проверяется по заявке, документам, действующей лицензии и техническим возможностям подразделения.</p>
+      </header>
+
+      <div class="v2-services__grid">
+        <article class="v2-service">
+          <span class="v2-service__glyph" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h10M17 4v12l-6 13a5 5 0 0 0 4.6 7h8.8a5 5 0 0 0 4.6-7l-6-13V4"/><path d="M16.5 27h7M20 23.5v7"/></svg>
+          </span>
+          <span class="v2-service__label">Для клиник и лабораторий</span>
+          <h3>Медицинские отходы</h3>
+          <p>Сбор, транспортирование и обезвреживание отходов классов Б, В и Г.</p>
+          <ul><li>разовый и регулярный вывоз</li><li>требования к таре и упаковке</li><li>акт обезвреживания и закрывающие документы</li></ul>
+          <a class="v2-service__link" href="{{ .BaseURL }}/medical-waste-v2/">Подробнее <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="v2-service">
+          <span class="v2-service__glyph" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 35V20l8 5v-5l8 5V13h6l1 22z"/><path d="M27 13V5h4v8"/><path d="M5 35h30"/></svg>
+          </span>
+          <span class="v2-service__label">Для предприятий</span>
+          <h3>Промышленные отходы I–IV классов</h3>
+          <p>Работа с отходами производства после проверки класса опасности, кода ФККО и лицензии.</p>
+          <ul><li>разовые партии и постоянный график</li><li>проверка возможности приёма</li><li>передача на разрешённое размещение</li></ul>
+          <a class="v2-service__link" href="{{ .BaseURL }}/industrial-waste-v2/">Подробнее <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="v2-service">
+          <span class="v2-service__glyph" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="12" width="28" height="22" rx="3"/><path d="M6 20h28M14 12l3-6h6l3 6M20 20v14"/></svg>
+          </span>
+          <span class="v2-service__label">Для торговли и общепита</span>
+          <h3>Пищевые отходы и продукция</h3>
+          <p>Вывоз пищевых отходов и уничтожение просроченной или некачественной продукции.</p>
+          <ul><li>регулярный график обслуживания</li><li>списанные и изъятые партии</li><li>фото- или видеофиксация результата</li></ul>
+          <a class="v2-service__link" href="{{ .BaseURL }}/food-waste-v2/">Подробнее <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="v2-service">
+          <span class="v2-service__glyph" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5c6 8 10 12 10 18a10 10 0 0 1-20 0c0-6 4-10 10-18z"/><path d="M14.5 24.5c4.5 0 8-3 9.5-8"/></svg>
+          </span>
+          <span class="v2-service__label">Для фермерских хозяйств</span>
+          <h3>Биологические отходы</h3>
+          <p>Обращение с биологическими отходами животноводческих и птицеводческих хозяйств.</p>
+          <ul><li>вид и примерная масса отходов</li><li>проверка условий хранения</li><li>согласование выезда</li></ul>
+          <a class="v2-service__link" href="{{ .BaseURL }}/biological-waste-v2/">Подробнее <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="v2-service">
+          <span class="v2-service__glyph" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4h13l7 7v11H10z"/><path d="M23 4v7h7"/><path d="M13 26v10M18 26v10M23 26v10M28 26v10M8 22h24"/></svg>
+          </span>
+          <span class="v2-service__label">Для архивов и организаций</span>
+          <h3>Уничтожение документов</h3>
+          <p>Вывоз и уничтожение архивных, бухгалтерских и конфиденциальных документов.</p>
+          <ul><li>количество коробок или объём</li><li>акт уничтожения</li><li>фото- или видеофиксация</li></ul>
+          <a class="v2-service__link" href="{{ .BaseURL }}/document-destruction-v2/">Подробнее <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="v2-service">
+          <span class="v2-service__glyph" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h14l8 8v24H9z"/><path d="M23 4v8h8"/><circle cx="20" cy="25" r="5.5"/><path d="M13 17h8"/></svg>
+          </span>
+          <span class="v2-service__label">Экологическая документация</span>
+          <h3>Паспорта отходов</h3>
+          <p>Разработка паспортов отходов I–IV классов опасности и работа с исходными документами.</p>
+          <ul><li>несколько видов отходов</li><li>анализ исходных данных</li><li>подготовка комплекта</li></ul>
+          <a class="v2-service__link" href="{{ .BaseURL }}/environmental-documents-v2/">Подробнее <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="v2-service">
+          <span class="v2-service__glyph" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5c5 7 8 10 8 15a8 8 0 0 1-16 0c0-3 1.5-5.5 3.5-7.5.4 3 1.8 4.2 3 4.2 1.6 0 2.1-2.2 2.1-4.4 0-2.8-1.1-4.8-.6-7.3z"/><path d="M10 34h20"/></svg>
+          </span>
+          <span class="v2-service__label">Для владельцев и ветклиник</span>
+          <h3>Кремация домашних животных</h3>
+          <p>Общая и индивидуальная кремация в пределах территории обслуживания подразделения.</p>
+          <ul><li>общий или индивидуальный формат</li><li>условия выезда</li><li>согласование времени</li></ul>
+          <a class="v2-service__link" href="{{ .BaseURL }}/pet-cremation-v2/">Подробнее <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="v2-service v2-service--action">
+          <span class="v2-eyebrow v2-eyebrow--accent">Не нашли свой отход?</span>
+          <h3>Проверим возможность приёма</h3>
+          <p>Пришлите описание, фотографию, паспорт отхода или код ФККО, если он известен. Специалист проверит возможность работы и подскажет, какие сведения нужны для расчёта.</p>
+          <a class="v2-button v2-button--primary v2-button--block" href="#request">Проверить возможность приёма</a>
+        </article>
+      </div>
+
+      <!-- Инфографика: с какими классами отходов работаем -->
+      <div class="v2-classes">
+        <div class="v2-classes__head">
+          <span class="v2-eyebrow">Классификация</span>
+          <h3>С какими классами работаем</h3>
+          <p>Возможность работы с конкретным отходом определяется его классом, составом и действующей лицензией подразделения.</p>
+        </div>
+
+        <div class="v2-classes__scales">
+          <div class="v2-scale">
+            <span class="v2-scale__title">Классы опасности отходов</span>
+            <ol class="v2-scale__row">
+              <li class="v2-scale__step v2-scale__step--1"><strong>I</strong><small>чрезвычайно опасные</small></li>
+              <li class="v2-scale__step v2-scale__step--2"><strong>II</strong><small>высокоопасные</small></li>
+              <li class="v2-scale__step v2-scale__step--3"><strong>III</strong><small>умеренно опасные</small></li>
+              <li class="v2-scale__step v2-scale__step--4"><strong>IV</strong><small>малоопасные</small></li>
+            </ol>
+          </div>
+
+          <div class="v2-scale">
+            <span class="v2-scale__title">Классы медицинских отходов</span>
+            <ol class="v2-scale__row">
+              <li class="v2-scale__step v2-scale__step--3"><strong>Б</strong><small>эпидемиологически опасные</small></li>
+              <li class="v2-scale__step v2-scale__step--2"><strong>В</strong><small>чрезвычайно опасные</small></li>
+              <li class="v2-scale__step v2-scale__step--1"><strong>Г</strong><small>токсикологически опасные</small></li>
+            </ol>
+          </div>
+        </div>
+
+        <p class="v2-classes__note">Публикация услуги на сайте не означает автоматический приём любого отхода: специалист проверяет сведения, действующую лицензию и техническую возможность.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · Понимание: что нужно от заказчика и что он получает -->
+  <section class="v2-section v2-process" id="process" aria-labelledby="v2-process-title">
+    <div class="v2-shell">
+      <header class="v2-heading">
+        <span class="v2-eyebrow">Как проходит работа</span>
+        <h2 id="v2-process-title">Что нужно от вас и что вы получаете</h2>
+        <p>Заявка превращается в проверенный маршрут работ и комплект подтверждающих документов. Полный перечень сведений специалист уточняет после обращения.</p>
+      </header>
+
+      <div class="v2-flow">
+        <div class="v2-flow__col v2-flow__col--in">
+          <span class="v2-flow__title">Вы присылаете</span>
+          <ul class="v2-chips">
+            <li>вид или название отхода</li>
+            <li>примерный объём</li>
+            <li>адрес и город</li>
+            <li>периодичность вывоза</li>
+            <li>фото или код ФККО — если есть</li>
+          </ul>
+          <p class="v2-flow__hint">Класс опасности, код ФККО и требования к документам специалист поможет уточнить.</p>
+        </div>
+
+        <div class="v2-flow__arrow" aria-hidden="true">
+          <svg viewBox="0 0 48 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h40"/><path d="M35 5l7 7-7 7"/></svg>
+        </div>
+
+        <div class="v2-flow__col v2-flow__col--core">
+          <span class="v2-flow__title">Мы выполняем</span>
+          <ol class="v2-flow__steps">
+            <li><span>01</span><div><strong>Проверка</strong><small>состав, класс опасности, лицензия, техническая возможность</small></div></li>
+            <li><span>02</span><div><strong>Расчёт и договор</strong><small>стоимость, график, состав документов, ЭДО при необходимости</small></div></li>
+            <li><span>03</span><div><strong>Упаковка и накопление</strong><small>требования к таре, маркировке и условиям хранения</small></div></li>
+            <li><span>04</span><div><strong>Транспортирование</strong><small>вывоз специализированным транспортом или согласованная доставка</small></div></li>
+            <li><span>05</span><div><strong>Обезвреживание</strong><small>операция по договору либо передача специализированной организации</small></div></li>
+          </ol>
+        </div>
+
+        <div class="v2-flow__arrow" aria-hidden="true">
+          <svg viewBox="0 0 48 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h40"/><path d="M35 5l7 7-7 7"/></svg>
+        </div>
+
+        <div class="v2-flow__col v2-flow__col--out">
+          <span class="v2-flow__title">Вы получаете</span>
+          <ul class="v2-chips v2-chips--result">
+            <li>договор и закрывающие документы</li>
+            <li>акт обезвреживания или уничтожения</li>
+            <li>справку о выполненных работах — по запросу</li>
+            <li>копию лицензии или выписку из реестра</li>
+            <li>материалы фото- или видеофиксации</li>
+          </ul>
+          <p class="v2-flow__hint">Состав документов зависит от услуги и фиксируется при согласовании заявки.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 · Доверие: чем компания обеспечена -->
+  <section class="v2-section v2-section--muted v2-infra" id="infrastructure" aria-labelledby="v2-infra-title">
+    <div class="v2-shell">
+      <header class="v2-heading">
+        <span class="v2-eyebrow">Инфраструктура</span>
+        <h2 id="v2-infra-title">Собственная база, транспорт и оборудование</h2>
+        <p>Своя инфраструктура позволяет контролировать основные этапы: приём заявки, проверку отхода, перевозку, накопление, обезвреживание и оформление документов.</p>
+      </header>
+
+      <ol class="v2-timeline" aria-label="История компании">
+        <li class="v2-timeline__item">
+          <span class="v2-timeline__year">2005</span>
+          <strong>Начало работы</strong>
+          <small>посёлок Белый Яр, Сургутский район ХМАО — Югры</small>
+        </li>
+        <li class="v2-timeline__item">
+          <span class="v2-timeline__year">2008</span>
+          <strong>Расширение географии</strong>
+          <small>открыты подразделения в Тюмени и Нягани</small>
+        </li>
+        <li class="v2-timeline__item">
+          <span class="v2-timeline__year">2025</span>
+          <strong>Признание в регионе</strong>
+          <small>дипломант конкурса «Лучшие товары и услуги Тюменской области»</small>
+        </li>
+        <li class="v2-timeline__item v2-timeline__item--now">
+          <span class="v2-timeline__year">Сегодня</span>
+          <strong>Три подразделения</strong>
+          <small>семь направлений работы и документальное сопровождение</small>
+        </li>
+      </ol>
+
+      <div class="v2-metrics">
+        <article class="v2-metric">
+          <span class="v2-metric__glyph" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3c4 6 7 9 7 13a7 7 0 0 1-14 0c0-4 3-7 7-13z"/><path d="M11.5 17.5c3.5 0 6.5-2.5 7.5-6.5"/></svg>
+          </span>
+          <strong>≈ 11 000 т</strong>
+          <span>обезвреживание в год</span>
+          <small>по данным подразделения в Тюмени</small>
+        </article>
+        <article class="v2-metric">
+          <span class="v2-metric__glyph" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22V9h15v13"/><path d="M17 13h6l5 5v4h-4"/><circle cx="9" cy="23" r="3"/><circle cx="23" cy="23" r="3"/><path d="M12 23h8"/></svg>
+          </span>
+          <strong>60+</strong>
+          <span>единиц специализированного транспорта</span>
+          <small>по данным корпоративных сайтов компании</small>
+        </article>
+        <article class="v2-metric">
+          <span class="v2-metric__glyph" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="11" r="5"/><path d="M3 27c0-5 4-8 9-8s9 3 9 8"/><path d="M22 8a5 5 0 0 1 0 8M25 27c0-4-1.5-6.5-4-7.8"/></svg>
+          </span>
+          <strong>47</strong>
+          <span>специалистов в штате</span>
+          <small>по данным подразделения в Тюмени</small>
+        </article>
+        <article class="v2-metric">
+          <span class="v2-metric__glyph" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 29s10-9.5 10-16a10 10 0 1 0-20 0c0 6.5 10 16 10 16z"/><circle cx="16" cy="13" r="4"/></svg>
+          </span>
+          <strong>3 города</strong>
+          <span>Сургут, Тюмень, Нягань</span>
+          <small>основные услуги доступны во всех подразделениях</small>
+        </article>
+      </div>
+
+      <div class="v2-capabilities">
+        <article><strong>Производственная база</strong><p>Собственные площадки для накопления и обезвреживания отходов.</p></article>
+        <article><strong>Инсинераторные установки</strong><p>Высокотемпературная обработка отходов на площадках компании.</p></article>
+        <article><strong>Специализированный транспорт</strong><p>Перевозка с соблюдением требований к конкретному виду отходов.</p></article>
+        <article><strong>Разрешённое размещение</strong><p>Отходы, не подлежащие обезвреживанию, передаются специализированным организациям.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 · Квалификация: доступно ли это в моём городе -->
+  <section class="v2-section v2-geo" id="geography" aria-labelledby="v2-geo-title">
+    <div class="v2-shell">
+      <header class="v2-heading">
+        <span class="v2-eyebrow">География</span>
+        <h2 id="v2-geo-title">Три подразделения — одна схема работы</h2>
+        <p>Выберите город, чтобы увидеть контакты и график подразделения. Возможность выполнения конкретной операции проверяется по виду отхода, адресу и техническим условиям.</p>
+      </header>
+
+      <div class="v2-geo__board" data-presence-map>
+        <div class="v2-geo__map" aria-label="Сеть подразделений">
+          <svg class="v2-geo__links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="v2GeoLine" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#4c91ca" />
+                <stop offset="1" stop-color="#46b749" />
+              </linearGradient>
+            </defs>
+            <path d="M20 26 C 28.7 30.7, 37 32, 46 40 C 55 48, 64.7 62.7, 74 74" vector-effect="non-scaling-stroke" />
+          </svg>
+          <button type="button" class="v2-geo__node" style="--x:20;--y:26" data-city="nyagan" data-title="Нягань" data-phone="+7 (3462) 55-58-97" data-phone-link="+73462555897" data-email="utilit@bk.ru" data-address="628181, г. Нягань, ул. Ленина, 17" data-hours="Время приёма согласуется по заявке" data-link="{{ .BaseURL }}/nyagan-v2/">Нягань</button>
+          <button type="button" class="v2-geo__node is-active" style="--x:46;--y:40" data-city="surgut" data-title="Сургут и Белый Яр" data-phone="+7 (3462) 55-58-97" data-phone-link="+73462555897" data-email="utilit@bk.ru" data-address="628400, ХМАО — Югра, Сургутский район, пгт. Белый Яр, ул. Некрасова, 24а" data-hours="Ежедневно 08:00–17:00" data-link="{{ .BaseURL }}/surgut-v2/">Сургут</button>
+          <button type="button" class="v2-geo__node" style="--x:74;--y:74" data-city="tyumen" data-title="Тюмень" data-phone="+7 (3452) 59-38-17" data-phone-link="+73452593817" data-email="utilit_tyumen@bk.ru" data-address="г. Тюмень, ул. Республики, 164, стр. 2, офис 314" data-hours="Пн–Чт 08:00–17:00, перерыв 12:00–14:00; Пт 08:00–16:00" data-link="{{ .BaseURL }}/tyumen-v2/">Тюмень</button>
+        </div>
+
+        <aside class="v2-geo__info">
+          <span class="v2-eyebrow">Подразделение</span>
+          <h3 data-presence-title>Сургут и Белый Яр</h3>
+          <a class="v2-geo__phone" href="tel:+73462555897" data-presence-phone>+7 (3462) 55-58-97</a>
+          <a href="mailto:utilit@bk.ru" data-presence-email>utilit@bk.ru</a>
+          <p data-presence-address>628400, ХМАО — Югра, Сургутский район, пгт. Белый Яр, ул. Некрасова, 24а</p>
+          <p class="v2-geo__hours" data-presence-hours>Ежедневно 08:00–17:00</p>
+          <a class="v2-button v2-button--secondary v2-button--block" href="{{ .BaseURL }}/surgut-v2/" data-presence-link>Страница подразделения</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 · Снятие возражений: документы и правовые рамки -->
+  <section class="v2-section v2-section--surface v2-docs" aria-labelledby="v2-docs-title">
+    <div class="v2-shell v2-docs__layout">
+      <header class="v2-heading">
+        <span class="v2-eyebrow">Документы</span>
+        <h2 id="v2-docs-title">Документы как часть услуги</h2>
+        <p>Работы выполняются только в пределах действующей лицензии и после проверки конкретного отхода. Состав комплекта фиксируется в договоре.</p>
+        <a class="v2-button v2-button--secondary" href="{{ .BaseURL }}/licenses-v2/">Лицензии и документы</a>
+      </header>
+
+      <ol class="v2-docs__stack">
+        <li><span>01 · допуск</span><strong>Лицензия</strong><small>операция выполняется в разрешённых пределах</small></li>
+        <li><span>02 · условия</span><strong>Договор</strong><small>состав работ, график и перечень документов</small></li>
+        <li><span>03 · учёт</span><strong>УПД и закрывающие</strong><small>документы для бухгалтерского учёта</small></li>
+        <li><span>04 · подтверждение</span><strong>Акт и фиксация</strong><small>акт обезвреживания или уничтожения, фото- и видеоматериалы</small></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 08 · Последние вопросы перед заявкой -->
+  <section class="v2-section v2-faq" aria-labelledby="v2-faq-title">
+    <div class="v2-shell v2-faq__layout">
+      <header class="v2-heading">
+        <span class="v2-eyebrow">Частые вопросы</span>
+        <h2 id="v2-faq-title">Коротко о главном</h2>
+        <p>Остальные вопросы разобраны в отдельном разделе.</p>
+        <a class="v2-button v2-button--secondary" href="{{ .BaseURL }}/faq-v2/">Все вопросы и ответы</a>
+      </header>
+
+      <div class="v2-faq__list">
+        <details class="v2-faq__item">
+          <summary>Вы работаете с физическими лицами?</summary>
+          <p>Основные направления рассчитаны на юридических лиц и индивидуальных предпринимателей. Для физических лиц доступна кремация домашних животных.</p>
+        </details>
+        <details class="v2-faq__item">
+          <summary>Что нужно для расчёта стоимости?</summary>
+          <p>На первом этапе достаточно выбрать город и услугу, указать телефон и кратко описать задачу. Остальные сведения специалист уточнит после получения заявки.</p>
+        </details>
+        <details class="v2-faq__item">
+          <summary>Можно заказать разовый вывоз?</summary>
+          <p>Да. Компания работает как по разовым заявкам, так и по регулярному графику с несколькими объектами одного заказчика.</p>
+        </details>
+        <details class="v2-faq__item">
+          <summary>Какие документы вы предоставляете?</summary>
+          <p>После оказания услуги предоставляются документы, предусмотренные договором. Их состав зависит от конкретной услуги и выполненной операции.</p>
+        </details>
+        <details class="v2-faq__item">
+          <summary>Вы участвуете в закупках по 44-ФЗ и 223-ФЗ?</summary>
+          <p>Отдельные подразделения работают с государственными и муниципальными заказчиками и участвуют в закупках. Документооборот может вестись через ЭДО.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 · Конверсия -->
+  <section class="v2-section v2-request" id="request" aria-labelledby="v2-request-title">
+    <div class="v2-shell v2-request__layout">
+      <div class="v2-request__aside">
+        <header class="v2-heading">
+          <span class="v2-eyebrow">Заявка</span>
+          <h2 id="v2-request-title">Опишите задачу — рассчитаем стоимость</h2>
+          <p>Остальные сведения уточним после обращения.</p>
+        </header>
+
+        <ol class="v2-request__steps">
+          <li><span>01</span><div><strong>Вы отправляете заявку</strong><small>город, услуга, телефон и краткое описание</small></div></li>
+          <li><span>02</span><div><strong>Специалист проверяет сведения</strong><small>класс отхода, лицензию и техническую возможность</small></div></li>
+          <li><span>03</span><div><strong>Согласуем условия и график</strong><small>стоимость, периодичность и состав документов</small></div></li>
+        </ol>
+
+        <div class="v2-request__contact">
+          <span class="v2-eyebrow">Если удобнее позвонить</span>
+          <a class="v2-request__phone" href="tel:+73462555897" data-city-phone>+7 3462 55-58-97</a>
+          <a href="mailto:utilit@bk.ru" data-city-email>utilit@bk.ru</a>
+        </div>
+      </div>
+
+      <form class="v2-form" method="post" action="#" novalidate data-v2-form>
+        <label class="v2-field">
+          <span>Город</span>
+          <select class="v2-control" name="city" data-request-city>
+            <option value="surgut">Сургут</option>
+            <option value="tyumen">Тюмень</option>
+            <option value="nyagan">Нягань</option>
+          </select>
+        </label>
+
+        <label class="v2-field">
+          <span>Услуга</span>
+          <select class="v2-control" name="service" data-request-service>
+            <option value="">Не знаю — подберите</option>
+            <option value="medical">Медицинские отходы</option>
+            <option value="industrial">Промышленные отходы I–IV классов</option>
+            <option value="food">Пищевые отходы и продукция</option>
+            <option value="biological">Биологические отходы</option>
+            <option value="documents">Уничтожение документов</option>
+            <option value="passports">Паспорта отходов</option>
+            <option value="cremation">Кремация домашних животных</option>
+          </select>
+        </label>
+
+        <div class="v2-field v2-field--wide v2-form__dynamic" data-dynamic-fields hidden></div>
+
+        <label class="v2-field">
+          <span>Телефон</span>
+          <input class="v2-control" type="tel" name="phone" placeholder="+7 ___ ___-__-__" required />
+        </label>
+
+        <label class="v2-field">
+          <span>Email</span>
+          <input class="v2-control" type="email" name="email" placeholder="name@company.ru" />
+        </label>
+
+        <label class="v2-field v2-field--wide">
+          <span>Организация — необязательно</span>
+          <input class="v2-control" type="text" name="company" placeholder="Название организации" />
+        </label>
+
+        <label class="v2-field v2-field--wide">
+          <span>Комментарий</span>
+          <textarea class="v2-control" name="comment" placeholder="Вид отхода, объём, адрес объекта, периодичность вывоза"></textarea>
+        </label>
+
+        <label class="v2-form__consent">
+          <input type="checkbox" name="privacy-consent" required />
+          <span class="v2-checkbox" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.4l3 3 6-6.4"/></svg>
+          </span>
+          <span class="v2-form__consent-copy">Согласен на <a href="{{ .BaseURL }}/privacy/">обработку персональных данных</a>.</span>
+        </label>
+
+        <div class="v2-form__footer">
+          <button class="v2-button v2-button--primary" type="submit">Отправить заявку</button>
+          <p>Отправка заявки не подтверждает возможность приёма отхода. Специалист проверит сведения, действующую лицензию и техническую возможность выполнения работ.</p>
+        </div>
+
+        <p class="v2-form__status" data-form-status role="status" hidden></p>
+      </form>
+    </div>
+  </section>
+</article>

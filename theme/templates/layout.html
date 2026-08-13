@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light" />
   <meta name="theme-color" content="#F2F5F4" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" /></noscript>
+  <link rel="preload" as="font" type="font/woff2" href="{{ .AssetsBase }}/fonts/manrope-var.woff2" crossorigin />
   {{- if .Page.Description }}
   <meta name="description" content="{{ .Page.Description }}" />
   {{- end }}
@@ -38,6 +35,23 @@
   <link rel="stylesheet" href="{{ .AssetsBase }}/home-page.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/action-components.css" />
   {{- end }}
+  {{- if eq .Page.Type "home-concept" }}
+  <link rel="stylesheet" href="{{ .AssetsBase }}/home-concept.css" />
+  {{- end }}
+  {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") }}
+  <link rel="stylesheet" href="{{ .AssetsBase }}/v2.css" />
+  {{- end }}
+  {{- if or (eq .Page.Type "service-v2") (eq .Page.Type "catalog-v2") }}
+  <link rel="stylesheet" href="{{ .AssetsBase }}/service-v2.css" />
+  {{- end }}
+  {{- if eq .Page.Type "company-v2" }}
+  <link rel="stylesheet" href="{{ .AssetsBase }}/company-v2.css" />
+  {{- end }}
+  {{- if eq .Page.Type "city-v2" }}
+  <link rel="stylesheet" href="{{ .AssetsBase }}/service-v2.css" />
+  <link rel="stylesheet" href="{{ .AssetsBase }}/company-v2.css" />
+  <link rel="stylesheet" href="{{ .AssetsBase }}/city-v2.css" />
+  {{- end }}
   {{- if eq .Page.Type "service" }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/service-page.css" />
   {{- end }}
@@ -66,19 +80,37 @@
   </script>
   <title>{{ .Title }}</title>
 </head>
-<body>
+<body{{ if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") }} class="v2-body"{{ end }}>
   <a class="skip-link" href="#content">К содержанию</a>
+  {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") }}
+  {{ template "v2_header.html" . }}
+  {{- else }}
   {{ template "header.html" . }}
+  {{- end }}
   <main id="content" class="site-main">
     {{ .Body }}
   </main>
+  {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") }}
+  {{ template "v2_footer.html" . }}
+  {{- else }}
   {{ template "footer.html" . }}
+  {{- end }}
   {{ template "search_trigger.html" . }}
   <script src="{{ .AssetsBase }}/main.js" defer></script>
   <script src="{{ .AssetsBase }}/ui.js" defer></script>
   <script src="{{ .AssetsBase }}/component-classes.js" defer></script>
   {{- if eq .Page.Type "home" }}
   <script src="{{ .AssetsBase }}/action-components.js" defer></script>
+  {{- end }}
+  {{- if eq .Page.Type "home-concept" }}
+  <script src="{{ .AssetsBase }}/action-components.js" defer></script>
+  <script src="{{ .AssetsBase }}/home-concept.js" defer></script>
+  {{- end }}
+  {{- if eq .Page.Type "home-v2" }}
+  <script src="{{ .AssetsBase }}/action-components.js" defer></script>
+  {{- end }}
+  {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") }}
+  <script src="{{ .AssetsBase }}/v2.js" defer></script>
   {{- end }}
   {{- if eq .Page.Type "design" }}
   <script src="{{ .AssetsBase }}/visual-components.js" defer></script>

@@ -1,0 +1,2799 @@
+/* ============================================================================
+   v2 — общий слой оформления для страниц нового поколения
+   (/home-v2 и страницы услуг service-v2).
+
+   Файл полностью автономен: все селекторы начинаются с .v2-page, .v2-header,
+   .v2-footer или .v2-*, поэтому стили не влияют на остальные страницы сайта
+   и не зависят от поздних слоёв overrides / design-consistency.
+
+   ПАЛИТРА И РАСПРЕДЕЛЕНИЕ АКЦЕНТОВ
+   Логотип состоит из двух форм: синей капли (#4C91CA) и зелёного знака (#46B749).
+   Отсюда семантика цвета на странице:
+
+     синий  — движение и процесс: навигация, входящие данные, этапы работы,
+              основной CTA, ссылки;
+     зелёный — результат и подтверждение: документы, выполненные операции,
+              согласие, положительные состояния;
+     графит — структура: заголовки, рамки, подписи, футер.
+
+   Правило: в одном визуальном блоке не больше двух акцентов; на диаграммах
+   переход всегда идёт от синего (вход) к зелёному (результат).
+   ========================================================================= */
+
+.v2-page {
+  /* Брендовые цвета взяты напрямую из logo.svg */
+  --v2-blue: #4c91ca;
+  --v2-blue-deep: #2f7099;
+  --v2-blue-soft: #eaf3fa;
+  --v2-green: #46b749;
+  --v2-green-deep: #2e8a34;
+  --v2-green-soft: #eaf6ea;
+
+  --v2-ink: #15211d;
+  --v2-ink-muted: #45534d;
+  --v2-ink-subtle: #6c7a74;
+
+  --v2-page: #f1f4f3;
+  --v2-surface: #ffffff;
+  --v2-surface-muted: #f7f9f8;
+  --v2-line: rgba(21, 33, 29, .09);
+  --v2-line-strong: rgba(21, 33, 29, .14);
+
+  --v2-shadow-sm: 0 1px 2px rgba(21, 33, 29, .04), 0 5px 12px rgba(21, 33, 29, .05);
+  --v2-shadow-md: 0 2px 4px rgba(21, 33, 29, .05), 0 10px 20px rgba(21, 33, 29, .07);
+
+  /* Высота липкой шапки: держим в одном месте, потому что от неё зависит
+     отступ при переходе по якорям. Меняется вместе с .v2-header__inner. */
+  --v2-header-height: 76px;
+
+  --v2-radius: 16px;
+  --v2-radius-lg: 22px;
+  --v2-radius-pill: 999px;
+  --v2-width: 1240px;
+
+  background: var(--v2-page);
+  color: var(--v2-ink);
+}
+
+.v2-header,
+.v2-footer {
+  --v2-blue: #4c91ca;
+  --v2-blue-deep: #2f7099;
+  --v2-blue-soft: #eaf3fa;
+  --v2-green: #46b749;
+  --v2-green-deep: #2e8a34;
+  --v2-green-soft: #eaf6ea;
+  --v2-ink: #15211d;
+  --v2-ink-muted: #45534d;
+  --v2-ink-subtle: #6c7a74;
+  --v2-surface: #ffffff;
+  --v2-surface-muted: #f7f9f8;
+  --v2-line: rgba(21, 33, 29, .09);
+  /* Шапка и подвал живут вне .v2-page и имеют собственный набор токенов.
+     Без этой строки border: 1px solid var(--v2-line-strong) целиком
+     отбрасывается как недействительный и рамка не рисуется вовсе. */
+  --v2-line-strong: rgba(21, 33, 29, .14);
+  --v2-radius: 16px;
+  --v2-radius-pill: 999px;
+  --v2-width: 1240px;
+}
+
+/* --------------------------------------------------------------------------
+   Раскладка и общие примитивы
+   -------------------------------------------------------------------------- */
+
+.v2-shell {
+  width: min(calc(100% - 2 * clamp(16px, 3vw, 32px)), var(--v2-width));
+  margin-inline: auto;
+}
+
+.v2-section {
+  padding-block: clamp(56px, 7vw, 96px);
+}
+
+.v2-section { background: var(--v2-page); }
+.v2-section--surface { background: var(--v2-surface); }
+.v2-section--muted { background: var(--v2-surface-muted); }
+
+/* Отступ под липкую шапку при переходе по якорям меню */
+.v2-page [id] { scroll-margin-top: var(--v2-header-height); }
+
+.v2-eyebrow {
+  display: block;
+  color: var(--v2-ink-subtle);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.v2-eyebrow--accent { color: var(--v2-blue-deep); }
+
+/* Длинные русские термины не должны разрываться посреди слова:
+   body задаёт overflow-wrap: break-word, для заголовков это отключаем. */
+.v2-page h1,
+.v2-page h2,
+.v2-page h3,
+.v2-page .v2-audience__grid strong,
+.v2-page .v2-metric strong,
+.v2-page .v2-docs__stack strong,
+.v2-page .v2-faq__item summary,
+.v2-footer__title {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+}
+
+.v2-heading {
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+  max-width: 720px;
+  margin-bottom: clamp(32px, 4vw, 48px);
+}
+
+.v2-heading h2 {
+  margin: 0;
+  font-size: clamp(28px, 3.4vw, 42px);
+  font-weight: 700;
+  letter-spacing: -.025em;
+  line-height: 1.18;
+}
+
+.v2-heading h3 {
+  margin: 0;
+  font-size: clamp(22px, 2.2vw, 28px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.25;
+}
+
+.v2-heading p {
+  margin: 0;
+  max-width: 640px;
+  color: var(--v2-ink-muted);
+  font-size: clamp(16px, 1.4vw, 18px);
+  line-height: 1.6;
+}
+
+.v2-heading .v2-button { margin-top: 6px; }
+
+.v2-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Кнопки: синий — основное действие, зелёный — вспомогательное */
+
+.v2-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding-inline: 22px;
+  border: 1px solid transparent;
+  border-radius: var(--v2-radius);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .16s ease, border-color .16s ease, color .16s ease;
+}
+
+.v2-button--primary {
+  background: var(--v2-blue);
+  color: #fff;
+}
+
+.v2-button--primary:hover,
+.v2-button--primary:focus-visible {
+  background: var(--v2-blue-deep);
+  color: #fff;
+}
+
+.v2-button--secondary {
+  border-color: var(--v2-line-strong, rgba(21, 33, 29, .14));
+  background: var(--v2-surface);
+  color: var(--v2-ink);
+}
+
+.v2-button--secondary:hover,
+.v2-button--secondary:focus-visible {
+  border-color: var(--v2-green);
+  background: var(--v2-green-soft);
+  color: var(--v2-ink);
+}
+
+.v2-button--ghost {
+  border-color: rgba(255, 255, 255, .28);
+  background: transparent;
+  color: #fff;
+}
+
+.v2-button--ghost:hover,
+.v2-button--ghost:focus-visible {
+  border-color: rgba(255, 255, 255, .55);
+  background: rgba(255, 255, 255, .08);
+  color: #fff;
+}
+
+.v2-button--block { width: 100%; }
+
+.v2-page :focus-visible,
+.v2-header :focus-visible,
+.v2-footer :focus-visible {
+  outline: 2px solid var(--v2-blue);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Шапка
+   -------------------------------------------------------------------------- */
+
+.v2-header {
+  position: sticky;
+  top: 0;
+  z-index: 1200;
+  /* Без backdrop-filter: размытие подложки у липкого элемента заставляет
+     композитор перерисовывать слой под шапкой на каждом кадре скролла. */
+  background: var(--v2-surface);
+  box-shadow: 0 1px 0 var(--v2-line);
+}
+
+.v2-header__inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 76px;
+  padding-block: 12px;
+}
+
+.v2-logo {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 11px;
+  color: var(--v2-ink);
+  text-decoration: none;
+}
+
+.v2-logo:hover { color: var(--v2-ink); }
+.v2-logo__mark { width: 42px; height: 34px; flex: 0 0 auto; }
+
+.v2-logo__copy {
+  display: grid;
+  gap: 2px;
+  line-height: 1.15;
+}
+
+.v2-logo__copy strong {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.v2-logo__copy small {
+  color: var(--v2-ink-subtle);
+  font-size: 11.5px;
+  letter-spacing: .04em;
+}
+
+.v2-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  /* Строка всегда занимает место между логотипом и правым блоком: так поле
+     поиска может развернуться на неё целиком без скачка раскладки.
+     position не задаём намеренно — панели разделов позиционируются
+     относительно .v2-header и должны оставаться во всю ширину окна. */
+  flex: 1 1 auto;
+  align-self: stretch;
+}
+
+/* Пункт занимает всю высоту шапки, включая её вертикальные отступы:
+   иначе между низом пункта и верхом панели остаётся мёртвая полоса,
+   курсор пересекает её, :hover теряется и панель закрывается на полпути. */
+.v2-nav__item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  align-self: stretch;
+  margin-block: -12px;
+  padding-block: 12px;
+}
+
+.v2-nav__link {
+  color: var(--v2-ink-muted);
+  font-size: 14.5px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.v2-nav__link:hover,
+.v2-nav__item:hover .v2-nav__link { color: var(--v2-blue-deep); }
+
+.v2-nav__toggle {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--v2-ink-subtle);
+  cursor: pointer;
+  transition: transform .16s ease, color .16s ease;
+}
+
+.v2-nav__toggle svg { width: 9px; height: 6px; }
+.v2-nav__item:hover .v2-nav__toggle { color: var(--v2-blue-deep); }
+.v2-nav__item:hover .v2-nav__toggle,
+.v2-nav__toggle[aria-expanded="true"] { transform: rotate(180deg); }
+
+/* Панель раздела. Позиционируется относительно .v2-header (он липкий,
+   то есть позиционированный), поэтому растягивается на всю ширину окна,
+   а не на ширину пункта — у .v2-nav__item намеренно нет position. */
+/* Переключается не через display, а через видимость и прозрачность:
+   display не анимируется, а появление панели должно быть плавным.
+   visibility убирает панель из попадания курсора и из обхода табом,
+   поэтому закрытая панель ведёт себя как display: none. */
+.v2-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  border-top: 1px solid var(--v2-line);
+  background: var(--v2-surface);
+  box-shadow: 0 2px 6px rgba(21, 33, 29, .06), 0 20px 44px rgba(21, 33, 29, .16);
+  /* visibility переключается без плавности, но с задержкой на время
+     затухания — иначе панель пропала бы до конца анимации */
+  transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
+}
+
+.v2-menu__inner { transition: none; }
+
+/* Наведение — только там, где есть настоящий курсор. На тач-устройствах
+   панель открывает кнопка, на клавиатуре — :focus-within. */
+@media (hover: hover) and (pointer: fine) {
+  .v2-nav__item:hover > .v2-menu {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition: opacity .2s ease, transform .2s ease, visibility 0s;
+  }
+}
+
+.v2-nav__item:focus-within > .v2-menu,
+.v2-nav__item[data-open="true"] > .v2-menu {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition: opacity .2s ease, transform .2s ease, visibility 0s;
+}
+
+/* Идёт последним намеренно: при равной специфичности перекрывает
+   :hover и :focus-within, чтобы Escape действительно закрывал панель. */
+.v2-nav__item[data-open="false"] > .v2-menu {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
+}
+
+.v2-menu__inner {
+  display: grid;
+  gap: 18px;
+  padding-block: 26px 28px;
+}
+
+.v2-menu__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.v2-menu__grid--wide { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* Меню показывается от 1060px; в нижней части диапазона четыре колонки
+   становятся тесными для длинных названий услуг. */
+@media (max-width: 1240px) {
+  .v2-menu__grid--wide { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.v2-menu__card {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid transparent;
+  border-radius: var(--v2-radius);
+  color: var(--v2-ink);
+  text-decoration: none;
+  transition: background .14s ease, border-color .14s ease;
+}
+
+.v2-menu__icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--v2-blue-soft);
+  color: var(--v2-blue-deep);
+}
+
+.v2-menu__icon svg { width: 19px; height: 19px; }
+
+/* Города — результат, а не процесс: по общему правилу палитры зелёный */
+.v2-menu__grid--places .v2-menu__icon {
+  background: var(--v2-green-soft);
+  color: var(--v2-green-deep);
+}
+
+.v2-menu__copy {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+}
+
+.v2-menu__card:hover {
+  border-color: rgba(76, 145, 202, .4);
+  background: var(--v2-blue-soft);
+  color: var(--v2-ink);
+}
+
+.v2-menu__card strong {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.v2-menu__card small {
+  color: var(--v2-ink-subtle);
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+
+.v2-menu__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--v2-line);
+}
+
+/* Цвет наведения задан явно: глобальное a:hover в styles.css красит
+   ссылки в белый и по специфичности перебивает одиночный класс. */
+.v2-menu__all,
+.v2-menu__all:hover {
+  color: var(--v2-blue-deep);
+  font-size: 14.5px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.v2-menu__all:hover { text-decoration: underline; }
+
+.v2-menu__hint {
+  color: var(--v2-ink-muted);
+  font-size: 13.5px;
+  text-decoration: none;
+}
+
+.v2-menu__hint:hover { color: var(--v2-blue-deep); }
+
+/* --------------------------------------------------------------------------
+   Поиск в строке меню
+   -------------------------------------------------------------------------- */
+
+.v2-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  flex: 0 0 auto;
+}
+
+.v2-search__open {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--v2-ink-muted);
+  cursor: pointer;
+  transition: color .16s ease;
+}
+
+.v2-search__open svg { width: 16px; height: 16px; }
+.v2-search__open:hover { color: var(--v2-blue-deep); }
+
+.v2-search__open { transition: opacity .14s ease, color .16s ease; }
+
+.v2-search[data-expanded="true"] .v2-search__open {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Поле прижато к правому краю и растёт влево: лупа внутри него уезжает
+   вместе с левой границей. Ширину в пикселях подставляет скрипт — она
+   равна ширине строки меню и меняется вместе с окном. */
+.v2-search__field {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 40px;
+  padding: 0 6px 0 10px;
+  border: 1px solid var(--v2-line-strong);
+  border-radius: var(--v2-radius-pill);
+  background: var(--v2-surface-muted);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-50%);
+  transition: width .3s cubic-bezier(.4, 0, .2, 1), opacity .18s ease, visibility 0s linear .3s;
+}
+
+.v2-search[data-expanded="true"] .v2-search__field {
+  width: var(--v2-search-width, 520px);
+  opacity: 1;
+  visibility: visible;
+  transition: width .3s cubic-bezier(.4, 0, .2, 1), opacity .12s ease, visibility 0s;
+}
+
+/* Общая рамка вместо системной обводки на самом поле ввода */
+.v2-search__field:focus-within {
+  border-color: var(--v2-blue);
+  background: var(--v2-surface);
+}
+
+.v2-header .v2-search__input:focus-visible { outline: none; }
+
+.v2-search__icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: var(--v2-ink-subtle);
+}
+
+.v2-search__icon svg { width: 15px; height: 15px; }
+
+.v2-search__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 38px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--v2-ink);
+  font-family: inherit;
+  font-size: 14.5px;
+}
+
+.v2-search__input::placeholder { color: var(--v2-ink-subtle); }
+.v2-search__input::-webkit-search-cancel-button { display: none; }
+
+.v2-search__close {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--v2-ink-muted);
+  cursor: pointer;
+}
+
+.v2-search__close svg { width: 14px; height: 14px; }
+.v2-search__close:hover { color: var(--v2-ink); background: rgba(21, 33, 29, .06); }
+
+/* Пункты гаснут, но сохраняют место: поле разворачивается поверх них,
+   поэтому раскладка не дёргается. */
+.v2-nav__item { transition: opacity .18s ease; }
+
+.v2-header[data-search-open="true"] .v2-nav__item {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.v2-search__results {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 8px);
+  max-height: min(60vh, 420px);
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface);
+  box-shadow: 0 2px 6px rgba(21, 33, 29, .06), 0 20px 44px rgba(21, 33, 29, .16);
+}
+
+.v2-search__hit {
+  display: grid;
+  gap: 2px;
+  padding: 9px 12px;
+  border-radius: 11px;
+  color: var(--v2-ink);
+  text-decoration: none;
+}
+
+.v2-search__hit:hover,
+.v2-search__hit:focus-visible,
+.v2-search__hit[aria-selected="true"] {
+  background: var(--v2-blue-soft);
+  color: var(--v2-ink);
+}
+
+.v2-search__hit strong { font-size: 14.5px; font-weight: 700; }
+
+.v2-search__hit small {
+  overflow: hidden;
+  color: var(--v2-ink-subtle);
+  font-size: 12.5px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.v2-search__kind {
+  color: var(--v2-blue-deep);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.v2-search__empty {
+  padding: 14px 12px;
+  color: var(--v2-ink-muted);
+  font-size: 14px;
+}
+
+.v2-header__actions {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 22px;
+}
+
+/* Селектор города: собственный дропдаун в стилях кнопок шапки.
+   Нативный select спрятан визуально, но остаётся источником состояния. */
+.v2-city {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.v2-city__native {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.v2-city__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 0 6px 0 0;
+  /* Без рамки и подложки: кнопка города читается как элемент строки
+     контактов, а не как отдельный контрол. */
+  border: 0;
+  background: transparent;
+  color: var(--v2-ink);
+  font-family: var(--font-family-base);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: normal;
+  cursor: pointer;
+  transition: border-color .16s ease, background .16s ease;
+}
+
+.v2-city__trigger:hover,
+.v2-city__trigger[aria-expanded="true"] { color: var(--v2-blue-deep); }
+
+.v2-city__pin {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: var(--v2-blue);
+}
+
+.v2-city__pin svg { width: 16px; height: 16px; }
+
+.v2-city__value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.v2-city__chevron {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: var(--v2-ink-subtle);
+  transition: transform .18s ease;
+}
+
+.v2-city__chevron svg { width: 11px; height: 8px; }
+.v2-city__trigger[aria-expanded="true"] .v2-city__chevron { transform: rotate(180deg); }
+
+.v2-city__menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 40;
+  display: grid;
+  gap: 2px;
+  min-width: 100%;
+  margin: 0;
+  padding: 6px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface);
+  box-shadow: 0 2px 4px rgba(21, 33, 29, .05), 0 10px 22px rgba(21, 33, 29, .12);
+  list-style: none;
+}
+
+.v2-city__menu[hidden] { display: none; }
+
+.v2-city__option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 40px;
+  padding: 0 14px 0 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--v2-ink-muted);
+  font-family: var(--font-family-base);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: normal;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background .14s ease, color .14s ease;
+}
+
+.v2-city__option::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: rgba(21, 33, 29, .2);
+  transition: background .14s ease;
+}
+
+.v2-city__option:hover {
+  background: var(--v2-surface-muted);
+  color: var(--v2-ink);
+}
+
+.v2-city__option[aria-selected="true"] {
+  background: var(--v2-blue-soft);
+  color: var(--v2-ink);
+  font-weight: 700;
+}
+
+.v2-city__option[aria-selected="true"]::before { background: var(--v2-blue); }
+
+.v2-header__contact {
+  display: grid;
+  gap: 1px;
+  justify-items: start;
+}
+
+.v2-header__hours {
+  color: var(--v2-ink-subtle);
+  font-size: 11.5px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.v2-header__phone {
+  color: var(--v2-ink);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.v2-header__phone:hover { color: var(--v2-blue-deep); }
+
+.v2-header__cta { min-height: 44px; }
+
+/* Бургер и крестик ящика — без подложки и рамки: в шапке и так плотно,
+   а рядом с ними стоят такие же бесфоновые иконки поиска и города. */
+.v2-burger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 11px 10px;
+  border: 0;
+  background: transparent;
+  color: var(--v2-ink);
+  cursor: pointer;
+}
+
+.v2-burger span:not(.v2-sr-only) {
+  display: block;
+  height: 2px;
+  margin: 4px 0;
+  border-radius: 2px;
+  background: var(--v2-ink);
+}
+
+/* Мобильная панель. Класс is-open переключает общий ui.js. */
+
+/* Мобильная панель. Закрытая панель раньше висела как position: fixed во весь
+   экран с visibility: hidden — такой слой поверх контента лишает прокрутку
+   быстрого пути композитора и заставляет перерисовывать вьюпорт на каждом
+   кадре. display: none полностью убирает её из отрисовки. */
+.v2-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 1800;
+  display: none;
+  transition: display .22s allow-discrete;
+}
+
+.v2-drawer.is-open { display: block; }
+
+.v2-drawer__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: rgba(21, 33, 29, .38);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.v2-drawer.is-open .v2-drawer__backdrop { opacity: 1; }
+
+.v2-drawer__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(88vw, 380px);
+  height: 100dvh;
+  padding: 18px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--v2-surface);
+  transform: translateX(100%);
+  transition: transform .22s ease;
+}
+
+.v2-drawer.is-open .v2-drawer__panel { transform: translateX(0); }
+
+@starting-style {
+  .v2-drawer.is-open .v2-drawer__backdrop { opacity: 0; }
+  .v2-drawer.is-open .v2-drawer__panel { transform: translateX(100%); }
+}
+
+.v2-drawer__top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.v2-drawer__close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: var(--v2-ink);
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.v2-drawer__close:hover { color: var(--v2-blue-deep); }
+
+.v2-drawer__nav {
+  display: grid;
+  margin-top: 26px;
+}
+
+.v2-drawer__nav a {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 2px;
+  color: var(--v2-ink);
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.v2-drawer__nav a + a { border-top: 1px solid var(--v2-line); }
+.v2-drawer__nav a span { color: var(--v2-blue); }
+.v2-drawer__nav a:hover { color: var(--v2-blue-deep); }
+
+/* Аккордеон разделов на узких экранах. Раскрытие обеспечивает сам
+   элемент details, свои обработчики не нужны. */
+.v2-drawer__group + .v2-drawer__group { border-top: 1px solid var(--v2-line); }
+
+.v2-drawer__group > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 2px;
+  color: var(--v2-ink);
+  font-size: 17px;
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+}
+
+.v2-drawer__group > summary::-webkit-details-marker { display: none; }
+
+.v2-drawer__group > summary::after {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid var(--v2-blue);
+  border-bottom: 2px solid var(--v2-blue);
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform .16s ease;
+}
+
+.v2-drawer__group[open] > summary::after { transform: rotate(-135deg) translateY(-2px); }
+
+/* Отступ снизу — внешний, а не внутренний: паддинг продлевал бы полоску
+   до самого низа раскрытого раздела, и она упиралась бы в разделитель
+   между разделами, сцепляясь с ним в угол. */
+.v2-drawer__sub {
+  display: grid;
+  margin-left: 2px;
+  margin-bottom: 12px;
+  padding: 0 0 4px 14px;
+  border-left: 2px solid var(--v2-line);
+}
+
+.v2-drawer__nav .v2-drawer__sub a {
+  padding: 9px 0;
+  color: var(--v2-ink-muted);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.v2-drawer__nav .v2-drawer__sub a + a { border-top: 0; }
+.v2-drawer__nav .v2-drawer__sub a:hover { color: var(--v2-blue-deep); }
+.v2-drawer__nav .v2-drawer__sub .v2-drawer__all { color: var(--v2-blue-deep); font-weight: 700; }
+
+.v2-drawer__contact {
+  display: grid;
+  gap: 9px;
+  margin-top: 28px;
+  padding: 18px;
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface-muted);
+}
+
+.v2-drawer__contact a {
+  color: var(--v2-ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.v2-drawer__contact a:hover { color: var(--v2-blue-deep); }
+.v2-drawer__contact .v2-button { margin-top: 6px; color: #fff; }
+
+/* --------------------------------------------------------------------------
+   01 · Первый экран и цикл работы
+   -------------------------------------------------------------------------- */
+
+.v2-hero {
+  padding-block: clamp(32px, 4.5vw, 60px) clamp(40px, 5vw, 64px);
+  /* Линейный градиент вместо радиального: та же подложка, но без дорогой
+     растеризации больших областей при сдвиге и скролле. */
+  background:
+    linear-gradient(112deg, rgba(70, 183, 73, .07) 0%, rgba(70, 183, 73, 0) 38%,
+                    rgba(76, 145, 202, 0) 58%, rgba(76, 145, 202, .11) 100%),
+    var(--v2-page);
+}
+
+.v2-hero__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);
+  gap: clamp(24px, 3.5vw, 56px);
+  align-items: center;
+}
+
+.v2-hero__copy h1 {
+  max-width: 620px;
+  margin: 14px 0 0;
+  font-size: clamp(32px, 3.9vw, 52px);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+}
+
+.v2-hero__lead {
+  max-width: 58ch;
+  margin: 22px 0 0;
+  color: var(--v2-ink-muted);
+  font-size: clamp(16px, 1.5vw, 18.5px);
+  line-height: 1.62;
+}
+
+.v2-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.v2-hero__note {
+  max-width: 52ch;
+  margin: 22px 0 0;
+  padding-left: 15px;
+  border-left: 2px solid var(--v2-green);
+  color: var(--v2-ink-subtle);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+.v2-cycle {
+  display: grid;
+  place-items: center;
+  margin: 0;
+}
+
+.v2-cycle__diagram {
+  display: block;
+  /* Ширина растёт пропорционально расширенному viewBox (720 → 800),
+     иначе узлы на экране стали бы мельче. */
+  width: min(100%, 620px);
+  height: auto;
+  overflow: visible;
+}
+
+/* Вертикальный вариант цикла для узких экранов */
+.v2-cycle__list {
+  display: none;
+  position: relative;
+  gap: 4px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.v2-cycle__list li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 10px 0;
+}
+
+.v2-cycle__list li::after {
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: 44px;
+  bottom: -4px;
+  width: 2px;
+  background: var(--v2-line);
+}
+
+.v2-cycle__list li:last-child::after { display: none; }
+
+.v2-cycle__list span {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  background: var(--v2-blue-soft);
+  color: var(--v2-blue-deep);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.v2-cycle__list li:last-child span {
+  background: var(--v2-green-soft);
+  color: var(--v2-green-deep);
+}
+
+.v2-cycle__list strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -.015em;
+  line-height: 1.3;
+}
+
+.v2-cycle__list small {
+  display: block;
+  margin-top: 2px;
+  color: var(--v2-ink-muted);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.v2-cycle__ring { fill: none; }
+.v2-cycle__ring--blue { stroke: var(--v2-blue); stroke-width: 1.2; stroke-opacity: .2; }
+.v2-cycle__ring--green { stroke: var(--v2-green); stroke-width: 1.1; stroke-opacity: .18; }
+.v2-cycle__ring--ink { stroke: var(--v2-ink); stroke-width: 1; stroke-opacity: .12; }
+
+.v2-cycle__track {
+  fill: none;
+  stroke-width: 22;
+  opacity: .92;
+}
+
+/* Схема отрисовывается сразу и целиком: поэтапная анимация отвлекала от
+   содержания и на медленной отрисовке показывала неполный цикл. */
+.v2-cycle__center circle {
+  fill: #fff;
+  stroke: var(--v2-line);
+  stroke-width: 1.4;
+}
+
+.v2-cycle__node circle {
+  fill: #fff;
+  /* CSS drop-shadow вместо filter: url(#...): ссылочный SVG-фильтр —
+     ресурс документа, его инвалидация задевает всю страницу. */
+  filter: drop-shadow(0 8px 16px rgba(21, 33, 29, .14));
+}
+
+.v2-cycle__label {
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  width: 192px;
+  height: 120px;
+  padding: 0 8px;
+  color: var(--v2-ink);
+  font-family: var(--font-family-base);
+  text-align: center;
+}
+
+.v2-cycle__label span {
+  color: var(--v2-blue-deep);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  line-height: 1;
+}
+
+.v2-cycle__label strong {
+  display: block;
+  margin-top: 5px;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.06;
+}
+
+.v2-cycle__label small {
+  display: block;
+  max-width: 172px;
+  margin-top: 6px;
+  color: var(--v2-ink-muted);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.24;
+}
+
+.v2-cycle__node--6 .v2-cycle__label span { color: var(--v2-green-deep); }
+
+.v2-trust {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin: clamp(32px, 4vw, 52px) 0 0;
+  padding: 0;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius);
+  background: var(--v2-line);
+  list-style: none;
+  overflow: hidden;
+}
+
+.v2-trust li {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 18px 20px;
+  background: var(--v2-surface);
+}
+
+.v2-trust__icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: var(--v2-blue-soft);
+  color: var(--v2-blue-deep);
+}
+
+.v2-trust__icon svg { width: 20px; height: 20px; }
+
+.v2-trust li:nth-child(3) .v2-trust__icon,
+.v2-trust li:nth-child(4) .v2-trust__icon {
+  background: var(--v2-green-soft);
+  color: var(--v2-green-deep);
+}
+
+.v2-trust li > div { display: grid; gap: 4px; }
+
+.v2-trust strong {
+  font-size: 16.5px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+.v2-trust span {
+  color: var(--v2-ink-subtle);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+/* --------------------------------------------------------------------------
+   02 · Кому подходит
+   -------------------------------------------------------------------------- */
+
+.v2-audience__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.v2-audience__grid li {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  padding: 24px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface);
+  transition: border-color .16s ease, transform .16s ease;
+}
+
+.v2-audience__grid li:hover {
+  border-color: rgba(76, 145, 202, .45);
+  transform: translateY(-2px);
+}
+
+.v2-audience__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Глобальное a:hover в styles.css красит ссылки в белый и по специфичности
+   перебивает color: inherit — задаём цвет наведения явно, как у остальных
+   ссылок v2. */
+.v2-audience__grid li:hover .v2-audience__link,
+.v2-audience__link:hover {
+  color: var(--v2-blue-deep);
+}
+
+/* Растягиваем ссылку на карточку: кликабельна вся площадь, но фокус
+   получает один элемент, а не каждая строка карточки. */
+.v2-audience__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--v2-radius);
+}
+
+.v2-audience__grid li:focus-within {
+  border-color: rgba(76, 145, 202, .45);
+}
+
+.v2-audience__link:focus-visible {
+  outline: none;
+}
+
+.v2-audience__link:focus-visible::after {
+  outline: 2px solid var(--v2-blue);
+  outline-offset: 2px;
+}
+
+.v2-audience__index {
+  color: var(--v2-blue);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
+/* Где карточки собираются из frontmatter, номер считает CSS: арифметики
+   в шаблонах Notepub нет, а держать номер в контенте — лишние данные. */
+.v2-audience__grid { counter-reset: v2-audience; }
+.v2-audience__grid li { counter-increment: v2-audience; }
+.v2-audience__index--auto::before { content: counter(v2-audience, decimal-leading-zero); }
+
+.v2-audience__grid strong {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -.015em;
+  line-height: 1.25;
+}
+
+.v2-audience__grid small {
+  color: var(--v2-ink-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   03 · Услуги и классы отходов
+   -------------------------------------------------------------------------- */
+
+.v2-services__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.v2-service {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface);
+  transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+
+.v2-service:hover {
+  border-color: var(--v2-accent, rgba(76, 145, 202, .45));
+  box-shadow: var(--v2-shadow-sm);
+  transform: translateY(-2px);
+}
+
+/* Акцент карточки — шаг градиента от синего логотипа к зелёному.
+   Порядок карточек = порядок цвета, случайного чередования нет. */
+.v2-services__grid > .v2-service:nth-child(1) { --v2-accent: #4c91ca; --v2-accent-deep: #2f7099; --v2-accent-soft: #eaf3fa; }
+.v2-services__grid > .v2-service:nth-child(2) { --v2-accent: #4b97b4; --v2-accent-deep: #2e7488; --v2-accent-soft: #eaf4f7; }
+.v2-services__grid > .v2-service:nth-child(3) { --v2-accent: #4a9e9f; --v2-accent-deep: #2d7876; --v2-accent-soft: #eaf5f5; }
+.v2-services__grid > .v2-service:nth-child(4) { --v2-accent: #49a48a; --v2-accent-deep: #2c7c64; --v2-accent-soft: #eaf6f3; }
+.v2-services__grid > .v2-service:nth-child(5) { --v2-accent: #48aa74; --v2-accent-deep: #2b8053; --v2-accent-soft: #eaf6f0; }
+.v2-services__grid > .v2-service:nth-child(6) { --v2-accent: #47b15f; --v2-accent-deep: #2a8442; --v2-accent-soft: #eaf7ed; }
+.v2-services__grid > .v2-service:nth-child(7) { --v2-accent: #46b749; --v2-accent-deep: #2e8a34; --v2-accent-soft: #eaf6ea; }
+
+.v2-services__grid > .v2-service:not(.v2-service--action) {
+  background: linear-gradient(170deg, var(--v2-accent-soft), var(--v2-surface) 64%);
+}
+
+.v2-service__glyph {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 18px;
+  border-radius: 13px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px var(--v2-line);
+  color: var(--v2-accent-deep, var(--v2-blue-deep));
+}
+
+.v2-service__glyph svg { width: 24px; height: 24px; }
+
+.v2-service__label {
+  color: var(--v2-ink-subtle);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.v2-service h3 {
+  margin: 10px 0 0;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.24;
+}
+
+.v2-service p {
+  margin: 10px 0 0;
+  color: var(--v2-ink-muted);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+.v2-service ul {
+  margin: 16px 0 22px;
+  padding: 0;
+  list-style: none;
+}
+
+.v2-service li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--v2-ink-muted);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.v2-service li + li { margin-top: 7px; }
+
+.v2-service li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--v2-accent, var(--v2-green));
+}
+
+.v2-service__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--v2-line);
+  color: var(--v2-ink);
+  font-size: 14.5px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.v2-service__link span { color: var(--v2-accent, var(--v2-blue)); transition: transform .16s ease; }
+.v2-service__link:hover { color: var(--v2-accent-deep, var(--v2-blue-deep)); }
+.v2-service__link:hover span { transform: translateX(3px); }
+
+.v2-service--action {
+  background: var(--v2-ink);
+  border-color: var(--v2-ink);
+  color: #fff;
+}
+
+.v2-service--action:hover { border-color: var(--v2-ink); }
+.v2-service--action .v2-eyebrow { color: #8fc4ea; }
+.v2-service--action h3 { color: #fff; margin-top: 12px; }
+.v2-service--action p { color: rgba(255, 255, 255, .74); }
+.v2-service--action .v2-button { margin-top: auto; }
+
+/* Инфографика: шкалы классов опасности. Насыщенность синего = уровень опасности. */
+
+.v2-classes {
+  margin-top: clamp(28px, 3.5vw, 44px);
+  padding: clamp(24px, 3vw, 36px);
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius-lg);
+  background: var(--v2-surface-muted);
+}
+
+.v2-classes__head {
+  display: grid;
+  gap: 10px;
+  max-width: 720px;
+}
+
+.v2-classes__head h3 {
+  margin: 0;
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.v2-classes__head p {
+  margin: 0;
+  color: var(--v2-ink-muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.v2-classes__scales {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 36px);
+  margin-top: 26px;
+}
+
+.v2-scale__title {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--v2-ink-subtle);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.v2-scale__row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.v2-scale__step {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 14px 12px 16px;
+  border-radius: 12px;
+  background: var(--v2-surface);
+}
+
+.v2-scale__step strong {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.v2-scale__step small {
+  color: var(--v2-ink-muted);
+  font-size: 12.5px;
+  line-height: 1.35;
+  hyphens: auto;
+}
+
+.v2-scale__step--1 strong { background: var(--v2-blue-deep); color: #fff; }
+.v2-scale__step--2 strong { background: var(--v2-blue); color: #fff; }
+.v2-scale__step--3 strong { background: rgba(76, 145, 202, .42); color: var(--v2-ink); }
+.v2-scale__step--4 strong { background: rgba(76, 145, 202, .18); color: var(--v2-ink); }
+
+.v2-classes__note {
+  margin: 24px 0 0;
+  padding: 15px 18px;
+  border-radius: 12px;
+  background: var(--v2-green-soft);
+  color: var(--v2-ink-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* --------------------------------------------------------------------------
+   04 · Как проходит работа: вход → операции → результат
+   -------------------------------------------------------------------------- */
+
+.v2-flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1.25fr) 44px minmax(0, 1fr);
+  gap: 10px;
+  align-items: stretch;
+}
+
+.v2-flow__col {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface);
+}
+
+.v2-flow__col--in { border-top: 3px solid var(--v2-blue); }
+.v2-flow__col--out { border-top: 3px solid var(--v2-green); }
+
+.v2-flow__col--core {
+  border: 0;
+  background: linear-gradient(165deg, rgba(76, 145, 202, .13), rgba(70, 183, 73, .13)), var(--v2-surface);
+  box-shadow: var(--v2-shadow-md);
+}
+
+.v2-flow__title {
+  display: block;
+  margin-bottom: 16px;
+  color: var(--v2-ink-subtle);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.v2-flow__col--core .v2-flow__title { color: var(--v2-ink); }
+
+.v2-chips {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.v2-chips li {
+  padding: 11px 14px;
+  border: 1px solid rgba(76, 145, 202, .26);
+  border-radius: var(--v2-radius-pill);
+  background: var(--v2-blue-soft);
+  color: var(--v2-ink-muted);
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.v2-chips--result li {
+  border-color: rgba(70, 183, 73, .3);
+  background: var(--v2-green-soft);
+}
+
+.v2-flow__hint {
+  margin: 16px 0 0;
+  color: var(--v2-ink-subtle);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.v2-flow__steps {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.v2-flow__steps li {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 12px;
+  padding: 13px 15px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .8);
+}
+
+.v2-flow__steps span {
+  color: var(--v2-blue-deep);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+
+.v2-flow__steps strong {
+  display: block;
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+.v2-flow__steps small {
+  display: block;
+  margin-top: 3px;
+  color: var(--v2-ink-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.v2-flow__steps li:last-child span { color: var(--v2-green-deep); }
+
+.v2-flow__arrow {
+  display: grid;
+  place-items: center;
+  color: rgba(76, 145, 202, .55);
+}
+
+.v2-flow__arrow svg { width: 36px; height: 20px; }
+.v2-flow > .v2-flow__arrow:last-of-type { color: rgba(70, 183, 73, .6); }
+
+/* --------------------------------------------------------------------------
+   05 · Инфраструктура: история, показатели, возможности
+   -------------------------------------------------------------------------- */
+
+.v2-timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0 0 clamp(40px, 5vw, 64px);
+  padding: 0;
+  list-style: none;
+}
+
+.v2-timeline::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 9px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--v2-blue), var(--v2-green));
+}
+
+.v2-timeline__item {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  padding-top: 34px;
+}
+
+.v2-timeline__item::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--v2-blue);
+  border-radius: 50%;
+  background: var(--v2-page);
+}
+
+.v2-timeline__item--now::before {
+  border-color: var(--v2-green);
+  background: var(--v2-green);
+}
+
+.v2-timeline__year {
+  color: var(--v2-blue-deep);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .06em;
+}
+
+.v2-timeline__item--now .v2-timeline__year { color: var(--v2-green-deep); }
+
+.v2-timeline__item strong {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -.015em;
+  line-height: 1.25;
+}
+
+.v2-timeline__item small {
+  color: var(--v2-ink-muted);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.v2-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.v2-metric {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  padding: 24px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface);
+}
+
+.v2-metric__glyph {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 6px;
+  border-radius: 12px;
+  background: var(--v2-green-soft);
+  color: var(--v2-green-deep);
+}
+
+.v2-metric__glyph svg { width: 22px; height: 22px; }
+
+.v2-metric strong {
+  font-size: clamp(24px, 2.6vw, 32px);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.05;
+}
+
+.v2-metric > span {
+  color: var(--v2-ink);
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.v2-metric small {
+  color: var(--v2-ink-subtle);
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.v2-capabilities {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: clamp(32px, 4vw, 48px);
+}
+
+.v2-capabilities article {
+  padding: 22px 24px;
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface);
+  border-left: 3px solid var(--v2-blue);
+}
+
+.v2-capabilities article:nth-child(even) { border-left-color: var(--v2-green); }
+
+.v2-capabilities strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -.015em;
+}
+
+.v2-capabilities p {
+  margin: 8px 0 0;
+  color: var(--v2-ink-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   06 · География
+   -------------------------------------------------------------------------- */
+
+.v2-geo__board {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 14px;
+}
+
+.v2-geo__map {
+  position: relative;
+  min-height: 420px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius-lg);
+  background:
+    linear-gradient(rgba(21, 33, 29, .035) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(90deg, rgba(21, 33, 29, .035) 1px, transparent 1px) 0 0 / 32px 32px,
+    var(--v2-surface);
+  overflow: hidden;
+}
+
+.v2-geo__links {
+  /* Совпадает с областью позиционирования узлов, иначе линия не дотягивается
+     до крайних городов: координаты пути читаются в тех же процентах. */
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  /* non-scaling-stroke в разметке: толщина не искажается растяжением viewBox */
+  stroke: url(#v2GeoLine);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: .8;
+}
+
+.v2-geo__node {
+  position: absolute;
+  left: calc(var(--x) * 1%);
+  top: calc(var(--y) * 1%);
+  min-height: 40px;
+  padding: 9px 15px 9px 32px;
+  border: 1px solid var(--v2-line-strong);
+  border-radius: var(--v2-radius-pill);
+  background: var(--v2-surface);
+  box-shadow: var(--v2-shadow-sm);
+  color: var(--v2-ink);
+  font: 700 13.5px/1.1 var(--font-family-base);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+
+.v2-geo__node::before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--v2-blue);
+  transform: translateY(-50%);
+}
+
+.v2-geo__node:hover { border-color: var(--v2-blue); }
+
+.v2-geo__node.is-active {
+  border-color: var(--v2-green);
+  box-shadow: 0 0 0 6px rgba(70, 183, 73, .14);
+}
+
+.v2-geo__node.is-active::before { background: var(--v2-green); }
+
+.v2-geo__info {
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  padding: 26px;
+  border-radius: var(--v2-radius-lg);
+  background: var(--v2-ink);
+  color: rgba(255, 255, 255, .76);
+}
+
+.v2-geo__info .v2-eyebrow { color: #8fc4ea; }
+
+.v2-geo__info h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+}
+
+.v2-geo__info a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.v2-geo__info a:hover { color: #a7d9a9; }
+
+.v2-geo__phone {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+.v2-geo__info p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.v2-geo__hours { color: rgba(255, 255, 255, .58); }
+
+.v2-geo__info .v2-button {
+  margin-top: 10px;
+  border-color: rgba(255, 255, 255, .22);
+  background: rgba(255, 255, 255, .09);
+  color: #fff;
+}
+
+.v2-geo__info .v2-button:hover {
+  border-color: var(--v2-green);
+  background: rgba(70, 183, 73, .18);
+  color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   07 · Документы
+   -------------------------------------------------------------------------- */
+
+.v2-docs__layout {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+}
+
+.v2-docs__layout .v2-heading { margin-bottom: 0; }
+
+.v2-docs__stack {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: docs;
+}
+
+.v2-docs__stack li {
+  display: grid;
+  gap: 6px;
+  padding: 20px 24px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface-muted);
+  transition: border-color .16s ease, background .16s ease;
+}
+
+.v2-docs__stack li:hover {
+  border-color: rgba(70, 183, 73, .4);
+  background: var(--v2-green-soft);
+}
+
+.v2-docs__stack span {
+  color: var(--v2-green-deep);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.v2-docs__stack strong {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.v2-docs__stack small {
+  color: var(--v2-ink-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   08 · Частые вопросы
+   -------------------------------------------------------------------------- */
+
+.v2-faq__layout {
+  display: grid;
+  grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+}
+
+.v2-faq__layout .v2-heading { margin-bottom: 0; }
+
+.v2-faq__list {
+  display: grid;
+  gap: 10px;
+}
+
+.v2-faq__item {
+  padding: 4px 22px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface);
+}
+
+.v2-faq__item[open] { border-color: rgba(76, 145, 202, .4); }
+
+.v2-faq__item summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding-block: 18px;
+  color: var(--v2-ink);
+  font-size: 16.5px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  line-height: 1.4;
+  list-style: none;
+  cursor: pointer;
+}
+
+.v2-faq__item summary::-webkit-details-marker { display: none; }
+
+.v2-faq__item summary::before {
+  content: "+";
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  margin-top: 1px;
+  border-radius: 8px;
+  background: var(--v2-blue-soft);
+  color: var(--v2-blue-deep);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.v2-faq__item[open] summary::before {
+  content: "−";
+  background: var(--v2-green-soft);
+  color: var(--v2-green-deep);
+}
+
+.v2-faq__item p {
+  margin: 0 0 20px;
+  padding-left: 39px;
+  color: var(--v2-ink-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   09 · Заявка
+   -------------------------------------------------------------------------- */
+
+.v2-request {
+  scroll-margin-top: var(--v2-header-height);
+  background:
+    linear-gradient(112deg, rgba(76, 145, 202, .1) 0%, rgba(76, 145, 202, 0) 40%,
+                    rgba(70, 183, 73, 0) 60%, rgba(70, 183, 73, .1) 100%),
+    var(--v2-surface-muted);
+}
+
+.v2-request__layout {
+  display: grid;
+  grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+}
+
+.v2-request__aside .v2-heading { margin-bottom: 28px; }
+
+.v2-request__steps {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.v2-request__steps li {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.v2-request__steps span {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--v2-blue-soft);
+  color: var(--v2-blue-deep);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.v2-request__steps li:last-child span {
+  background: var(--v2-green-soft);
+  color: var(--v2-green-deep);
+}
+
+.v2-request__steps strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -.015em;
+}
+
+.v2-request__steps small {
+  display: block;
+  margin-top: 3px;
+  color: var(--v2-ink-muted);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.v2-request__contact {
+  display: grid;
+  gap: 6px;
+  margin-top: 28px;
+  padding: 22px;
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface);
+}
+
+.v2-request__contact a {
+  color: var(--v2-ink);
+  text-decoration: none;
+}
+
+.v2-request__contact a:hover { color: var(--v2-blue-deep); }
+
+.v2-request__phone {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.v2-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: clamp(22px, 3vw, 34px);
+  border-radius: var(--v2-radius-lg);
+  background: var(--v2-surface);
+  box-shadow: var(--v2-shadow-md);
+}
+
+.v2-field {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.v2-field--wide { grid-column: 1 / -1; }
+
+.v2-field > span {
+  color: var(--v2-ink);
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.v2-control {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 15px;
+  border: 1px solid var(--v2-line-strong);
+  border-radius: 12px;
+  outline: 0;
+  background: var(--v2-surface);
+  color: var(--v2-ink);
+  font-size: 15px;
+}
+
+textarea.v2-control {
+  min-height: 120px;
+  padding-block: 13px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.v2-control:focus {
+  border-color: var(--v2-blue);
+  box-shadow: 0 0 0 3px rgba(76, 145, 202, .16);
+}
+
+/* Выпадающие списки формы оформлены так же, как селектор города в шапке */
+select.v2-control {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 40px;
+  background-image: linear-gradient(45deg, transparent 49%, var(--v2-ink-subtle) 50% 63%, transparent 64%),
+                    linear-gradient(-45deg, transparent 49%, var(--v2-ink-subtle) 50% 63%, transparent 64%);
+  background-position: calc(100% - 21px) 52%, calc(100% - 15px) 52%;
+  background-size: 7px 7px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.v2-form__dynamic {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 12px;
+  background: var(--v2-blue-soft);
+}
+
+.v2-form__dynamic[hidden] { display: none; }
+
+.v2-form__dynamic .v2-field > span { font-size: 13px; }
+.v2-form__dynamic .v2-control { background: var(--v2-surface); }
+
+.v2-form__dynamic-title {
+  color: var(--v2-blue-deep);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.v2-form__consent {
+  position: relative;
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--v2-ink-muted);
+  font-size: 13.5px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+/* Собственный чекбокс: системный скрыт, состояние рисует .v2-checkbox */
+.v2-form__consent input {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  opacity: 0;
+}
+
+.v2-checkbox {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  margin-top: 1px;
+  border: 1.5px solid var(--v2-line-strong);
+  border-radius: 6px;
+  background: var(--v2-surface);
+  color: #fff;
+  transition: background .14s ease, border-color .14s ease;
+}
+
+.v2-checkbox svg {
+  width: 13px;
+  height: 13px;
+  opacity: 0;
+  transform: scale(.7);
+  transition: opacity .14s ease, transform .14s ease;
+}
+
+.v2-form__consent input:checked + .v2-checkbox {
+  border-color: var(--v2-green);
+  background: var(--v2-green);
+}
+
+.v2-form__consent input:checked + .v2-checkbox svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.v2-form__consent input:focus-visible + .v2-checkbox {
+  outline: 2px solid var(--v2-blue);
+  outline-offset: 2px;
+}
+
+.v2-form__consent:hover .v2-checkbox { border-color: var(--v2-green); }
+
+.v2-form__consent-copy { min-width: 0; }
+
+.v2-form__consent a { color: var(--v2-blue-deep); }
+.v2-form__consent a:hover { color: var(--v2-blue); }
+
+.v2-form__footer {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+}
+
+.v2-form__footer p {
+  margin: 0;
+  color: var(--v2-ink-subtle);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.v2-form__status {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--v2-green-soft);
+  color: var(--v2-green-deep);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.v2-form__status[hidden] { display: none; }
+
+/* --------------------------------------------------------------------------
+   Подвал
+   -------------------------------------------------------------------------- */
+
+.v2-footer {
+  padding-block: clamp(48px, 6vw, 72px) 24px;
+  background: #16211e;
+  color: rgba(255, 255, 255, .66);
+}
+
+.v2-footer__top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
+  gap: clamp(28px, 4vw, 56px);
+}
+
+.v2-footer__brand p {
+  max-width: 380px;
+  margin: 18px 0 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.v2-logo--invert { color: #fff; }
+.v2-logo--invert:hover { color: #fff; }
+.v2-logo--invert .v2-logo__copy small { color: rgba(255, 255, 255, .72); }
+
+.v2-footer__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.v2-footer__column {
+  display: grid;
+  align-content: start;
+  gap: 11px;
+}
+
+.v2-footer__title {
+  margin-bottom: 4px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+/* Раньше здесь стоял .v2-footer a. По специфичности он перебивал
+   .v2-logo--invert и .v2-button--primary и перекрашивал название компании
+   и текст кнопки в полупрозрачный белый. Сужаем до списков ссылок —
+   компоненты сохраняют собственные цвета без переопределений. */
+.v2-footer__column a,
+.v2-footer__location a {
+  color: rgba(255, 255, 255, .66);
+  font-size: 14.5px;
+  text-decoration: none;
+}
+
+.v2-footer__column a:hover,
+.v2-footer__location a:hover { color: #fff; }
+
+/* Ссылка на каталог отделена от перечня услуг */
+.v2-footer__column .v2-footer__all {
+  margin-top: 6px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.v2-footer__location {
+  display: grid;
+  gap: 3px;
+}
+
+/* !important больше не нужен: сузили .v2-footer a до списков ссылок. */
+.v2-footer__location .v2-footer__city {
+  color: #fff;
+  font-weight: 700;
+}
+
+.v2-footer__location span { font-size: 14px; }
+
+.v2-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 26px;
+  margin-top: clamp(36px, 4vw, 52px);
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, .12);
+  color: rgba(255, 255, 255, .44);
+  font-size: 12.5px;
+}
+
+/* --------------------------------------------------------------------------
+   Внутренние страницы: первый экран, хлебные крошки, панель фактов.
+   Используется страницами услуг (service-v2) и компании (company-v2).
+   -------------------------------------------------------------------------- */
+
+.v2-subhero {
+  padding-block: clamp(20px, 2.5vw, 32px) clamp(40px, 5vw, 64px);
+  background:
+    linear-gradient(112deg, rgba(70, 183, 73, .07) 0%, rgba(70, 183, 73, 0) 38%,
+                    rgba(76, 145, 202, 0) 58%, rgba(76, 145, 202, .11) 100%),
+    var(--v2-page);
+}
+
+.v2-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: clamp(24px, 3vw, 38px);
+  color: var(--v2-ink-subtle);
+  font-size: 13px;
+}
+
+.v2-crumbs a {
+  color: var(--v2-ink-subtle);
+  text-decoration: none;
+}
+
+.v2-crumbs a:hover { color: var(--v2-blue-deep); }
+.v2-crumbs span[aria-current] { color: var(--v2-ink); font-weight: 600; }
+
+.v2-subhero__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+}
+
+.v2-subhero__copy h1 {
+  max-width: 18ch;
+  margin: 14px 0 0;
+  font-size: clamp(30px, 3.5vw, 46px);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.12;
+}
+
+.v2-subhero__lead {
+  max-width: 60ch;
+  margin: 20px 0 0;
+  color: var(--v2-ink-muted);
+  font-size: clamp(16px, 1.4vw, 18px);
+  line-height: 1.62;
+}
+
+.v2-subhero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.v2-subhero__note {
+  max-width: 56ch;
+  margin: 22px 0 0;
+  padding-left: 15px;
+  border-left: 2px solid var(--v2-green);
+  color: var(--v2-ink-subtle);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+/* Панель ключевых параметров: считывается раньше основного текста */
+.v2-facts {
+  display: grid;
+  gap: 1px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius-lg);
+  background: var(--v2-line);
+  overflow: hidden;
+}
+
+.v2-fact {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 20px 22px;
+  background: var(--v2-surface);
+}
+
+.v2-fact__body { display: grid; gap: 5px; }
+
+.v2-fact__icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--v2-blue-soft);
+  color: var(--v2-blue-deep);
+}
+
+.v2-fact__icon svg { width: 21px; height: 21px; }
+
+/* Итоговый документ — зелёный, как результат на остальных страницах v2 */
+.v2-fact__icon--document {
+  background: var(--v2-green-soft);
+  color: var(--v2-green-deep);
+}
+
+.v2-fact strong {
+  font-size: clamp(19px, 1.9vw, 23px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+}
+
+.v2-fact span {
+  color: var(--v2-ink-muted);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+@media (max-width: 1000px) {
+  .v2-subhero__layout { grid-template-columns: minmax(0, 1fr); }
+  .v2-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; }
+}
+
+@media (max-width: 760px) {
+  .v2-subhero__copy h1 { max-width: none; }
+  .v2-subhero__actions .v2-button { width: 100%; }
+  .v2-facts { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* --------------------------------------------------------------------------
+   Анимации
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-menu,
+  .v2-nav__item:hover > .v2-menu,
+  .v2-nav__item:focus-within > .v2-menu,
+  .v2-nav__item[data-open="true"] > .v2-menu,
+  .v2-nav__item[data-open="false"] > .v2-menu { transition: none; transform: none; }
+
+  .v2-nav__toggle { transition: none; }
+
+  .v2-audience__grid li:hover,
+  .v2-service:hover { transform: none; }
+
+  .v2-drawer__panel,
+  .v2-drawer__backdrop { transition: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Адаптив: 1600 → 360
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 1600px) {
+  .v2-page,
+  .v2-header,
+  .v2-footer { --v2-width: 1440px; }
+}
+
+@media (max-width: 1200px) {
+  .v2-nav { gap: 16px; }
+  .v2-nav a { font-size: 13.5px; }
+  .v2-header__phone { display: none; }
+  .v2-services__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .v2-geo__board { grid-template-columns: minmax(0, 1fr) 280px; }
+}
+
+@media (max-width: 1060px) {
+  /* Пункты меню уходят в ящик, но сама строка остаётся: в ней лежит поиск,
+     и на узких экранах он единственный её житель. */
+  .v2-nav__item,
+  .v2-header__cta,
+  .v2-header__contact { display: none; }
+  .v2-burger { display: block; }
+
+  /* Правый блок раскрывается в общую строку шапки, чтобы поиск встал между
+     городом и бургером — на место часов работы. */
+  /* Порядок задаём только для строки шапки: в ящике лежат такие же
+     .v2-logo и кнопки, и без этой привязки они бы тоже переставились. */
+  .v2-header__actions { display: contents; }
+  .v2-header__inner { position: relative; }
+  .v2-header__inner .v2-logo { order: 1; }
+  .v2-header__inner .v2-city { order: 2; margin-left: auto; }
+  .v2-header__inner .v2-nav { order: 3; flex: 0 0 auto; gap: 0; }
+  .v2-header__inner .v2-burger { order: 4; }
+
+  .v2-search__open { width: 44px; height: 44px; }
+  .v2-search__open svg { width: 18px; height: 18px; }
+
+  /* Ширины строки меню здесь не хватает под поле, поэтому оно
+     разворачивается на всю шапку, а логотип, город и бургер гаснут — так же,
+     как пункты меню на десктопе. Ширину анимировать нечем (auto не
+     интерполируется), остаётся проявление. */
+  .v2-search { position: static; }
+
+  .v2-search__field {
+    left: 0;
+    right: 0;
+    width: auto;
+    transition: opacity .18s ease, visibility 0s linear .18s;
+  }
+
+  .v2-search[data-expanded="true"] .v2-search__field {
+    width: auto;
+    transition: opacity .16s ease, visibility 0s;
+  }
+
+  .v2-header[data-search-open="true"] .v2-header__inner .v2-logo,
+  .v2-header[data-search-open="true"] .v2-header__inner .v2-city,
+  .v2-header[data-search-open="true"] .v2-header__inner .v2-burger {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .v2-header__inner .v2-logo,
+  .v2-header__inner .v2-city,
+  .v2-header__inner .v2-burger { transition: opacity .18s ease; }
+
+  .v2-hero__layout { grid-template-columns: minmax(0, 1fr); }
+
+  /* Подписи внутри круговой схемы масштабируются вместе с SVG и на узких
+     экранах становятся нечитаемыми — переходим на вертикальный список. */
+  .v2-cycle { margin-top: 6px; }
+  .v2-cycle__diagram { display: none; }
+  .v2-cycle__list { display: grid; max-width: 520px; }
+
+  .v2-flow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .v2-flow__arrow { transform: rotate(90deg); height: 26px; }
+
+  .v2-docs__layout,
+  .v2-faq__layout,
+  .v2-request__layout { grid-template-columns: minmax(0, 1fr); }
+
+  .v2-geo__board { grid-template-columns: minmax(0, 1fr); }
+  .v2-footer__top { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
+  .v2-trust { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .v2-audience__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .v2-services__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .v2-metrics,
+  .v2-capabilities { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .v2-classes__scales { grid-template-columns: minmax(0, 1fr); }
+
+  .v2-timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
+  .v2-timeline::before { display: none; }
+  .v2-timeline__item { padding-top: 0; padding-left: 26px; }
+  .v2-timeline__item::before { left: 0; top: 5px; }
+}
+
+@media (max-width: 720px) {
+  .v2-header__inner { min-height: 66px; gap: 10px; }
+  /* Только в шапке: в строке нет места под название рядом с городом и
+     бургером. В подвале колонка своей ширины, и там название нужно. */
+  .v2-header .v2-logo__copy { display: none; }
+  .v2-city__trigger { font-size: 13.5px; }
+  .v2-city__value { max-width: 108px; }
+
+  .v2-hero__actions .v2-button { width: 100%; }
+
+  .v2-timeline,
+  .v2-trust,
+  .v2-audience__grid,
+  .v2-services__grid,
+  .v2-metrics,
+  .v2-capabilities,
+  .v2-form { grid-template-columns: minmax(0, 1fr); }
+
+  .v2-scale__row { grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .v2-field--wide,
+  .v2-form__consent,
+  .v2-form__footer,
+  .v2-form__status { grid-column: auto; }
+
+  .v2-form__footer { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .v2-form__footer .v2-button { width: 100%; }
+
+  .v2-geo__map { min-height: 340px; }
+  .v2-footer__top { grid-template-columns: minmax(0, 1fr); }
+  .v2-footer__cta .v2-button { width: 100%; }
+}
+
+@media (max-width: 400px) {
+  .v2-city__value { max-width: 92px; }
+  .v2-scale__row { grid-auto-flow: row; grid-template-columns: minmax(0, 1fr); }
+}

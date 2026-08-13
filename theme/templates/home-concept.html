@@ -1,0 +1,284 @@
+<article class="page home-concept">
+  <section class="concept-hero" aria-labelledby="concept-hero-title">
+    <div class="concept-field" aria-hidden="true"></div>
+    <div class="container concept-hero__layout">
+      <div class="concept-hero__copy">
+        <span class="concept-hero__eyebrow">Полный цикл утилизации отходов</span>
+        <h1 id="concept-hero-title"><span class="concept-hero__title-nowrap">Сбор, транспортирование</span> и обезвреживание отходов</h1>
+        <p>Организуем разовый и регулярный вывоз отходов для юридических лиц и индивидуальных предпринимателей в Сургуте, Тюмени, Новосибирске и Нягани.</p>
+        <div class="concept-hero__actions cluster">
+          <a class="button button--primary" href="#request">Получить расчёт</a>
+          <a class="button button--secondary" href="{{ .BaseURL }}/contacts/">Задать вопрос специалисту</a>
+        </div>
+      </div>
+
+      <figure class="cycle-board" aria-labelledby="company-cycle-title">
+        <svg class="cycle-diagram" viewBox="0 0 720 720" role="img" aria-labelledby="company-cycle-title company-cycle-desc">
+          <title id="company-cycle-title">Цикл деятельности компании</title>
+          <desc id="company-cycle-desc">Последовательность: заявка, проверка, логистика, обработка, документы. От последнего узла к первому стрелки нет.</desc>
+          <defs>
+            <linearGradient id="cycleArrowGradient1" x1="152.9" y1="209.5" x2="280.9" y2="116.5" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#5bc873" />
+              <stop offset="1" stop-color="#5cc77f" />
+            </linearGradient>
+            <linearGradient id="cycleArrowGradient2" x1="439.1" y1="116.5" x2="567.1" y2="209.5" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#5cc77f" />
+              <stop offset="1" stop-color="#5bbfc1" />
+            </linearGradient>
+            <linearGradient id="cycleArrowGradient3" x1="616" y1="360" x2="567.1" y2="510.5" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#5bbfc1" />
+              <stop offset="1" stop-color="#5ab8dc" />
+            </linearGradient>
+            <linearGradient id="cycleArrowGradient4" x1="439.1" y1="603.5" x2="280.9" y2="603.5" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#5ab8dc" />
+              <stop offset="1" stop-color="#5aaee6" />
+            </linearGradient>
+            <marker id="cycleArrowHead1" markerWidth="18" markerHeight="18" refX="13" refY="9" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M2 2 L14 9 L2 16 Z" fill="#5cc77f" />
+            </marker>
+            <marker id="cycleArrowHead2" markerWidth="18" markerHeight="18" refX="13" refY="9" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M2 2 L14 9 L2 16 Z" fill="#5bbfc1" />
+            </marker>
+            <marker id="cycleArrowHead3" markerWidth="18" markerHeight="18" refX="13" refY="9" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M2 2 L14 9 L2 16 Z" fill="#5ab8dc" />
+            </marker>
+            <marker id="cycleArrowHead4" markerWidth="18" markerHeight="18" refX="13" refY="9" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M2 2 L14 9 L2 16 Z" fill="#5aaee6" />
+            </marker>
+            <filter id="cycleNodeShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#1e2925" flood-opacity=".12" />
+            </filter>
+          </defs>
+
+          <g class="cycle-rings cycle-rings--outer" aria-hidden="true">
+            <circle cx="360" cy="360" r="350" />
+            <circle cx="360" cy="360" r="282" />
+          </g>
+          <g class="cycle-rings cycle-rings--route" aria-hidden="true">
+            <circle cx="360" cy="360" r="256" />
+          </g>
+          <g class="cycle-rings cycle-rings--inner" aria-hidden="true">
+            <circle cx="360" cy="360" r="178" />
+            <circle cx="360" cy="360" r="116" />
+          </g>
+
+          <g class="cycle-arrows" fill="none" stroke-width="22" stroke-linecap="round">
+            <path pathLength="100" stroke="url(#cycleArrowGradient1)" marker-end="url(#cycleArrowHead1)" d="M 152.9 209.5 A 256 256 0 0 1 280.9 116.5" />
+            <path pathLength="100" stroke="url(#cycleArrowGradient2)" marker-end="url(#cycleArrowHead2)" d="M 439.1 116.5 A 256 256 0 0 1 567.1 209.5" />
+            <path pathLength="100" stroke="url(#cycleArrowGradient3)" marker-end="url(#cycleArrowHead3)" d="M 616 360 A 256 256 0 0 1 567.1 510.5" />
+            <path pathLength="100" stroke="url(#cycleArrowGradient4)" marker-end="url(#cycleArrowHead4)" d="M 439.1 603.5 A 256 256 0 0 1 280.9 603.5" />
+          </g>
+
+          <g class="cycle-center">
+            <circle cx="360" cy="360" r="92" />
+            <text class="cycle-center__intro" x="360" y="344" text-anchor="middle">
+              <tspan x="360" dy="0">полный цикл</tspan>
+              <tspan x="360" dy="24">утилизации</tspan>
+              <tspan x="360" dy="24">отходов</tspan>
+            </text>
+            <image class="cycle-center__logo" href="{{ .AssetsBase }}/logo.svg" x="323.5" y="331" width="73" height="58" preserveAspectRatio="xMidYMid meet" />
+          </g>
+
+          <g class="cycle-node cycle-node--1" transform="translate(116.5 280.9)">
+            <circle r="80" />
+            <foreignObject x="-70" y="-54" width="140" height="108">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="cycle-node__text">
+                <span>01</span><strong>Заявка</strong><small>отход, объём, адрес</small>
+              </div>
+            </foreignObject>
+          </g>
+          <g class="cycle-node cycle-node--2" transform="translate(360 104)">
+            <circle r="80" />
+            <foreignObject x="-70" y="-54" width="140" height="108">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="cycle-node__text">
+                <span>02</span><strong>Проверка</strong><small>класс, ФККО, лицензия</small>
+              </div>
+            </foreignObject>
+          </g>
+          <g class="cycle-node cycle-node--3" transform="translate(603.5 280.9)">
+            <circle r="80" />
+            <foreignObject x="-70" y="-54" width="140" height="108">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="cycle-node__text">
+                <span>03</span><strong>Логистика</strong><small>тара, график, вывоз</small>
+              </div>
+            </foreignObject>
+          </g>
+          <g class="cycle-node cycle-node--4" transform="translate(510.5 567.1)">
+            <circle r="80" />
+            <foreignObject x="-70" y="-54" width="140" height="108">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="cycle-node__text">
+                <span>04</span><strong>Обработка</strong><small>операция по договору</small>
+              </div>
+            </foreignObject>
+          </g>
+          <g class="cycle-node cycle-node--5 cycle-node--final" transform="translate(209.5 567.1)">
+            <circle r="80" />
+            <foreignObject x="-70" y="-54" width="140" height="108">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="cycle-node__text">
+                <span>05</span><strong>Документы</strong><small>акт, УПД, фиксация</small>
+              </div>
+            </foreignObject>
+          </g>
+        </svg>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section concept-io" aria-labelledby="concept-io-title">
+    <div class="container concept-io__layout">
+      <header class="section-heading">
+        <span class="section-heading__eyebrow">Input / System / Output</span>
+        <h2 id="concept-io-title" class="section-heading__title">Что приходит, что делает система, что получает клиент</h2>
+        <p class="section-heading__description">Одна схема заменяет несколько абзацев: заявка превращается в проверенный маршрут работ и комплект подтверждений.</p>
+      </header>
+      <div class="io-diagram">
+        <div class="io-stack" aria-label="Входные сведения">
+          <span>Фото</span>
+          <span>Код ФККО</span>
+          <span>Класс</span>
+          <span>Объём</span>
+          <span>Адрес</span>
+        </div>
+        <div class="io-system">
+          <strong>УТИЛИТСЕРВИС</strong>
+          <ol>
+            <li>проверка</li>
+            <li>упаковка</li>
+            <li>график</li>
+            <li>транспортирование</li>
+            <li>обезвреживание</li>
+          </ol>
+        </div>
+        <div class="io-stack io-stack--output" aria-label="Документы и результат">
+          <span>Договор</span>
+          <span>УПД</span>
+          <span>Акт</span>
+          <span>Фото / видео</span>
+          <span>Подтверждения</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface concept-materials" aria-labelledby="concept-materials-title">
+    <div class="container">
+      <header class="section-heading">
+        <span class="section-heading__eyebrow">Услуги</span>
+        <h2 id="concept-materials-title" class="section-heading__title">Выберите вид отходов</h2>
+        <p class="section-heading__description">Подберем маршрут обращения с отходами под конкретную организацию, состав партии и требования к документам.</p>
+      </header>
+      <div class="catalog-service-grid">
+        <article class="catalog-service-card catalog-service-card--blue"><span class="catalog-service-card__label">Для клиник и лабораторий</span><h3>Медицинские отходы</h3><p>Сбор, транспортирование и обезвреживание отходов классов А, Б, В и Г.</p><ul><li>разовый или регулярный вывоз</li><li>тара и требования к упаковке</li><li>закрывающие документы</li></ul><a href="{{ .BaseURL }}/medical-waste/">Подробнее <span>→</span></a></article>
+        <article class="catalog-service-card catalog-service-card--green"><span class="catalog-service-card__label">Для предприятий</span><h3>Промышленные отходы I–IV классов</h3><p>Работа с отходами производства после проверки класса, кода ФККО и лицензии.</p><ul><li>разовые партии</li><li>регулярное обслуживание</li><li>проверка возможности приёма</li></ul><a href="{{ .BaseURL }}/industrial-waste/">Подробнее <span>→</span></a></article>
+        <article class="catalog-service-card"><span class="catalog-service-card__label">Для торговли и общепита</span><h3>Пищевые отходы и продукция</h3><p>Вывоз пищевых отходов и уничтожение просроченной или некачественной продукции.</p><ul><li>регулярный график</li><li>списанные партии</li><li>фиксация результата</li></ul><a href="{{ .BaseURL }}/food-waste/">Подробнее <span>→</span></a></article>
+        <article class="catalog-service-card"><span class="catalog-service-card__label">Для фермерских хозяйств</span><h3>Биологические отходы</h3><p>Решения для животноводческих и фермерских хозяйств с проверкой условий хранения.</p><ul><li>вид и масса отходов</li><li>адрес хозяйства</li><li>техническая проверка</li></ul><a href="{{ .BaseURL }}/biological-waste/">Подробнее <span>→</span></a></article>
+        <article class="catalog-service-card"><span class="catalog-service-card__label">Для архивов и организаций</span><h3>Уничтожение документов</h3><p>Вывоз и термическое уничтожение архивных, бухгалтерских и конфиденциальных документов.</p><ul><li>разовый вывоз</li><li>акт уничтожения</li><li>фото- или видеофиксация</li></ul><a href="{{ .BaseURL }}/document-destruction/">Подробнее <span>→</span></a></article>
+        <article class="catalog-service-card catalog-service-card--blue"><span class="catalog-service-card__label">Экологическая документация</span><h3>Паспорта отходов</h3><p>Подготовка паспортов отходов I–IV классов опасности и работа с исходными документами.</p><ul><li>несколько видов отходов</li><li>анализ исходных данных</li><li>подготовка комплекта</li></ul><a href="{{ .BaseURL }}/environmental-documents/">Подробнее <span>→</span></a></article>
+        <article class="catalog-service-card catalog-service-card--green"><span class="catalog-service-card__label">Для владельцев и ветклиник</span><h3>Кремация домашних животных</h3><p>Общая и индивидуальная кремация в пределах территории обслуживания подразделения.</p><ul><li>общий или индивидуальный формат</li><li>условия выезда</li><li>согласование времени</li></ul><a href="{{ .BaseURL }}/pet-cremation/">Подробнее <span>→</span></a></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section concept-capability" aria-labelledby="concept-capability-title">
+    <div class="container concept-capability__layout">
+      <header class="section-heading">
+        <span class="section-heading__eyebrow">Capability system</span>
+        <h2 id="concept-capability-title" class="section-heading__title">Инфраструктура как система операций</h2>
+        <p class="section-heading__description">База, площадки, транспорт и документы складываются в маршрут, а не в набор рекламных тезисов.</p>
+      </header>
+      <div class="facility-board">
+        <div class="facility-board__viewport">
+          <span>FACILITY / TYUMEN / 01</span>
+          <div class="facility-map" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i>
+          </div>
+        </div>
+        <ol class="facility-flow">
+          <li><span>01</span><strong>Приём</strong></li>
+          <li><span>02</span><strong>Накопление</strong></li>
+          <li><span>03</span><strong>Обработка</strong></li>
+          <li><span>04</span><strong>Транспорт</strong></li>
+          <li><span>05</span><strong>Документы</strong></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--strong concept-telemetry" aria-labelledby="concept-telemetry-title">
+    <div class="container">
+      <header class="section-heading">
+        <span class="section-heading__eyebrow">Operational telemetry</span>
+        <h2 id="concept-telemetry-title" class="section-heading__title">Показатели как операционная панель</h2>
+      </header>
+      <div class="telemetry-grid">
+        <article class="telemetry-card"><strong>11 000 т / год</strong><span>обезвреживание · Тюмень</span><i></i></article>
+        <article class="telemetry-card"><strong>60+</strong><span>единиц специализированного транспорта</span><i></i></article>
+        <article class="telemetry-card"><strong>2005 -> 2026</strong><span>операционная история компании</span><i></i></article>
+        <article class="telemetry-card"><strong>4 города</strong><span>распределённая сеть подразделений</span><i></i></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section concept-network" aria-labelledby="concept-network-title">
+    <div class="container concept-network__layout">
+      <header class="section-heading">
+        <span class="section-heading__eyebrow">Network</span>
+        <h2 id="concept-network-title" class="section-heading__title">Четыре города как рабочая сеть</h2>
+        <p class="section-heading__description">Абстрактная карта без лишней географии: только узлы, связь подразделений и контакт выбранного города.</p>
+      </header>
+      <div class="network-board" data-presence-map>
+        <div class="network-map" aria-label="Сеть подразделений">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M18 32 C30 18 41 24 43 36 S45 62 56 66 S70 68 82 78" /></svg>
+          <button type="button" class="network-node" style="--x:43;--y:36" data-city="surgut" data-title="Сургут" data-phone="+7 (3462) 55-58-97" data-phone-link="+73462555897" data-email="utilit@bk.ru" data-address="Сургутский район, п.г.т. Белый Яр, ул. Некрасова, 24а" data-hours="Ежедневно, 08:00–17:00" data-link="{{ .BaseURL }}/surgut/">Сургут</button>
+          <button type="button" class="network-node" style="--x:18;--y:32" data-city="nyagan" data-title="Нягань" data-phone="+7 (3462) 55-58-97" data-phone-link="+73462555897" data-email="utilit@bk.ru" data-address="г. Нягань, ул. Ленина, 17" data-hours="Время приёма согласуется по заявке" data-link="{{ .BaseURL }}/nyagan/">Нягань</button>
+          <button type="button" class="network-node" style="--x:56;--y:66" data-city="tyumen" data-title="Тюмень" data-phone="+7 (3452) 59-38-17" data-phone-link="+73452593817" data-email="utilit_tyumen@bk.ru" data-address="г. Тюмень, ул. Республики, 164, стр. 2, офис 314" data-hours="Пн-Чт 08:00-17:00; Пт 08:00-16:00" data-link="{{ .BaseURL }}/tyumen/">Тюмень</button>
+          <button type="button" class="network-node" style="--x:82;--y:78" data-city="novosibirsk" data-title="Новосибирск" data-phone="+7 (383) 218-21-84" data-phone-link="+73832182184" data-email="nsk@utilit.tw1.ru.ru" data-address="г. Новосибирск, ул. Сакко и Ванцетти, 74" data-hours="Время приёма согласуется по заявке" data-link="{{ .BaseURL }}/novosibirsk/">Новосибирск</button>
+        </div>
+        <aside class="network-info">
+          <span class="eyebrow">Подразделение</span>
+          <h3 data-presence-title>Сургут</h3>
+          <a href="tel:+73462555897" data-presence-phone>+7 (3462) 55-58-97</a>
+          <a href="mailto:utilit@bk.ru" data-presence-email>utilit@bk.ru</a>
+          <p data-presence-address>Сургутский район, п.г.т. Белый Яр, ул. Некрасова, 24а</p>
+          <p data-presence-hours>Ежедневно, 08:00-17:00</p>
+          <a class="button button--secondary" href="{{ .BaseURL }}/surgut/" data-presence-link>Страница подразделения</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface concept-compliance" aria-labelledby="concept-compliance-title">
+    <div class="container concept-compliance__layout">
+      <header class="section-heading">
+        <span class="section-heading__eyebrow">Compliance stack</span>
+        <h2 id="concept-compliance-title" class="section-heading__title">Документы как часть продукта</h2>
+        <p class="section-heading__description">Лицензия, договор, УПД и акт визуально собраны в реестр статусов, без имитации печатей и тяжёлой канцелярии.</p>
+      </header>
+      <div class="document-stack" aria-label="Комплект документов">
+        <article><span>01 / документ</span><strong>Лицензия</strong><small>операция в разрешённых пределах</small></article>
+        <article><span>02 / статус</span><strong>Договор</strong><small>состав работ и документов</small></article>
+        <article><span>03 / учёт</span><strong>УПД</strong><small>закрывающие документы</small></article>
+        <article><span>04 / подтверждение</span><strong>Акт</strong><small>результат выполненных работ</small></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section concept-request" id="request" aria-labelledby="concept-request-title">
+    <div class="container concept-request__layout">
+      <header class="section-heading">
+        <span class="section-heading__eyebrow">Task configurator</span>
+        <h2 id="concept-request-title" class="section-heading__title">Опишите задачу</h2>
+        <p class="section-heading__description">Форма выглядит как постановка задачи: регион, тип отхода, описание, материалы и дальнейший статус проверки.</p>
+      </header>
+      <form class="task-form" action="#" method="post">
+        <div class="task-status" aria-label="Статус заявки"><span>Заявка</span><i></i><span>Проверка специалистом</span><i></i><span>Расчёт</span></div>
+        <label><span>01 Регион</span><select class="control" name="city" data-request-city><option value="surgut">Сургут</option><option value="tyumen">Тюмень</option><option value="novosibirsk">Новосибирск</option><option value="nyagan">Нягань</option></select></label>
+        <label><span>02 Тип отхода</span><select class="control" name="service" data-request-service><option>Медицинские отходы</option><option>Промышленные отходы I-IV классов</option><option>Пищевые отходы и продукция</option><option>Биологические отходы</option><option>Уничтожение документов</option><option>Паспорта отходов</option></select></label>
+        <label><span>03 Объём / описание</span><textarea class="control" name="comment" placeholder="Вид отхода, объём, адрес, периодичность"></textarea></label>
+        <label><span>04 Материалы</span><input class="control" type="text" name="materials" placeholder="Фото, паспорт отхода, код ФККО" /></label>
+        <label><span>Телефон</span><input class="control" type="tel" name="phone" placeholder="+7 ___ ___-__-__" required /></label>
+        <button class="button button--primary" type="submit">Передать на проверку</button>
+      </form>
+    </div>
+  </section>
+</article>

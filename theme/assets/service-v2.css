@@ -1,0 +1,437 @@
+/* ============================================================================
+   service-v2 — надстройка над общим слоем v2.css для страниц услуг.
+
+   Здесь только компоненты, которых нет на главной. Оболочка, кнопки, чипы,
+   секции, FAQ, форма заявки, шапка и подвал приходят из v2.css без дублей.
+
+   Цветовая семантика та же, что на главной: синий — вход и процесс,
+   зелёный — результат и подтверждение, графит — структура.
+   ========================================================================= */
+
+/* --------------------------------------------------------------------------
+   02 · Кому подходит и формат работы
+   -------------------------------------------------------------------------- */
+
+.sv2-scope__layout {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+}
+
+.sv2-scope .v2-heading { margin-bottom: 22px; }
+.sv2-scope .v2-heading h2 { font-size: clamp(24px, 2.6vw, 32px); }
+
+.sv2-audience {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sv2-audience li { flex: 0 1 auto; }
+
+.sv2-formats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.sv2-format {
+  padding: 22px 24px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface);
+  border-left: 3px solid var(--v2-blue);
+}
+
+.sv2-format:nth-child(even) { border-left-color: var(--v2-green); }
+
+.sv2-format strong {
+  display: block;
+  font-size: 16.5px;
+  font-weight: 700;
+  letter-spacing: -.015em;
+}
+
+.sv2-format p {
+  margin: 8px 0 0;
+  color: var(--v2-ink-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   03 · С чем работаем — главный различитель услуг
+   -------------------------------------------------------------------------- */
+
+.sv2-kinds {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.sv2-kind {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  padding: 22px 24px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface-muted);
+  transition: border-color .16s ease, background .16s ease;
+}
+
+/* Карточки без кода класса занимают всю ширину строки под текст */
+.sv2-kind:not(:has(.sv2-kind__code)) { grid-template-columns: minmax(0, 1fr); }
+
+.sv2-kind:hover {
+  border-color: rgba(76, 145, 202, .42);
+  background: var(--v2-surface);
+}
+
+/* Насыщенность синего = уровень опасности или значимости позиции */
+.sv2-kind__code {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+
+.sv2-kind__code--1 { background: var(--v2-blue-deep); color: #fff; }
+.sv2-kind__code--2 { background: var(--v2-blue); color: #fff; }
+.sv2-kind__code--3 { background: rgba(76, 145, 202, .4); color: var(--v2-ink); }
+.sv2-kind__code--4 { background: rgba(76, 145, 202, .16); color: var(--v2-ink); }
+
+.sv2-kind h3 {
+  margin: 0;
+  font-size: 17.5px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.3;
+}
+
+.sv2-kind p {
+  margin: 8px 0 0;
+  color: var(--v2-ink-muted);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+/* --------------------------------------------------------------------------
+   04 · Порядок работы
+   -------------------------------------------------------------------------- */
+
+.sv2-process {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* количество колонок подбирается под число шагов, чтобы последняя
+     строка не оставалась почти пустой */
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: sv2-step;
+}
+
+.sv2-process:has(> :nth-child(6):last-child) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.sv2-step {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  padding: 22px 22px 24px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface);
+  counter-increment: sv2-step;
+}
+
+.sv2-step::before {
+  content: counter(sv2-step, decimal-leading-zero);
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin-bottom: 4px;
+  border-radius: 10px;
+  background: var(--v2-blue-soft);
+  color: var(--v2-blue-deep);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.sv2-step:last-child::before {
+  background: var(--v2-green-soft);
+  color: var(--v2-green-deep);
+}
+
+.sv2-step strong {
+  font-size: 16.5px;
+  font-weight: 700;
+  letter-spacing: -.015em;
+  line-height: 1.3;
+}
+
+.sv2-step small {
+  color: var(--v2-ink-muted);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   05 · Что нужно от вас и что вы получаете
+   -------------------------------------------------------------------------- */
+
+.sv2-io {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.sv2-io__col {
+  padding: 26px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface);
+}
+
+.sv2-io__col--in { border-top: 3px solid var(--v2-blue); }
+.sv2-io__col--out { border-top: 3px solid var(--v2-green); }
+
+.sv2-io__title {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--v2-ink-subtle);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.sv2-io__arrow {
+  display: grid;
+  place-items: center;
+  color: rgba(76, 145, 202, .5);
+}
+
+.sv2-io__arrow svg { width: 38px; height: 20px; }
+
+/* --------------------------------------------------------------------------
+   06 · Подготовка и ограничения
+   -------------------------------------------------------------------------- */
+
+.sv2-rules__layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+}
+
+.sv2-rules .v2-heading { margin-bottom: 22px; }
+.sv2-rules .v2-heading h2 { font-size: clamp(24px, 2.6vw, 32px); }
+
+.sv2-prepare {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sv2-prepare li {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.sv2-prepare__check {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+  border-radius: 8px;
+  background: var(--v2-green-soft);
+  color: var(--v2-green-deep);
+}
+
+.sv2-prepare__check svg { width: 13px; height: 13px; }
+
+.sv2-prepare strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -.015em;
+}
+
+.sv2-prepare small {
+  display: block;
+  margin-top: 4px;
+  color: var(--v2-ink-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.sv2-limits {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sv2-limits li {
+  position: relative;
+  padding: 15px 18px 15px 50px;
+  border-radius: 12px;
+  background: var(--v2-surface);
+  color: var(--v2-ink-muted);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+.sv2-limits li::before {
+  content: "!";
+  position: absolute;
+  left: 16px;
+  top: 14px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  background: var(--v2-blue-soft);
+  color: var(--v2-blue-deep);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.sv2-limits__note {
+  margin: 18px 0 0;
+  padding: 15px 18px;
+  border-radius: 12px;
+  background: var(--v2-green-soft);
+  color: var(--v2-ink-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* --------------------------------------------------------------------------
+   08 · Другие услуги
+   -------------------------------------------------------------------------- */
+
+.sv2-related__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.sv2-related__card {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 22px 24px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface);
+  color: var(--v2-ink);
+  text-decoration: none;
+  transition: border-color .16s ease, transform .16s ease;
+}
+
+.sv2-related__card:hover {
+  border-color: rgba(76, 145, 202, .45);
+  color: var(--v2-ink);
+  transform: translateY(-2px);
+}
+
+.sv2-related__label {
+  color: var(--v2-ink-subtle);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.sv2-related__card strong {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.3;
+}
+
+.sv2-related__arrow {
+  color: var(--v2-blue);
+  font-weight: 700;
+  transition: transform .16s ease;
+}
+
+.sv2-related__card:hover .sv2-related__arrow { transform: translateX(3px); }
+
+/* --------------------------------------------------------------------------
+   09 · Факторы стоимости рядом с формой
+   -------------------------------------------------------------------------- */
+
+.sv2-pricing {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+  padding: 22px;
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface);
+}
+
+.sv2-pricing__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sv2-pricing__list li {
+  padding: 8px 13px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius-pill);
+  background: var(--v2-surface-muted);
+  color: var(--v2-ink-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Адаптив
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .sv2-process { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sv2-related__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 1000px) {
+  .sv2-scope__layout,
+  .sv2-rules__layout { grid-template-columns: minmax(0, 1fr); }
+
+  .sv2-io { grid-template-columns: minmax(0, 1fr); }
+  .sv2-io__arrow { transform: rotate(90deg); height: 26px; }
+
+}
+
+@media (max-width: 760px) {
+  .sv2-formats,
+  .sv2-kinds,
+  .sv2-process,
+  .sv2-related__grid { grid-template-columns: minmax(0, 1fr); }
+}

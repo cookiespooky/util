@@ -1,0 +1,256 @@
+<header class="v2-header" data-v2-header>
+  <div class="v2-header__bar">
+    <div class="v2-shell v2-header__inner">
+      <a class="v2-logo" href="{{ .BaseURL }}/" aria-label="Утилитсервис — главная">
+        <img class="v2-logo__mark" src="{{ .AssetsBase }}/logo.svg" width="45" height="36" alt="" aria-hidden="true" />
+        <span class="v2-logo__copy">
+          <strong>Утилитсервис</strong>
+          <small>обращение с отходами</small>
+        </span>
+      </a>
+
+      {{- /* Пункты меню собираются из коллекций, поэтому не расходятся
+             со страницами. Сам пункт — обычная ссылка на страницу-раздел,
+             панель открывает отдельная кнопка: так на ощупь и с клавиатуры
+             работает то же, что мышью по наведению. */ -}}
+      <nav class="v2-nav" aria-label="Основная навигация">
+
+        <div class="v2-nav__item" data-nav-item>
+          <a class="v2-nav__link" href="{{ .BaseURL }}/services-v2/">Услуги</a>
+          <button class="v2-nav__toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="v2-menu-services">
+            <svg viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1.5 6 6.5 11 1.5"/></svg>
+            <span class="v2-sr-only">Показать список услуг</span>
+          </button>
+
+          <div class="v2-menu" id="v2-menu-services" data-nav-panel>
+            <div class="v2-shell v2-menu__inner">
+              <div class="v2-menu__grid v2-menu__grid--wide">
+                {{- range .Collections.services_v2.Items }}
+                <a class="v2-menu__card" href="{{ $.BaseURL }}/{{ .Slug }}/">
+                  <span class="v2-menu__icon" aria-hidden="true">{{ template "v2_service_glyph.html" . }}</span>
+                  <span class="v2-menu__copy">
+                    <strong>{{ .FM.hero_title }}</strong>
+                    <small>{{ .FM.hero_kicker }}</small>
+                  </span>
+                </a>
+                {{- end }}
+              </div>
+              <div class="v2-menu__foot">
+                <a class="v2-menu__all" href="{{ .BaseURL }}/services-v2/">Все услуги <span aria-hidden="true">→</span></a>
+                <a class="v2-menu__hint" href="#request">Не знаю, какой у меня отход — опишу задачу словами</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="v2-nav__item" data-nav-item>
+          <a class="v2-nav__link" href="{{ .BaseURL }}/about-v2/">Компания</a>
+          <button class="v2-nav__toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="v2-menu-company">
+            <svg viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1.5 6 6.5 11 1.5"/></svg>
+            <span class="v2-sr-only">Показать раздел о компании</span>
+          </button>
+
+          <div class="v2-menu" id="v2-menu-company" data-nav-panel>
+            <div class="v2-shell v2-menu__inner">
+              <div class="v2-menu__grid v2-menu__grid--wide">
+                {{- /* Контакты вынесены в отдельный пункт меню */ -}}
+                {{- range .Collections.company_v2.Items }}
+                {{- if ne .Slug "contacts-v2" }}
+                <a class="v2-menu__card" href="{{ $.BaseURL }}/{{ .Slug }}/">
+                  <span class="v2-menu__icon" aria-hidden="true">
+                    {{- if eq .FM.icon "building" }}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 21h17"/><path d="M5.5 21V5.5a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2V21"/><path d="M14.5 10h3a2 2 0 0 1 2 2v9"/><path d="M8.5 7.5h3M8.5 11h3M8.5 14.5h3"/></svg>
+                    {{- else if eq .FM.icon "document" }}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2.5h8l4.5 4.5V21.5H6z"/><path d="M14 2.5V7h4.5"/><path d="M9 13.6l2.1 2.1 4.2-4.2"/></svg>
+                    {{- else if eq .FM.icon "people" }}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8.5" r="3.8"/><path d="M2.5 20c0-3.8 3-6 6.5-6s6.5 2.2 6.5 6"/><path d="M16.5 5.6a3.8 3.8 0 0 1 0 6M21.5 20c0-3-1.2-4.9-3.2-5.8"/></svg>
+                    {{- else if eq .FM.icon "question" }}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.4 9.2a2.7 2.7 0 0 1 5.2.9c0 1.8-2.6 2.2-2.6 3.9"/><path d="M12 17.3v.01"/></svg>
+                    {{- else }}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.2 12 3.5l9 4.7v7.6L12 20.5l-9-4.7z"/><path d="M3 8.2 12 13l9-4.8M12 13v7.5"/></svg>
+                    {{- end }}
+                  </span>
+                  <span class="v2-menu__copy">
+                    <strong>{{ .FM.nav_title }}</strong>
+                    <small>{{ .FM.hero_kicker }}</small>
+                  </span>
+                </a>
+                {{- end }}
+                {{- end }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="v2-nav__item" data-nav-item>
+          <a class="v2-nav__link" href="{{ .BaseURL }}/contacts-v2/">Контакты</a>
+          <button class="v2-nav__toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="v2-menu-contacts">
+            <svg viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1.5 6 6.5 11 1.5"/></svg>
+            <span class="v2-sr-only">Показать подразделения</span>
+          </button>
+
+          <div class="v2-menu" id="v2-menu-contacts" data-nav-panel>
+            <div class="v2-shell v2-menu__inner">
+              <div class="v2-menu__grid v2-menu__grid--places">
+                {{- range .Collections.cities_v2.Items }}
+                <a class="v2-menu__card" href="{{ $.BaseURL }}/{{ .Slug }}/">
+                  <span class="v2-menu__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s7-6.6 7-11.2A7 7 0 1 0 5 10.3c0 4.6 7 11.2 7 11.2z"/><circle cx="12" cy="10" r="2.7"/></svg>
+                  </span>
+                  <span class="v2-menu__copy">
+                    <strong>{{ .FM.nav_title }}</strong>
+                    <small>{{ .FM.contact.address }}</small>
+                  </span>
+                </a>
+                {{- end }}
+              </div>
+              <div class="v2-menu__foot">
+                <a class="v2-menu__all" href="{{ .BaseURL }}/contacts-v2/">Все контакты и реквизиты <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {{- /* Поиск — следующий элемент за «Контактами». По нажатию пункты
+               меню прячутся, а поле занимает всю ширину строки: лупа уходит
+               внутрь поля слева, справа появляется крестик. */ -}}
+        <div class="v2-search" data-header-search>
+          <button class="v2-search__open" type="button" data-search-expand aria-expanded="false" aria-controls="v2-search-field">
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+            <span class="v2-sr-only">Поиск по сайту</span>
+          </button>
+
+          <div class="v2-search__field" id="v2-search-field">
+            <span class="v2-search__icon" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="currentColor"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+            </span>
+            <input class="v2-search__input" type="search" data-search-field placeholder="Вид отхода, услуга или город"
+                   autocomplete="off" role="combobox" aria-expanded="false" aria-controls="v2-search-results" aria-label="Поиск по сайту" />
+            <button class="v2-search__close" type="button" data-search-collapse>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+              <span class="v2-sr-only">Закрыть поиск</span>
+            </button>
+
+            <div class="v2-search__results" id="v2-search-results" role="listbox" aria-label="Результаты поиска" data-search-output hidden></div>
+          </div>
+        </div>
+
+      </nav>
+
+      <div class="v2-header__actions">
+        <!-- Нативный select оставлен как источник состояния: с ним работают
+             общие main.js (телефон, email, поле города в форме) и карта.
+             Он меняет контекст страницы и не связан с пунктом «Контакты». -->
+        <div class="v2-city" data-city-dropdown>
+          <select class="v2-city__native" data-city-select tabindex="-1" aria-hidden="true">
+            <option value="surgut">Сургут</option>
+            <option value="tyumen">Тюмень</option>
+            <option value="nyagan">Нягань</option>
+          </select>
+
+          <button class="v2-city__trigger" type="button" data-city-trigger aria-haspopup="listbox" aria-expanded="false">
+            <span class="v2-city__pin" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s7-6.6 7-11.2A7 7 0 1 0 5 10.3c0 4.6 7 11.2 7 11.2z"/><circle cx="12" cy="10" r="2.7"/></svg>
+            </span>
+            <span class="v2-city__value" data-city-value>Сургут</span>
+            <span class="v2-city__chevron" aria-hidden="true">
+              <svg viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1.5 6 6.5 11 1.5"/></svg>
+            </span>
+            <span class="v2-sr-only">Выберите город</span>
+          </button>
+
+          <ul class="v2-city__menu" data-city-menu role="listbox" aria-label="Города" hidden>
+            <li><button class="v2-city__option" type="button" role="option" aria-selected="true" data-city-option="surgut">Сургут</button></li>
+            <li><button class="v2-city__option" type="button" role="option" aria-selected="false" data-city-option="tyumen">Тюмень</button></li>
+            <li><button class="v2-city__option" type="button" role="option" aria-selected="false" data-city-option="nyagan">Нягань</button></li>
+          </ul>
+        </div>
+
+        <span class="v2-header__contact">
+          <a class="v2-header__phone" href="tel:+73462555897" data-city-phone>+7 3462 55-58-97</a>
+          <small class="v2-header__hours">Пн–Пт 08:00–17:00</small>
+        </span>
+
+        <a class="v2-button v2-button--primary v2-header__cta" href="#request">Оставить заявку</a>
+
+        <button class="v2-burger" type="button" data-drawer-open aria-expanded="false" aria-controls="v2-drawer">
+          <span></span><span></span><span></span>
+          <span class="v2-sr-only">Открыть меню</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {{- /* Список страниц v2 для поиска в шапке. Отдаётся data-атрибутами,
+         а не JSON: разметку экранирует шаблонизатор, ломать кавычками
+         нечего. Ссылками не делаем, чтобы не плодить дубли в разметке. */ -}}
+  <div hidden data-search-index>
+    {{- range .Collections.search_v2.Items }}
+    <div data-item
+         data-title="{{ if .FM.hero_title }}{{ .FM.hero_title }}{{ else }}{{ .FM.title }}{{ end }}"
+         data-path="/{{ .Slug }}/"
+         data-kind="{{ .FM.page_kind }}"
+         data-snippet="{{ .FM.description }}"></div>
+    {{- end }}
+  </div>
+
+  <div class="v2-drawer" id="v2-drawer" data-mobile-drawer aria-hidden="true">
+    <button class="v2-drawer__backdrop" type="button" data-drawer-close aria-label="Закрыть меню"></button>
+    <aside class="v2-drawer__panel">
+      <div class="v2-drawer__top">
+        <a class="v2-logo v2-logo--compact" href="{{ .BaseURL }}/" aria-label="Утилитсервис — главная">
+          <img class="v2-logo__mark" src="{{ .AssetsBase }}/logo.svg" width="45" height="36" alt="" aria-hidden="true" />
+          <span class="v2-logo__copy"><strong>Утилитсервис</strong></span>
+        </a>
+        {{- /* Поиска в ящике нет: на узких экранах он живёт в самой шапке,
+               рядом с городом, и работает так же, как на десктопе. */ -}}
+        <button class="v2-drawer__close" type="button" data-drawer-close aria-label="Закрыть меню">×</button>
+      </div>
+
+      {{- /* На узких экранах ховера нет, поэтому те же разделы — аккордеоном
+             на нативных details: разметка отдаётся целиком, работает без
+             скрипта, клавиатура и скринридеры поддержаны браузером. */ -}}
+      <nav class="v2-drawer__nav" aria-label="Мобильная навигация">
+
+        <details class="v2-drawer__group">
+          <summary>Услуги</summary>
+          <div class="v2-drawer__sub">
+            {{- range .Collections.services_v2.Items }}
+            <a href="{{ $.BaseURL }}/{{ .Slug }}/" data-drawer-close>{{ .FM.hero_title }}</a>
+            {{- end }}
+            <a class="v2-drawer__all" href="{{ .BaseURL }}/services-v2/" data-drawer-close>Все услуги</a>
+          </div>
+        </details>
+
+        <details class="v2-drawer__group">
+          <summary>Компания</summary>
+          <div class="v2-drawer__sub">
+            {{- range .Collections.company_v2.Items }}
+            {{- if ne .Slug "contacts-v2" }}
+            <a href="{{ $.BaseURL }}/{{ .Slug }}/" data-drawer-close>{{ .FM.nav_title }}</a>
+            {{- end }}
+            {{- end }}
+          </div>
+        </details>
+
+        <details class="v2-drawer__group">
+          <summary>Контакты</summary>
+          <div class="v2-drawer__sub">
+            {{- range .Collections.cities_v2.Items }}
+            <a href="{{ $.BaseURL }}/{{ .Slug }}/" data-drawer-close>{{ .FM.nav_title }}</a>
+            {{- end }}
+            <a class="v2-drawer__all" href="{{ .BaseURL }}/contacts-v2/" data-drawer-close>Все контакты и реквизиты</a>
+          </div>
+        </details>
+
+      </nav>
+
+      <div class="v2-drawer__contact">
+        <span class="v2-eyebrow">Связаться</span>
+        <a href="tel:+73462555897" data-city-phone>+7 3462 55-58-97</a>
+        <a href="mailto:utilit@bk.ru" data-city-email>utilit@bk.ru</a>
+        <a class="v2-button v2-button--primary v2-button--block" href="#request" data-drawer-close>Оставить заявку</a>
+      </div>
+    </aside>
+  </div>
+</header>

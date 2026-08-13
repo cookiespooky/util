@@ -1,0 +1,188 @@
+<article class="page v2-page catalog-v2">
+
+  <!-- 01 · Первый экран раздела услуг -->
+  <section class="v2-subhero" aria-labelledby="cat2-hero-title">
+    <div class="v2-shell">
+      <nav class="v2-crumbs" aria-label="Хлебные крошки">
+        <a href="{{ .BaseURL }}/home-v2/">Главная</a>
+        <span aria-hidden="true">/</span>
+        <!-- В крошке короткое имя раздела, а не длинный H1 страницы. -->
+        <span aria-current="page">Услуги</span>
+      </nav>
+
+      <div class="v2-subhero__layout">
+        <div class="v2-subhero__copy">
+          <span class="v2-eyebrow v2-eyebrow--accent">{{ .FM.hero_kicker }}</span>
+          <h1 id="cat2-hero-title">{{ .FM.hero_title }}</h1>
+          <p class="v2-subhero__lead">{{ .FM.hero_lead }}</p>
+          {{- if .FM.show_request }}
+          <div class="v2-subhero__actions">
+            <a class="v2-button v2-button--primary" href="#request">Задать вопрос специалисту</a>
+          </div>
+          {{- end }}
+          {{- if .FM.hero_note }}
+          <p class="v2-subhero__note">{{ .FM.hero_note }}</p>
+          {{- end }}
+        </div>
+
+        {{ template "v2_facts.html" . }}
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · Сетка услуг. Карточки собираются из коллекции services_v2,
+       поэтому каталог не расходится со страницами услуг: заголовок,
+       адресат и описание берутся из их же frontmatter. -->
+  <section class="v2-section v2-section--surface v2-services" id="services" aria-labelledby="cat2-services-title">
+    <div class="v2-shell">
+      <header class="v2-heading">
+        <span class="v2-eyebrow">Направления работы</span>
+        <h2 id="cat2-services-title">Выберите вид отходов</h2>
+        <p>Конкретный перечень принимаемых отходов проверяется по заявке, документам, действующей лицензии и техническим возможностям подразделения.</p>
+      </header>
+
+      <div class="v2-services__grid">
+        {{- range .Collections.services_v2.Items }}
+        <article class="v2-service">
+          <span class="v2-service__glyph" aria-hidden="true">{{ template "v2_service_glyph.html" . }}</span>
+          <span class="v2-service__label">{{ .FM.hero_kicker }}</span>
+          <h3>{{ .FM.hero_title }}</h3>
+          <p>{{ .FM.description }}</p>
+          <a class="v2-service__link" href="{{ $.BaseURL }}/{{ .Slug }}/">Подробнее <span aria-hidden="true">→</span></a>
+        </article>
+        {{- end }}
+
+        <!-- Карточка для неизвестного отхода. Класс v2-service--action
+             подхватывает initUnknownWasteShortcut в v2.js: услуга в форме
+             сбрасывается, фокус уходит в поле описания. -->
+        <article class="v2-service v2-service--action">
+          <span class="v2-eyebrow v2-eyebrow--accent">Не нашли свой отход?</span>
+          <h3>Проверим возможность приёма</h3>
+          <p>Пришлите описание, фотографию, паспорт отхода или код ФККО, если он известен. Специалист проверит возможность работы и подскажет, какие сведения нужны для расчёта.</p>
+          <a class="v2-button v2-button--primary v2-button--block" href="#request">Проверить возможность приёма</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · Общее начало для любого направления. Сетка .sv2-process
+       рассчитана на всю ширину секции, в отличие от списка шагов
+       в колонке формы. Четыре шага дают ровный ряд из четырёх колонок. -->
+  <section class="v2-section sv2-process-section" id="process" aria-labelledby="cat2-process-title">
+    <div class="v2-shell">
+      <header class="v2-heading">
+        <span class="v2-eyebrow">Порядок работы</span>
+        <h2 id="cat2-process-title">Начало одинаково для всех направлений</h2>
+        <p>Дальше порядок зависит от услуги: где-то это вывоз и обезвреживание, где-то — подготовка документов. На первом шаге достаточно описать задачу словами.</p>
+      </header>
+
+      <ol class="sv2-process">
+        <li class="sv2-step">
+          <strong>Заявка</strong>
+          <small>Вид отхода, примерный объём, адрес объекта и желаемая периодичность.</small>
+        </li>
+        <li class="sv2-step">
+          <strong>Проверка</strong>
+          <small>Код ФККО, класс опасности, действующая лицензия и технические возможности подразделения.</small>
+        </li>
+        <li class="sv2-step">
+          <strong>Согласование и договор</strong>
+          <small>Стоимость, график, требования к таре и состав документов по итогам работ.</small>
+        </li>
+        <li class="sv2-step">
+          <strong>Работы и документы</strong>
+          <small>Предусмотренная договором операция и передача закрывающих документов.</small>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 04 · Заявка -->
+  {{- if .FM.show_request }}
+  <section class="v2-section v2-request" id="request" aria-labelledby="cat2-request-title">
+    <div class="v2-shell v2-request__layout">
+      <div class="v2-request__aside">
+        <header class="v2-heading">
+          <span class="v2-eyebrow">Заявка</span>
+          <h2 id="cat2-request-title">{{ .FM.request_title }}</h2>
+          <p>{{ .FM.request_note }}</p>
+        </header>
+
+        <ol class="v2-request__steps">
+          <li><span>01</span><div><strong>Вы отправляете заявку</strong><small>город, услуга, телефон и краткое описание</small></div></li>
+          <li><span>02</span><div><strong>Специалист проверяет сведения</strong><small>класс отхода, лицензию и техническую возможность</small></div></li>
+          <li><span>03</span><div><strong>Согласуем условия и график</strong><small>стоимость, периодичность и состав документов</small></div></li>
+        </ol>
+
+        <div class="v2-request__contact">
+          <span class="v2-eyebrow">Если удобнее позвонить</span>
+          <a class="v2-request__phone" href="tel:+73462555897" data-city-phone>+7 3462 55-58-97</a>
+          <a href="mailto:utilit@bk.ru" data-city-email>utilit@bk.ru</a>
+        </div>
+      </div>
+
+      <form class="v2-form" method="post" action="#" novalidate data-v2-form>
+        <label class="v2-field">
+          <span>Город</span>
+          <select class="v2-control" name="city" data-request-city>
+            <option value="surgut">Сургут</option>
+            <option value="tyumen">Тюмень</option>
+            <option value="nyagan">Нягань</option>
+          </select>
+        </label>
+
+        <label class="v2-field">
+          <span>Услуга</span>
+          <select class="v2-control" name="service" data-request-service>
+            <option value="">Не знаю — подберите</option>
+            <option value="medical">Медицинские отходы</option>
+            <option value="industrial">Промышленные отходы I–IV классов</option>
+            <option value="food">Пищевые отходы и продукция</option>
+            <option value="biological">Биологические отходы</option>
+            <option value="documents">Уничтожение документов</option>
+            <option value="passports">Паспорта отходов</option>
+            <option value="cremation">Кремация домашних животных</option>
+          </select>
+        </label>
+
+        <div class="v2-field v2-field--wide v2-form__dynamic" data-dynamic-fields hidden></div>
+
+        <label class="v2-field">
+          <span>Телефон</span>
+          <input class="v2-control" type="tel" name="phone" placeholder="+7 ___ ___-__-__" required />
+        </label>
+
+        <label class="v2-field">
+          <span>Email</span>
+          <input class="v2-control" type="email" name="email" placeholder="name@company.ru" />
+        </label>
+
+        <label class="v2-field v2-field--wide">
+          <span>Организация — необязательно</span>
+          <input class="v2-control" type="text" name="company" placeholder="Название организации" />
+        </label>
+
+        <label class="v2-field v2-field--wide">
+          <span>Комментарий</span>
+          <textarea class="v2-control" name="comment" placeholder="Вид отхода, объём, адрес объекта, периодичность вывоза"></textarea>
+        </label>
+
+        <label class="v2-form__consent">
+          <input type="checkbox" name="privacy-consent" required />
+          <span class="v2-checkbox" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.4l3 3 6-6.4"/></svg>
+          </span>
+          <span class="v2-form__consent-copy">Согласен на <a href="{{ .BaseURL }}/privacy/">обработку персональных данных</a>.</span>
+        </label>
+
+        <div class="v2-form__footer">
+          <button class="v2-button v2-button--primary" type="submit">Отправить заявку</button>
+          <p>Отправка заявки не подтверждает возможность приёма отхода. Специалист проверит сведения, действующую лицензию и техническую возможность выполнения работ.</p>
+        </div>
+
+        <p class="v2-form__status" data-form-status role="status" hidden></p>
+      </form>
+    </div>
+  </section>
+  {{- end }}
+</article>

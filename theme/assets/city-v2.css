@@ -1,0 +1,232 @@
+/* ============================================================================
+   city-v2 — надстройка для страниц подразделений.
+
+   Первый экран, панель фактов, показатели, чипы, шаги, ограничения, форма,
+   шапка и подвал приходят из v2.css, service-v2.css и company-v2.css.
+   Здесь только карточка контактов, карта подразделения и сетка городов.
+   ========================================================================= */
+
+/* --------------------------------------------------------------------------
+   Контакты подразделения
+   -------------------------------------------------------------------------- */
+
+.ct2-contact__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(24px, 3.5vw, 48px);
+  align-items: start;
+}
+
+.ct2-contact {
+  padding: clamp(24px, 3vw, 34px);
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius-lg);
+  background: var(--v2-surface-muted);
+  color: var(--v2-ink-muted);
+}
+
+.ct2-contact__head {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 24px;
+}
+
+.ct2-contact__dot {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 10px;
+  border-radius: 50%;
+  background: var(--v2-green);
+}
+
+.ct2-contact h2 {
+  margin: 0;
+  color: var(--v2-ink);
+  font-size: clamp(22px, 2.2vw, 28px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.ct2-contact__rows {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+}
+
+.ct2-contact__rows > div {
+  display: grid;
+  gap: 5px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--v2-line);
+}
+
+.ct2-contact__rows > div:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.ct2-contact__rows dt {
+  color: var(--v2-ink-subtle);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.ct2-contact__rows dd {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.55;
+}
+
+.ct2-contact__rows a {
+  color: var(--v2-ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.ct2-contact__rows a:hover { color: var(--v2-blue-deep); }
+
+/* Несколько телефонов подразделения перечисляются столбцом */
+.ct2-contact__phones {
+  display: grid;
+  gap: 4px;
+  justify-items: start;
+}
+
+.ct2-contact__note {
+  margin: 24px 0 0;
+  padding: 15px 18px;
+  border-radius: 12px;
+  background: var(--v2-surface);
+  box-shadow: inset 0 0 0 1px var(--v2-line);
+  color: var(--v2-ink-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* --------------------------------------------------------------------------
+   Карта подразделения
+   -------------------------------------------------------------------------- */
+
+.ct2-map .v2-heading { margin-bottom: 20px; }
+.ct2-map .v2-heading h2 { font-size: clamp(22px, 2.2vw, 28px); }
+
+/* Соотношение сторон вместо фиксированной высоты: карта тянется по колонке
+   и на узких экранах не вырождается в полоску. */
+.ct2-map__frame {
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius-lg);
+  background: var(--v2-surface-muted);
+}
+
+.ct2-map__frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.ct2-map__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  color: var(--v2-blue-deep);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.ct2-map__link:hover { color: var(--v2-blue); }
+
+/* --------------------------------------------------------------------------
+   Другие подразделения
+   -------------------------------------------------------------------------- */
+
+.ct2-others {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.ct2-other {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 24px 56px 24px 24px;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius);
+  background: var(--v2-surface-muted);
+  color: var(--v2-ink);
+  text-decoration: none;
+  transition: border-color .16s ease, background .16s ease, transform .16s ease;
+}
+
+.ct2-other:hover {
+  border-color: rgba(76, 145, 202, .45);
+  background: var(--v2-surface);
+  color: var(--v2-ink);
+  transform: translateY(-2px);
+}
+
+.ct2-other__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--v2-blue);
+}
+
+.ct2-other strong {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.ct2-other__address {
+  color: var(--v2-ink-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ct2-other__arrow {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  color: var(--v2-blue);
+  font-weight: 700;
+  transition: transform .16s ease;
+}
+
+.ct2-other:hover .ct2-other__arrow { transform: translateX(3px); }
+
+/* --------------------------------------------------------------------------
+   Ограничения
+   -------------------------------------------------------------------------- */
+
+.ct2-limits__layout {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+}
+
+.ct2-limits__layout .v2-heading { margin-bottom: 0; }
+
+/* --------------------------------------------------------------------------
+   Адаптив
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+  .ct2-contact__layout,
+  .ct2-limits__layout { grid-template-columns: minmax(0, 1fr); }
+  .ct2-limits__layout .v2-heading { margin-bottom: 22px; }
+}
+
+@media (max-width: 760px) {
+  .ct2-others { grid-template-columns: minmax(0, 1fr); }
+}

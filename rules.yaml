@@ -14,6 +14,58 @@ fields:
     - related
     - noindex
     - updated_at
+    # поля страниц service-v2: структура страницы задаётся контентом
+    - hero_title
+    - hero_kicker
+    - hero_lead
+    - hero_note
+    - facts
+    - formats
+    - audience
+    - kinds_title
+    - kinds_note
+    - kinds
+    - process
+    - inputs
+    - outputs
+    - prepare
+    - limits
+    - pricing
+    - faq
+    # поля страниц company-v2: секция выводится, только если поле заполнено
+    - icon          # знак страницы в панели меню
+    - nav_title
+    - stats
+    - timeline
+    - blocks
+    - blocks_title
+    - blocks_note
+    # карточки «кому помогаем»: отдельно от blocks, потому что blocks на других
+    # страницах раздела занят под другие смыслы
+    - audience_cards
+    - audience_title
+    - audience_note
+    - capabilities
+    - documents
+    - documents_title
+    - documents_note
+    - checklist
+    - checklist_title
+    - requisites
+    - offices
+    - logos
+    - logos_title
+    - logos_note
+    - testimonials
+    - faq_groups
+    - show_request
+    - request_title
+    - request_note
+    # поля страниц city-v2
+    - city_key
+    - contact
+    - services
+    - services_note
   defaults:
     draft: false
     noindex: false
@@ -29,6 +81,30 @@ types:
     template: "home.html"
     permalink: "/"
     include_in: { sitemap: true, search: false }
+  home-concept:
+    template: "home-concept.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: false, search: false }
+  home-v2:
+    template: "home-v2.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: false, search: false }
+  catalog-v2:
+    template: "catalog-v2.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: false, search: false }
+  service-v2:
+    template: "service-v2.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: false, search: false }
+  company-v2:
+    template: "company-v2.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: false, search: false }
+  city-v2:
+    template: "city-v2.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: false, search: false }
   catalog:
     template: "catalog.html"
     permalink: "/{{ slug }}/"
@@ -66,8 +142,8 @@ links:
   - name: "related"
     kind: "field"
     field: "related"
-    from_types: ["home", "catalog", "service", "city", "company", "legal", "design", "system"]
-    to_types: ["home", "catalog", "service", "city", "company", "legal", "design", "system"]
+    from_types: ["home", "home-concept", "home-v2", "catalog", "catalog-v2", "service", "service-v2", "company-v2", "city-v2", "city", "company", "legal", "design", "system"]
+    to_types: ["home", "home-concept", "home-v2", "catalog", "catalog-v2", "service", "service-v2", "company-v2", "city-v2", "city", "company", "legal", "design", "system"]
     to: "slug"
     value_syntax: "auto"
     resolve:
@@ -77,9 +153,9 @@ links:
       case: "insensitive"
   - name: "wiki"
     kind: "wikilinks"
-    from_types: ["home", "catalog", "service", "city", "company", "legal", "design", "partial", "system"]
+    from_types: ["home", "home-concept", "home-v2", "catalog", "catalog-v2", "service", "service-v2", "company-v2", "city-v2", "city", "company", "legal", "design", "partial", "system"]
     resolve_by: "wikimap"
-    to_types: ["home", "catalog", "service", "city", "company", "legal", "design", "partial", "system"]
+    to_types: ["home", "home-concept", "home-v2", "catalog", "catalog-v2", "service", "service-v2", "company-v2", "city-v2", "city", "company", "legal", "design", "partial", "system"]
     resolve:
       order: ["path", "filename", "slug"]
       ambiguity: "error"
@@ -96,6 +172,45 @@ collections:
         - type_in: ["service"]
     sort: { by: "fm.nav_order", dir: "asc", nulls_last: true }
     limit: 50
+  services_v2:
+    kind: "filter"
+    materialize: true
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["service-v2"]
+    sort: { by: "fm.nav_order", dir: "asc", nulls_last: true }
+    limit: 20
+  company_v2:
+    kind: "filter"
+    materialize: true
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["company-v2"]
+    sort: { by: "fm.nav_order", dir: "asc", nulls_last: true }
+    limit: 20
+  # Источник для поиска в шапке v2. Общий search.json собирается только по
+  # страницам v1 (см. search.include_types), поэтому страницы v2 в него не
+  # попадают — держим отдельный список и отдаём его прямо в разметку.
+  search_v2:
+    kind: "filter"
+    materialize: true
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["home-v2", "catalog-v2", "service-v2", "company-v2", "city-v2"]
+    sort: { by: "fm.nav_order", dir: "asc", nulls_last: true }
+    limit: 50
+  cities_v2:
+    kind: "filter"
+    materialize: true
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["city-v2"]
+    sort: { by: "fm.nav_order", dir: "asc", nulls_last: true }
+    limit: 20
   cities:
     kind: "filter"
     materialize: true

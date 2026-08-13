@@ -22,7 +22,9 @@ if [[ -z "$NOTEPUB_BIN" ]]; then
   fi
 fi
 
-rm -rf dist .notepub
+# artifacts/ — каталог по умолчанию шага build; чистим, чтобы он не расходился
+# с индексом в .notepub/artifacts
+rm -rf dist .notepub artifacts
 mkdir -p dist
 
 echo "Проверяю frontmatter и маршруты"
@@ -41,7 +43,7 @@ echo "Проверяю wikilinks и Markdown по созданной карте"
 "$NOTEPUB_BIN" validate --config ./config.yaml --rules ./rules.yaml --resolve "$RESOLVE_FILE" --links --markdown
 
 echo "Собираю статический сайт"
-"$NOTEPUB_BIN" build --config ./config.yaml --rules ./rules.yaml --dist ./dist
+"$NOTEPUB_BIN" build --config ./config.yaml --rules ./rules.yaml --dist ./dist --artifacts ./.notepub/artifacts
 
 touch dist/.nojekyll
 if [[ -f dist/404/index.html ]]; then

@@ -1,0 +1,20 @@
+{{- /* Знак услуги по service_key. Точка — элемент коллекции services_v2,
+       поэтому партиал вызывается внутри range: {{ template "v2_service_glyph.html" . }}.
+       Один набор на каталог и на панель меню. */ -}}
+{{- if eq .FM.service_key "medical" }}
+<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h10M17 4v12l-6 13a5 5 0 0 0 4.6 7h8.8a5 5 0 0 0 4.6-7l-6-13V4"/><path d="M16.5 27h7M20 23.5v7"/></svg>
+{{- else if eq .FM.service_key "industrial" }}
+<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 35V20l8 5v-5l8 5V13h6l1 22z"/><path d="M27 13V5h4v8"/><path d="M5 35h30"/></svg>
+{{- else if eq .FM.service_key "food" }}
+<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="12" width="28" height="22" rx="3"/><path d="M6 20h28M14 12l3-6h6l3 6M20 20v14"/></svg>
+{{- else if eq .FM.service_key "biological" }}
+<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5c6 8 10 12 10 18a10 10 0 0 1-20 0c0-6 4-10 10-18z"/><path d="M14.5 24.5c4.5 0 8-3 9.5-8"/></svg>
+{{- else if eq .FM.service_key "documents" }}
+<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4h13l7 7v11H10z"/><path d="M23 4v7h7"/><path d="M13 26v10M18 26v10M23 26v10M28 26v10M8 22h24"/></svg>
+{{- else if eq .FM.service_key "passports" }}
+<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5h13l6 6v24H11z"/><path d="M24 5v6h6"/><path d="M16 19h11M16 25h11M16 31h7"/></svg>
+{{- else if eq .FM.service_key "cremation" }}
+<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="4"/><circle cx="26" cy="14" r="4"/><circle cx="9" cy="24" r="3.5"/><circle cx="31" cy="24" r="3.5"/><path d="M20 22c5 0 8 4 8 7.5S24.5 35 20 35s-8-2-8-5.5S15 22 20 22z"/></svg>
+{{- else }}
+<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13 20 6l15 7v14l-15 7-15-7z"/><path d="M5 13l15 7 15-7M20 20v14"/></svg>
+{{- end }}

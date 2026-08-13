@@ -20,6 +20,7 @@
 .header-inner { min-height: 72px; padding: 12px 0; }
 .site-logo { display:inline-flex; align-items:center; gap:10px; color:#1e2925; text-decoration:none; flex:0 0 auto; }
 .site-logo:hover { color:#1e2925; text-decoration:none; }
+.site-logo-image { display:block; width:45px; height:36px; flex:0 0 auto; }
 .site-logo-mark { display:grid; place-items:center; width:40px; height:40px; border-radius:13px; color:#fff; font-weight:700; }
 .site-logo-text { font-weight:700; letter-spacing:-.02em; }
 .desktop-nav { display:flex; align-items:center; gap:18px; margin-left:auto; }
