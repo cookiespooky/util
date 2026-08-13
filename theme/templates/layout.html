@@ -38,7 +38,7 @@
   {{- if eq .Page.Type "home-concept" }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/home-concept.css" />
   {{- end }}
-  {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") }}
+  {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") (eq .Page.Type "legal") (eq .Page.Type "system") }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/v2.css" />
   {{- end }}
   {{- if or (eq .Page.Type "service-v2") (eq .Page.Type "catalog-v2") }}
@@ -61,7 +61,7 @@
   {{- if eq .Page.Type "city" }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/catalog-city-page.css" />
   {{- end }}
-  {{- if or (eq .Page.Type "company") (eq .Page.Type "legal") }}
+  {{- if eq .Page.Type "company" }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/company-legal-page.css" />
   {{- end }}
   {{- if eq .Page.Type "design" }}
@@ -80,9 +80,9 @@
   </script>
   <title>{{ .Title }}</title>
 </head>
-<body{{ if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") }} class="v2-body"{{ end }}>
+<body{{ if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") (eq .Page.Type "legal") (eq .Page.Type "system") }} class="v2-body"{{ end }}>
   <a class="skip-link" href="#content">К содержанию</a>
-  {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") }}
+  {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") (eq .Page.Type "legal") (eq .Page.Type "system") }}
   {{ template "v2_header.html" . }}
   {{- else }}
   {{ template "header.html" . }}
@@ -90,7 +90,7 @@
   <main id="content" class="site-main">
     {{ .Body }}
   </main>
-  {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") }}
+  {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") (eq .Page.Type "legal") (eq .Page.Type "system") }}
   {{ template "v2_footer.html" . }}
   {{- else }}
   {{ template "footer.html" . }}
@@ -109,7 +109,7 @@
   {{- if eq .Page.Type "home-v2" }}
   <script src="{{ .AssetsBase }}/action-components.js" defer></script>
   {{- end }}
-  {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") }}
+  {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") (eq .Page.Type "legal") (eq .Page.Type "system") }}
   <script src="{{ .AssetsBase }}/v2.js" defer></script>
   {{- end }}
   {{- if eq .Page.Type "design" }}

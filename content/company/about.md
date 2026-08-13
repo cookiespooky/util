@@ -1,17 +1,17 @@
 ---
 type: company-v2
-slug: about-v2
+slug: about
 title: "О компании «Утилитсервис» — работа с отходами с 2005 года"
 description: "ООО «Утилитсервис»: работа в сфере обращения с отходами с 2005 года, собственная производственная база, автопарк и подразделения в трёх городах."
 draft: false
-layout: company-v2
+layout: company
 page_kind: content
 nav_order: 1
 section: company
 city: ''
 service_key: ''
 related: []
-noindex: true
+noindex: false
 updated_at: '2026-08-12'
 
 icon: building

@@ -77,32 +77,36 @@ fm_schema:
   related: string[]
 
 types:
+  # Основные страницы сайта. Типы сохраняют суффикс -v2: он остался только
+  # именем типа и шаблона, на маршруты и индексацию больше не влияет.
+  home-v2:
+    template: "home-v2.html"
+    permalink: "/"
+    include_in: { sitemap: true, search: false }
+  catalog-v2:
+    template: "catalog-v2.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: true, search: true }
+  service-v2:
+    template: "service-v2.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: true, search: true }
+  company-v2:
+    template: "company-v2.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: true, search: true }
+  city-v2:
+    template: "city-v2.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: true, search: true }
+  # Типы прошлой версии. Страницы перенесены в content-v1-backup/ и не
+  # собираются; описания оставлены, чтобы бэкап можно было вернуть в сборку.
   home:
     template: "home.html"
     permalink: "/"
     include_in: { sitemap: true, search: false }
   home-concept:
     template: "home-concept.html"
-    permalink: "/{{ slug }}/"
-    include_in: { sitemap: false, search: false }
-  home-v2:
-    template: "home-v2.html"
-    permalink: "/{{ slug }}/"
-    include_in: { sitemap: false, search: false }
-  catalog-v2:
-    template: "catalog-v2.html"
-    permalink: "/{{ slug }}/"
-    include_in: { sitemap: false, search: false }
-  service-v2:
-    template: "service-v2.html"
-    permalink: "/{{ slug }}/"
-    include_in: { sitemap: false, search: false }
-  company-v2:
-    template: "company-v2.html"
-    permalink: "/{{ slug }}/"
-    include_in: { sitemap: false, search: false }
-  city-v2:
-    template: "city-v2.html"
     permalink: "/{{ slug }}/"
     include_in: { sitemap: false, search: false }
   catalog:
@@ -231,11 +235,11 @@ collections:
     limit: 50
 
 sitemap:
-  include_types: ["home", "catalog", "service", "city", "company", "legal", "design"]
+  include_types: ["home-v2", "catalog-v2", "service-v2", "city-v2", "company-v2", "legal"]
   exclude_drafts: true
 
 search:
-  include_types: ["catalog", "service", "city", "company", "legal", "design"]
+  include_types: ["catalog-v2", "service-v2", "city-v2", "company-v2", "legal"]
   exclude_drafts: true
   fields_boost:
     title: 3
@@ -251,7 +255,7 @@ artifacts:
     dir: "collections"
 
 validation:
-  single_page_of_type: { home: 1 }
+  single_page_of_type: { home-v2: 1 }
   duplicate_route: { action: "error" }
   unknown_type: { action: "error" }
   unique_slug: { action: "error" }

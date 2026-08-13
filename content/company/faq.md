@@ -1,17 +1,17 @@
 ---
 type: company-v2
-slug: faq-v2
+slug: faq
 title: "Вопросы и ответы об обращении с отходами — «Утилитсервис»"
 description: "Ответы на частые вопросы о начале работы, подготовке отходов, документах, стоимости и лицензиях."
 draft: false
-layout: company-v2
+layout: company
 page_kind: content
 nav_order: 5
 section: company
 city: ''
 service_key: ''
 related: []
-noindex: true
+noindex: false
 updated_at: '2026-08-12'
 
 icon: question

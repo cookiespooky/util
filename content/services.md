@@ -1,17 +1,17 @@
 ---
 type: catalog-v2
-slug: services-v2
+slug: services
 title: "Услуги по обращению с отходами для организаций — «Утилитсервис»"
 description: "Семь направлений работы: медицинские, промышленные, пищевые и биологические отходы, уничтожение документов, паспорта отходов и кремация животных."
 draft: false
-layout: catalog-v2
+layout: catalog
 page_kind: catalog
 nav_order: 1
 section: services
 city: ''
 service_key: ''
 related: []
-noindex: true
+noindex: false
 updated_at: '2026-08-12'
 
 hero_kicker: "Каталог услуг"
