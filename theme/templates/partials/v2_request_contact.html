@@ -1,0 +1,14 @@
+{{- /* Телефон и почта рядом с формой заявки. Значения — из коллекции
+       cities_v2, то есть из frontmatter страниц подразделений; здесь стоит
+       город по умолчанию (первый по nav_order), дальше main.js подменяет их
+       по выбранному городу через data-city-phone и data-city-email.
+
+       Партиал вызывается контекстом страницы: {{ template "v2_request_contact.html" . }}
+       Вынесен потому, что тот же блок есть на четырёх типах страниц, и
+       раньше в каждом лежала своя копия контактов. */ -}}
+{{- $cities := .Collections.cities_v2.Items }}
+{{- if $cities }}
+{{- $first := index $cities 0 }}
+<a class="v2-request__phone" href="tel:{{ (index $first.FM.contact.phones 0).link }}" data-city-phone>{{ (index $first.FM.contact.phones 0).value }}</a>
+<a href="mailto:{{ $first.FM.contact.email }}" data-city-email>{{ $first.FM.contact.email }}</a>
+{{- end }}

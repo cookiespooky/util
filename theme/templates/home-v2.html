@@ -21,22 +21,23 @@
         </p>
       </div>
 
+      {{- /* Схема состава компании: четыре опоры вместо прежних шести шагов
+             цикла. Порядок в ней ничего не значит, поэтому ни нумерации,
+             ни соединительной линии в списке для узких экранов нет. */ -}}
       <figure class="v2-cycle" aria-labelledby="v2-cycle-title">
-        <!-- Узкие экраны: круговая схема нечитаема, показываем те же шесть этапов списком -->
-        <ol class="v2-cycle__list">
-          <li><span>01</span><div><strong>Проверка</strong><small>вид, класс, ФККО, лицензия</small></div></li>
-          <li><span>02</span><div><strong>Сбор</strong><small>тара, маркировка, накопление</small></div></li>
-          <li><span>03</span><div><strong>Вывоз</strong><small>транспортирование спецтранспортом</small></div></li>
-          <li><span>04</span><div><strong>Обезвреживание</strong><small>операция по действующей лицензии</small></div></li>
-          <li><span>05</span><div><strong>Передача</strong><small>остаток — специализированной организации</small></div></li>
-          <li><span>06</span><div><strong>Документы</strong><small>акт, УПД, фиксация</small></div></li>
-        </ol>
+        <!-- Узкие экраны: круговая схема нечитаема, показываем те же опоры списком -->
+        <ul class="v2-cycle__list">
+          <li><strong>Производственная база</strong><small>площадки накопления и обезвреживания</small></li>
+          <li><strong>Инсинераторные установки</strong><small>высокотемпературная обработка отходов</small></li>
+          <li><strong>Специализированный транспорт</strong><small>60+ единиц техники под вид отхода</small></li>
+          <li><strong>Разрешённое размещение</strong><small>остатки — специализированным организациям</small></li>
+        </ul>
 
         <!-- viewBox расширен за пределы 0…720: центр остаётся в 360,360,
              а поля вокруг дают внешнему кольцу отойти от узлов. -->
         <svg class="v2-cycle__diagram" viewBox="-40 -40 800 800" role="img" aria-labelledby="v2-cycle-title v2-cycle-desc">
-          <title id="v2-cycle-title">Цикл работы с отходами</title>
-          <desc id="v2-cycle-desc">Шесть последовательных этапов: проверка, сбор, вывоз, обезвреживание, передача остатка специализированной организации, документы.</desc>
+          <title id="v2-cycle-title">Из чего состоит компания</title>
+          <desc id="v2-cycle-desc">Четыре опоры работы: собственная производственная база, инсинераторные установки, специализированный транспорт и разрешённое размещение остатков.</desc>
           <defs>
             <!-- Одна дорожка вместо сегментов: узлы её перекрывают, поэтому
                  промежутки между ними получаются сами и ничего не надо считать. -->
@@ -59,40 +60,28 @@
             <image href="{{ .AssetsBase }}/logo.svg" x="323.5" y="331" width="73" height="58" preserveAspectRatio="xMidYMid meet" />
           </g>
 
-          <g class="v2-cycle__node v2-cycle__node--1" transform="translate(138.3 232)">
-            <circle r="96" />
-            <foreignObject x="-96" y="-60" width="192" height="120">
-              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><span>01</span><strong>Проверка</strong><small>вид, класс, ФККО, лицензия</small></div>
+          <g class="v2-cycle__node v2-cycle__node--1" transform="translate(360 104)">
+            <circle r="118" />
+            <foreignObject x="-118" y="-75" width="236" height="150">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><strong>Производственная база</strong><small>площадки накопления и обезвреживания</small></div>
             </foreignObject>
           </g>
-          <g class="v2-cycle__node v2-cycle__node--2" transform="translate(360 104)">
-            <circle r="96" />
-            <foreignObject x="-96" y="-60" width="192" height="120">
-              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><span>02</span><strong>Сбор</strong><small>тара, маркировка, накопление</small></div>
+          <g class="v2-cycle__node v2-cycle__node--2" transform="translate(616 360)">
+            <circle r="118" />
+            <foreignObject x="-118" y="-75" width="236" height="150">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><strong>Инсинераторные установки</strong><small>высокотемпературная обработка отходов</small></div>
             </foreignObject>
           </g>
-          <g class="v2-cycle__node v2-cycle__node--3" transform="translate(581.7 232)">
-            <circle r="96" />
-            <foreignObject x="-96" y="-60" width="192" height="120">
-              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><span>03</span><strong>Вывоз</strong><small>транспортирование спецтранспортом</small></div>
+          <g class="v2-cycle__node v2-cycle__node--3" transform="translate(360 616)">
+            <circle r="118" />
+            <foreignObject x="-118" y="-75" width="236" height="150">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><strong>Специализированный транспорт</strong><small>60+ единиц техники под вид отхода</small></div>
             </foreignObject>
           </g>
-          <g class="v2-cycle__node v2-cycle__node--4" transform="translate(581.7 488)">
-            <circle r="96" />
-            <foreignObject x="-96" y="-60" width="192" height="120">
-              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><span>04</span><strong>Обезвреживание</strong><small>операция по действующей лицензии</small></div>
-            </foreignObject>
-          </g>
-          <g class="v2-cycle__node v2-cycle__node--5" transform="translate(360 616)">
-            <circle r="96" />
-            <foreignObject x="-96" y="-60" width="192" height="120">
-              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><span>05</span><strong>Передача</strong><small>остаток — специализированной организации</small></div>
-            </foreignObject>
-          </g>
-          <g class="v2-cycle__node v2-cycle__node--6" transform="translate(138.3 488)">
-            <circle r="96" />
-            <foreignObject x="-96" y="-60" width="192" height="120">
-              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><span>06</span><strong>Документы</strong><small>акт, УПД, фиксация</small></div>
+          <g class="v2-cycle__node v2-cycle__node--4" transform="translate(104 360)">
+            <circle r="118" />
+            <foreignObject x="-118" y="-75" width="236" height="150">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><strong>Разрешённое размещение</strong><small>остатки — специализированным организациям</small></div>
             </foreignObject>
           </g>
         </svg>
@@ -100,6 +89,8 @@
     </div>
 
     <div class="v2-shell">
+      {{- /* Показатели компании. Прежняя секция «Инфраструктура» разобрана:
+             состав — в схему выше, цифры — сюда. */ -}}
       <ul class="v2-trust" aria-label="Ключевые сведения о компании">
         <li>
           <span class="v2-trust__icon" aria-hidden="true">
@@ -111,13 +102,13 @@
           <span class="v2-trust__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s7-6.6 7-11.2A7 7 0 1 0 5 10.3c0 4.6 7 11.2 7 11.2z"/><circle cx="12" cy="10" r="2.7"/></svg>
           </span>
-          <div><strong>3 подразделения</strong><span>Сургут, Тюмень, Нягань</span></div>
+          <div><strong>3 подразделения</strong><span>Сургут, Тюмень, Нягань — 47 специалистов</span></div>
         </li>
         <li>
           <span class="v2-trust__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 20V12l5 3v-3l5 3V7h4l.5 13z"/><path d="M17 7V3h3v4"/><path d="M2 20h20"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c3 4.5 5.3 6.8 5.3 9.8a5.3 5.3 0 0 1-10.6 0c0-3 2.3-5.3 5.3-9.8z"/><path d="M8.6 13.4c2.6 0 4.9-1.9 5.6-4.9"/></svg>
           </span>
-          <div><strong>своя база</strong><span>площадки, оборудование, спецтранспорт</span></div>
+          <div><strong>≈ 11 000 т</strong><span>обезвреживание отходов в год</span></div>
         </li>
         <li>
           <span class="v2-trust__icon" aria-hidden="true">
@@ -249,37 +240,6 @@
         </article>
       </div>
 
-      <!-- Инфографика: с какими классами отходов работаем -->
-      <div class="v2-classes">
-        <div class="v2-classes__head">
-          <span class="v2-eyebrow">Классификация</span>
-          <h3>С какими классами работаем</h3>
-          <p>Возможность работы с конкретным отходом определяется его классом, составом и действующей лицензией подразделения.</p>
-        </div>
-
-        <div class="v2-classes__scales">
-          <div class="v2-scale">
-            <span class="v2-scale__title">Классы опасности отходов</span>
-            <ol class="v2-scale__row">
-              <li class="v2-scale__step v2-scale__step--1"><strong>I</strong><small>чрезвычайно опасные</small></li>
-              <li class="v2-scale__step v2-scale__step--2"><strong>II</strong><small>высокоопасные</small></li>
-              <li class="v2-scale__step v2-scale__step--3"><strong>III</strong><small>умеренно опасные</small></li>
-              <li class="v2-scale__step v2-scale__step--4"><strong>IV</strong><small>малоопасные</small></li>
-            </ol>
-          </div>
-
-          <div class="v2-scale">
-            <span class="v2-scale__title">Классы медицинских отходов</span>
-            <ol class="v2-scale__row">
-              <li class="v2-scale__step v2-scale__step--3"><strong>Б</strong><small>эпидемиологически опасные</small></li>
-              <li class="v2-scale__step v2-scale__step--2"><strong>В</strong><small>чрезвычайно опасные</small></li>
-              <li class="v2-scale__step v2-scale__step--1"><strong>Г</strong><small>токсикологически опасные</small></li>
-            </ol>
-          </div>
-        </div>
-
-        <p class="v2-classes__note">Публикация услуги на сайте не означает автоматический приём любого отхода: специалист проверяет сведения, действующую лицензию и техническую возможность.</p>
-      </div>
     </div>
   </section>
 
@@ -288,7 +248,7 @@
     <div class="v2-shell">
       <header class="v2-heading">
         <span class="v2-eyebrow">Как проходит работа</span>
-        <h2 id="v2-process-title">Что нужно от вас и что вы получаете</h2>
+        <h2 id="v2-process-title">Начало сотрудничества</h2>
         <p>Заявка превращается в проверенный маршрут работ и комплект подтверждающих документов. Полный перечень сведений специалист уточняет после обращения.</p>
       </header>
 
@@ -312,7 +272,7 @@
         <div class="v2-flow__col v2-flow__col--core">
           <span class="v2-flow__title">Мы выполняем</span>
           <ol class="v2-flow__steps">
-            <li><span>01</span><div><strong>Проверка</strong><small>состав, класс опасности, лицензия, техническая возможность</small></div></li>
+            <li><span>01</span><div><strong>Консультация</strong><small>состав, класс опасности, лицензия, техническая возможность</small></div></li>
             <li><span>02</span><div><strong>Расчёт и договор</strong><small>стоимость, график, состав документов, ЭДО при необходимости</small></div></li>
             <li><span>03</span><div><strong>Упаковка и накопление</strong><small>требования к таре, маркировке и условиям хранения</small></div></li>
             <li><span>04</span><div><strong>Транспортирование</strong><small>вывоз специализированным транспортом или согласованная доставка</small></div></li>
@@ -328,89 +288,13 @@
           <span class="v2-flow__title">Вы получаете</span>
           <ul class="v2-chips v2-chips--result">
             <li>договор и закрывающие документы</li>
-            <li>акт обезвреживания или уничтожения</li>
+            <li>акт уничтожения или справка об обезвреживании</li>
             <li>справку о выполненных работах — по запросу</li>
             <li>копию лицензии или выписку из реестра</li>
             <li>материалы фото- или видеофиксации</li>
           </ul>
           <p class="v2-flow__hint">Состав документов зависит от услуги и фиксируется при согласовании заявки.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 05 · Доверие: чем компания обеспечена -->
-  <section class="v2-section v2-section--muted v2-infra" id="infrastructure" aria-labelledby="v2-infra-title">
-    <div class="v2-shell">
-      <header class="v2-heading">
-        <span class="v2-eyebrow">Инфраструктура</span>
-        <h2 id="v2-infra-title">Собственная база, транспорт и оборудование</h2>
-        <p>Своя инфраструктура позволяет контролировать основные этапы: приём заявки, проверку отхода, перевозку, накопление, обезвреживание и оформление документов.</p>
-      </header>
-
-      <ol class="v2-timeline" aria-label="История компании">
-        <li class="v2-timeline__item">
-          <span class="v2-timeline__year">2005</span>
-          <strong>Начало работы</strong>
-          <small>посёлок Белый Яр, Сургутский район ХМАО — Югры</small>
-        </li>
-        <li class="v2-timeline__item">
-          <span class="v2-timeline__year">2008</span>
-          <strong>Расширение географии</strong>
-          <small>открыты подразделения в Тюмени и Нягани</small>
-        </li>
-        <li class="v2-timeline__item">
-          <span class="v2-timeline__year">2025</span>
-          <strong>Признание в регионе</strong>
-          <small>дипломант конкурса «Лучшие товары и услуги Тюменской области»</small>
-        </li>
-        <li class="v2-timeline__item v2-timeline__item--now">
-          <span class="v2-timeline__year">Сегодня</span>
-          <strong>Три подразделения</strong>
-          <small>семь направлений работы и документальное сопровождение</small>
-        </li>
-      </ol>
-
-      <div class="v2-metrics">
-        <article class="v2-metric">
-          <span class="v2-metric__glyph" aria-hidden="true">
-            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3c4 6 7 9 7 13a7 7 0 0 1-14 0c0-4 3-7 7-13z"/><path d="M11.5 17.5c3.5 0 6.5-2.5 7.5-6.5"/></svg>
-          </span>
-          <strong>≈ 11 000 т</strong>
-          <span>обезвреживание в год</span>
-          <small>по данным подразделения в Тюмени</small>
-        </article>
-        <article class="v2-metric">
-          <span class="v2-metric__glyph" aria-hidden="true">
-            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22V9h15v13"/><path d="M17 13h6l5 5v4h-4"/><circle cx="9" cy="23" r="3"/><circle cx="23" cy="23" r="3"/><path d="M12 23h8"/></svg>
-          </span>
-          <strong>60+</strong>
-          <span>единиц специализированного транспорта</span>
-          <small>по данным корпоративных сайтов компании</small>
-        </article>
-        <article class="v2-metric">
-          <span class="v2-metric__glyph" aria-hidden="true">
-            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="11" r="5"/><path d="M3 27c0-5 4-8 9-8s9 3 9 8"/><path d="M22 8a5 5 0 0 1 0 8M25 27c0-4-1.5-6.5-4-7.8"/></svg>
-          </span>
-          <strong>47</strong>
-          <span>специалистов в штате</span>
-          <small>по данным подразделения в Тюмени</small>
-        </article>
-        <article class="v2-metric">
-          <span class="v2-metric__glyph" aria-hidden="true">
-            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 29s10-9.5 10-16a10 10 0 1 0-20 0c0 6.5 10 16 10 16z"/><circle cx="16" cy="13" r="4"/></svg>
-          </span>
-          <strong>3 города</strong>
-          <span>Сургут, Тюмень, Нягань</span>
-          <small>основные услуги доступны во всех подразделениях</small>
-        </article>
-      </div>
-
-      <div class="v2-capabilities">
-        <article><strong>Производственная база</strong><p>Собственные площадки для накопления и обезвреживания отходов.</p></article>
-        <article><strong>Инсинераторные установки</strong><p>Высокотемпературная обработка отходов на площадках компании.</p></article>
-        <article><strong>Специализированный транспорт</strong><p>Перевозка с соблюдением требований к конкретному виду отходов.</p></article>
-        <article><strong>Разрешённое размещение</strong><p>Отходы, не подлежащие обезвреживанию, передаются специализированным организациям.</p></article>
       </div>
     </div>
   </section>
@@ -435,25 +319,58 @@
             </defs>
             <path d="M20 26 C 28.7 30.7, 37 32, 46 40 C 55 48, 64.7 62.7, 74 74" vector-effect="non-scaling-stroke" />
           </svg>
-          <button type="button" class="v2-geo__node" style="--x:20;--y:26" data-city="nyagan" data-title="Нягань" data-phone="+7 (3462) 55-58-97" data-phone-link="+73462555897" data-email="utilit@bk.ru" data-address="628181, г. Нягань, ул. Ленина, 17" data-hours="Время приёма согласуется по заявке" data-link="{{ .BaseURL }}/nyagan/">Нягань</button>
-          <button type="button" class="v2-geo__node is-active" style="--x:46;--y:40" data-city="surgut" data-title="Сургут и Белый Яр" data-phone="+7 (3462) 55-58-97" data-phone-link="+73462555897" data-email="utilit@bk.ru" data-address="628400, ХМАО — Югра, Сургутский район, пгт. Белый Яр, ул. Некрасова, 24а" data-hours="Ежедневно 08:00–17:00" data-link="{{ .BaseURL }}/surgut/">Сургут</button>
-          <button type="button" class="v2-geo__node" style="--x:74;--y:74" data-city="tyumen" data-title="Тюмень" data-phone="+7 (3452) 59-38-17" data-phone-link="+73452593817" data-email="utilit_tyumen@bk.ru" data-address="г. Тюмень, ул. Республики, 164, стр. 2, офис 314" data-hours="Пн–Чт 08:00–17:00, перерыв 12:00–14:00; Пт 08:00–16:00" data-link="{{ .BaseURL }}/tyumen/">Тюмень</button>
+          {{- /* Точки собираются из коллекции городов: контакты приходят из
+                 frontmatter подразделений, координаты — из полей map_x/map_y
+                 там же. ВНИМАНИЕ: линия выше (path в svg) построена по этим же
+                 координатам вручную, арифметики в шаблонах нет — меняя
+                 map_x/map_y, поправьте и её. */ -}}
+          {{- range $i, $c := .Collections.cities_v2.Items }}
+          <button type="button" class="v2-geo__node{{ if eq $i 0 }} is-active{{ end }}"
+                  style="--x:{{ $c.FM.map_x }};--y:{{ $c.FM.map_y }}"
+                  data-city="{{ $c.FM.city_key }}"
+                  data-title="{{ $c.FM.city }}"
+                  data-phone="{{ (index $c.FM.contact.phones 0).value }}"
+                  data-phone-link="{{ (index $c.FM.contact.phones 0).link }}"
+                  data-email="{{ $c.FM.contact.email }}"
+                  data-address="{{ $c.FM.contact.address }}"
+                  data-hours="{{ $c.FM.contact.hours }}"
+                  data-link="{{ $.BaseURL }}/{{ $c.Slug }}/">{{ $c.FM.nav_title }}</button>
+          {{- end }}
         </div>
 
+        {{- /* Панель показывает город по умолчанию — первый в коллекции;
+               дальше её переписывает action-components.js по клику. */ -}}
+        {{- $cities := .Collections.cities_v2.Items }}
+        {{- if $cities }}
+        {{- $first := index $cities 0 }}
         <aside class="v2-geo__info">
           <span class="v2-eyebrow">Подразделение</span>
-          <h3 data-presence-title>Сургут и Белый Яр</h3>
-          <a class="v2-geo__phone" href="tel:+73462555897" data-presence-phone>+7 (3462) 55-58-97</a>
-          <a href="mailto:utilit@bk.ru" data-presence-email>utilit@bk.ru</a>
-          <p data-presence-address>628400, ХМАО — Югра, Сургутский район, пгт. Белый Яр, ул. Некрасова, 24а</p>
-          <p class="v2-geo__hours" data-presence-hours>Ежедневно 08:00–17:00</p>
-          <a class="v2-button v2-button--secondary v2-button--block" href="{{ .BaseURL }}/surgut/" data-presence-link>Страница подразделения</a>
+          <h3 data-presence-title>{{ $first.FM.city }}</h3>
+          <a class="v2-geo__phone" href="tel:{{ (index $first.FM.contact.phones 0).link }}" data-presence-phone>{{ (index $first.FM.contact.phones 0).value }}</a>
+          <a href="mailto:{{ $first.FM.contact.email }}" data-presence-email>{{ $first.FM.contact.email }}</a>
+          <p data-presence-address>{{ $first.FM.contact.address }}</p>
+          <p class="v2-geo__hours" data-presence-hours>{{ $first.FM.contact.hours }}</p>
+          <a class="v2-button v2-button--secondary v2-button--block" href="{{ $.BaseURL }}/{{ $first.Slug }}/" data-presence-link>Страница подразделения</a>
         </aside>
+        {{- end }}
       </div>
     </div>
   </section>
 
   <!-- 07 · Снятие возражений: документы и правовые рамки -->
+  {{- /* Клиенты и отзывы. Данные берутся со страницы /partners/ через
+         коллекцию company_v2 и рендерятся теми же партиалами, что и там:
+         второй копии текста нет, разметка обычная — без JS. */ -}}
+  {{- range .Collections.company_v2.Items }}
+  {{- if eq .Slug "partners" }}
+  {{ template "v2_logos.html" . }}
+  {{ template "v2_testimonials.html" . }}
+  <div class="v2-shell v2-partners-more">
+    <a class="v2-button v2-button--secondary" href="{{ $.BaseURL }}/partners/">Все партнёры и отзывы <span aria-hidden="true">→</span></a>
+  </div>
+  {{- end }}
+  {{- end }}
+
   <section class="v2-section v2-section--surface v2-docs" aria-labelledby="v2-docs-title">
     <div class="v2-shell v2-docs__layout">
       <header class="v2-heading">
@@ -467,7 +384,7 @@
         <li><span>01 · допуск</span><strong>Лицензия</strong><small>операция выполняется в разрешённых пределах</small></li>
         <li><span>02 · условия</span><strong>Договор</strong><small>состав работ, график и перечень документов</small></li>
         <li><span>03 · учёт</span><strong>УПД и закрывающие</strong><small>документы для бухгалтерского учёта</small></li>
-        <li><span>04 · подтверждение</span><strong>Акт и фиксация</strong><small>акт обезвреживания или уничтожения, фото- и видеоматериалы</small></li>
+        <li><span>04 · подтверждение</span><strong>Акт и фиксация</strong><small>акт уничтожения или справка об обезвреживании, фото- и видеоматериалы</small></li>
       </ol>
     </div>
   </section>
@@ -501,7 +418,7 @@
         </details>
         <details class="v2-faq__item">
           <summary>Вы участвуете в закупках по 44-ФЗ и 223-ФЗ?</summary>
-          <p>Отдельные подразделения работают с государственными и муниципальными заказчиками и участвуют в закупках. Документооборот может вестись через ЭДО.</p>
+          <p>Отдельные подразделения работают с государственными и муниципальными заказчиками и участвуют в закупках. Возможен электронный документооборот (ЭДО).</p>
         </details>
       </div>
     </div>
@@ -525,8 +442,7 @@
 
         <div class="v2-request__contact">
           <span class="v2-eyebrow">Если удобнее позвонить</span>
-          <a class="v2-request__phone" href="tel:+73462555897" data-city-phone>+7 3462 55-58-97</a>
-          <a href="mailto:utilit@bk.ru" data-city-email>utilit@bk.ru</a>
+          {{ template "v2_request_contact.html" . }}
         </div>
       </div>
 
@@ -588,6 +504,8 @@
           <button class="v2-button v2-button--primary" type="submit">Отправить заявку</button>
           <p>Отправка заявки не подтверждает возможность приёма отхода. Специалист проверит сведения, действующую лицензию и техническую возможность выполнения работ.</p>
         </div>
+
+        {{ template "v2_form_guard.html" . }}
 
         <p class="v2-form__status" data-form-status role="status" hidden></p>
       </form>

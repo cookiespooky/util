@@ -135,7 +135,10 @@
   {{- end }}
 
   <!-- 04 · Подразделения и контакты -->
-  {{- if .FM.offices }}
+  {{- /* Контакты берутся из коллекции cities_v2, а не из своего поля offices:
+         адрес, телефоны, почта и график живут в frontmatter страниц
+         подразделений, ссылка выводится из слага и не может устареть. */ -}}
+  {{- if .Collections.cities_v2.Items }}
   <section class="v2-section cv2-offices-section" id="offices" aria-labelledby="cv2-offices-title">
     <div class="v2-shell">
       <header class="v2-heading">
@@ -144,19 +147,26 @@
         <p>Возможность выполнения конкретной операции проверяется по виду отхода, адресу и техническим условиям.</p>
       </header>
       <div class="cv2-offices">
-        {{- range .FM.offices }}
+        {{- range .Collections.cities_v2.Items }}
         <article class="cv2-office">
           <header class="cv2-office__head">
             <span class="cv2-office__dot" aria-hidden="true"></span>
-            <h3>{{ .city }}</h3>
+            <h3>{{ .FM.nav_title }}</h3>
           </header>
           <dl class="cv2-office__rows">
-            <div><dt>Адрес</dt><dd>{{ .address }}</dd></div>
-            <div><dt>Телефон</dt><dd><a href="tel:{{ .phone_link }}">{{ .phone }}</a></dd></div>
-            <div><dt>Email</dt><dd><a href="mailto:{{ .email }}">{{ .email }}</a></dd></div>
-            <div><dt>График</dt><dd>{{ .hours }}</dd></div>
+            <div><dt>Адрес</dt><dd>{{ .FM.contact.address }}</dd></div>
+            <div>
+              <dt>{{ if gt (len .FM.contact.phones) 1 }}Телефоны{{ else }}Телефон{{ end }}</dt>
+              <dd>
+                {{- range .FM.contact.phones }}
+                <a href="tel:{{ .link }}">{{ .value }}</a>
+                {{- end }}
+              </dd>
+            </div>
+            <div><dt>Email</dt><dd><a href="mailto:{{ .FM.contact.email }}">{{ .FM.contact.email }}</a></dd></div>
+            <div><dt>График</dt><dd>{{ .FM.contact.hours }}</dd></div>
           </dl>
-          <a class="cv2-office__link" href="{{ $.BaseURL }}{{ .link }}">Страница подразделения <span aria-hidden="true">→</span></a>
+          <a class="cv2-office__link" href="{{ $.BaseURL }}/{{ .Slug }}/">Страница подразделения <span aria-hidden="true">→</span></a>
         </article>
         {{- end }}
       </div>
@@ -164,49 +174,9 @@
   </section>
   {{- end }}
 
-  <!-- 05 · Клиенты и партнёры -->
-  {{- if .FM.logos }}
-  <section class="v2-section v2-section--surface cv2-logos-section" aria-labelledby="cv2-logos-title">
-    <div class="v2-shell">
-      <header class="v2-heading">
-        <span class="v2-eyebrow">{{ .FM.logos_title }}</span>
-        <h2 id="cv2-logos-title">{{ .FM.logos_note }}</h2>
-      </header>
-      <div class="cv2-logos">
-        {{- range .FM.logos }}
-        <a class="cv2-logo" href="{{ .url }}" target="_blank" rel="noopener">
-          <strong>{{ .name }}</strong>
-          <span>{{ .role }}</span>
-        </a>
-        {{- end }}
-      </div>
-    </div>
-  </section>
-  {{- end }}
-
-  <!-- 06 · Благодарственные письма -->
-  {{- if .FM.testimonials }}
-  <section class="v2-section cv2-testimonials-section" aria-labelledby="cv2-testimonials-title">
-    <div class="v2-shell">
-      <header class="v2-heading">
-        <span class="v2-eyebrow">Отзывы</span>
-        <h2 id="cv2-testimonials-title">Благодарственные письма</h2>
-        <p>Опубликованы отзывы, размещённые на прежних корпоративных сайтах компании.</p>
-      </header>
-      <div class="cv2-testimonials">
-        {{- range .FM.testimonials }}
-        <figure class="cv2-testimonial">
-          <blockquote>{{ .text }}</blockquote>
-          <figcaption>
-            <strong>{{ .org }}</strong>
-            <span>{{ .date }}</span>
-          </figcaption>
-        </figure>
-        {{- end }}
-      </div>
-    </div>
-  </section>
-  {{- end }}
+  <!-- 05 · Клиенты и отзывы: те же секции выводит главная -->
+  {{ template "v2_logos.html" . }}
+  {{ template "v2_testimonials.html" . }}
 
   <!-- 07 · Что получает заказчик -->
   {{- if .FM.checklist }}
@@ -215,7 +185,7 @@
       <header class="v2-heading">
         <span class="v2-eyebrow">Комплект документов</span>
         <h2 id="cv2-checklist-title">{{ .FM.checklist_title }}</h2>
-        <p>Состав комплекта зависит от услуги и фиксируется в договоре. Документооборот может вестись через ЭДО.</p>
+        <p>Состав комплекта зависит от услуги и фиксируется в договоре. Возможен электронный документооборот (ЭДО).</p>
       </header>
       <ul class="v2-chips v2-chips--result cv2-checklist">
         {{- range .FM.checklist }}
@@ -378,8 +348,7 @@
 
         <div class="v2-request__contact">
           <span class="v2-eyebrow">Если удобнее позвонить</span>
-          <a class="v2-request__phone" href="tel:+73462555897" data-city-phone>+7 3462 55-58-97</a>
-          <a href="mailto:utilit@bk.ru" data-city-email>utilit@bk.ru</a>
+          {{ template "v2_request_contact.html" . }}
         </div>
       </div>
 
@@ -441,6 +410,8 @@
           <button class="v2-button v2-button--primary" type="submit">Отправить заявку</button>
           <p>Отправка заявки не подтверждает возможность приёма отхода. Специалист проверит сведения, действующую лицензию и техническую возможность выполнения работ.</p>
         </div>
+
+        {{ template "v2_form_guard.html" . }}
 
         <p class="v2-form__status" data-form-status role="status" hidden></p>
       </form>

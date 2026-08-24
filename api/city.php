@@ -1,0 +1,104 @@
+<?php
+/**
+ * Определение подразделения по IP.
+ *
+ * Отдаёт только ключ города — страницы остаются статикой и кешируются как
+ * раньше, подстановку делает main.js. Если определить не удалось, возвращается
+ * city: null, и сайт остаётся на городе по умолчанию.
+ *
+ * Правило намеренно региональное, а не городское. Тюменская область и ХМАО —
+ * разные субъекты, они различаются надёжно. А вот Сургут и Нягань лежат в
+ * одном округе: провайдеры регистрируют блоки адресов на региональный узел,
+ * мобильные операторы выпускают абонентов через общие шлюзы, и различить эти
+ * два города по IP нельзя. Поэтому для всего ХМАО подставляется головная
+ * площадка, а не догадка.
+ */
+
+declare(strict_types=1);
+
+require __DIR__ . '/lib/Support.php';
+
+$config = load_config();
+$siteData = load_site_data();
+
+header('Content-Type: application/json; charset=utf-8');
+
+if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET') {
+    json_response(['city' => null, 'error' => 'method_not_allowed'], 405);
+}
+
+if (!($config['geo']['enabled'] ?? false)) {
+    json_response(['city' => null, 'source' => 'disabled']);
+}
+
+$known = city_keys($siteData);
+$geo = $config['geo'];
+
+/**
+ * Приводит ответ источника к ключу подразделения.
+ * Точное совпадение по городу важнее правила по региону.
+ */
+$resolve = static function (?string $city, ?string $region) use ($geo, $known): ?array {
+    if ($city !== null && $city !== '') {
+        foreach ($geo['cities'] ?? [] as $name => $key) {
+            if (mb_strtolower((string) $name) === mb_strtolower($city) && in_array($key, $known, true)) {
+                return ['city' => $key, 'match' => 'city'];
+            }
+        }
+    }
+
+    if ($region !== null && $region !== '') {
+        $region = strtoupper(preg_replace('/^RU-/i', '', $region) ?? '');
+        $key = $geo['regions'][$region] ?? null;
+        if ($key !== null && in_array($key, $known, true)) {
+            return ['city' => $key, 'match' => 'region'];
+        }
+    }
+
+    return null;
+};
+
+/* --- Источник 1: переменные от веб-сервера ------------------------------- */
+
+/* Модуль GeoIP в nginx или Apache кладёт готовые значения в окружение.
+   Это самый дешёвый путь: базу обновляет сервер, приложению читать нечего. */
+$serverCity = $_SERVER['GEOIP_CITY'] ?? $_SERVER['HTTP_X_GEOIP_CITY'] ?? null;
+$serverRegion = $_SERVER['GEOIP_REGION'] ?? $_SERVER['GEOIP_REGION_CODE']
+    ?? $_SERVER['HTTP_X_GEOIP_REGION'] ?? null;
+
+$match = $resolve(
+    is_string($serverCity) ? $serverCity : null,
+    is_string($serverRegion) ? $serverRegion : null
+);
+
+if ($match !== null) {
+    json_response(['city' => $match['city'], 'source' => 'server', 'match' => $match['match']]);
+}
+
+/* --- Источник 2: база MaxMind рядом со скриптом -------------------------- */
+
+/* Читатель .mmdb ставится composer'ом (geoip2/geoip2). На площадке его может
+   не быть, поэтому наличие проверяется, а не предполагается: без него
+   эндпоинт просто не определяет город и ничего не ломает. */
+$mmdb = (string) ($geo['mmdb_path'] ?? '');
+
+if ($mmdb !== '' && is_file($mmdb) && class_exists('GeoIp2\Database\Reader')) {
+    try {
+        $reader = new GeoIp2\Database\Reader($mmdb);
+        $record = $reader->city(client_ip($config));
+
+        $match = $resolve(
+            $record->city->name ?? null,
+            $record->mostSpecificSubdivision->isoCode ?? null
+        );
+
+        if ($match !== null) {
+            json_response(['city' => $match['city'], 'source' => 'mmdb', 'match' => $match['match']]);
+        }
+    } catch (Throwable $e) {
+        // Адрес не найден в базе или база повреждена — это не ошибка запроса.
+        error_log('utilit: geoip: ' . $e->getMessage());
+    }
+}
+
+json_response(['city' => null, 'source' => 'unknown']);

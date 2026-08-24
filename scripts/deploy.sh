@@ -18,7 +18,7 @@ if [[ -z "$BRANCH" ]]; then
 fi
 
 if [[ -n "$(git status --porcelain)" ]]; then
-  git add content content-v1-backup theme config.yaml config.dev.yaml rules.yaml scripts .github README.md FRONTMATTER.md .gitignore media
+  git add content content-v1-backup theme api config.yaml config.dev.yaml rules.yaml scripts .github README.md FRONTMATTER.md .gitignore media
   git commit -m "${1:-Update Utilit text site}"
 else
   echo "Изменений для коммита нет."

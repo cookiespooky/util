@@ -5,3 +5,7 @@ dist/
 .DS_Store
 *.log
 artifacts/
+
+# Бэкенд: реальный конфиг с паролем и журнал заявок наружу не уходят
+api/config.php
+storage/

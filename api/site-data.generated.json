@@ -1,0 +1,78 @@
+{
+  "cities": [
+    {
+      "key": "surgut",
+      "slug": "surgut",
+      "title": "Сургут",
+      "full_title": "Сургут и Белый Яр",
+      "email": "utilit@bk.ru",
+      "phone": "+7 (3462) 55-58-97",
+      "phone_link": "+73462555897",
+      "order": 1
+    },
+    {
+      "key": "tyumen",
+      "slug": "tyumen",
+      "title": "Тюмень",
+      "full_title": "Тюмень",
+      "email": "utilit_tyumen@bk.ru",
+      "phone": "+7 (3452) 59-38-17",
+      "phone_link": "+73452593817",
+      "order": 2
+    },
+    {
+      "key": "nyagan",
+      "slug": "nyagan",
+      "title": "Нягань",
+      "full_title": "Нягань",
+      "email": "utilit@bk.ru",
+      "phone": "+7 (34672) 55-315",
+      "phone_link": "+73467255315",
+      "order": 3
+    }
+  ],
+  "services": [
+    {
+      "key": "medical",
+      "slug": "medical-waste",
+      "title": "Медицинские отходы",
+      "order": 1
+    },
+    {
+      "key": "industrial",
+      "slug": "industrial-waste",
+      "title": "Промышленные отходы I–IV классов",
+      "order": 2
+    },
+    {
+      "key": "food",
+      "slug": "food-waste",
+      "title": "Пищевые отходы и продукция",
+      "order": 3
+    },
+    {
+      "key": "biological",
+      "slug": "biological-waste",
+      "title": "Биологические отходы",
+      "order": 4
+    },
+    {
+      "key": "documents",
+      "slug": "document-destruction",
+      "title": "Уничтожение документов",
+      "order": 5
+    },
+    {
+      "key": "passports",
+      "slug": "environmental-documents",
+      "title": "Паспорта отходов",
+      "order": 6
+    },
+    {
+      "key": "cremation",
+      "slug": "pet-cremation",
+      "title": "Кремация домашних животных",
+      "order": 7
+    }
+  ]
+}

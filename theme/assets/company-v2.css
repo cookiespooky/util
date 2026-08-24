@@ -311,108 +311,6 @@
 .cv2-office__link:hover span { transform: translateX(3px); }
 
 /* --------------------------------------------------------------------------
-   Клиенты и партнёры: текстовые плашки вместо разнокалиберных логотипов
-   -------------------------------------------------------------------------- */
-
-.cv2-logos {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.cv2-logo {
-  display: grid;
-  align-content: start;
-  gap: 7px;
-  padding: 24px;
-  border: 1px solid var(--v2-line);
-  border-radius: var(--v2-radius);
-  background: var(--v2-surface-muted);
-  color: var(--v2-ink);
-  text-decoration: none;
-  transition: border-color .16s ease, background .16s ease, transform .16s ease;
-}
-
-.cv2-logo:hover {
-  border-color: rgba(76, 145, 202, .45);
-  background: var(--v2-surface);
-  color: var(--v2-ink);
-  transform: translateY(-2px);
-}
-
-.cv2-logo strong {
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: -.02em;
-}
-
-.cv2-logo span {
-  color: var(--v2-ink-muted);
-  font-size: 13.5px;
-  line-height: 1.45;
-}
-
-/* --------------------------------------------------------------------------
-   Благодарственные письма
-   -------------------------------------------------------------------------- */
-
-.cv2-testimonials {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.cv2-testimonial {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 26px;
-  border-radius: var(--v2-radius);
-  background: var(--v2-surface);
-  border-top: 3px solid var(--v2-green);
-}
-
-.cv2-testimonial blockquote {
-  position: relative;
-  margin: 0 0 20px;
-  padding-top: 34px;
-  color: var(--v2-ink);
-  font-size: 15.5px;
-  line-height: 1.6;
-}
-
-/* Кавычка рисуется текстом, чтобы не тянуть иконочный шрифт */
-.cv2-testimonial blockquote::before {
-  content: "“";
-  position: absolute;
-  left: -2px;
-  top: -6px;
-  color: rgba(70, 183, 73, .45);
-  font-size: 54px;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.cv2-testimonial figcaption {
-  display: grid;
-  gap: 4px;
-  margin-top: auto;
-  padding-top: 18px;
-  border-top: 1px solid var(--v2-line);
-}
-
-.cv2-testimonial figcaption strong {
-  font-size: 14.5px;
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-.cv2-testimonial figcaption span {
-  color: var(--v2-ink-subtle);
-  font-size: 13px;
-}
-
-/* --------------------------------------------------------------------------
    Сгруппированные вопросы
    -------------------------------------------------------------------------- */
 
@@ -443,9 +341,7 @@
 
 @media (max-width: 1100px) {
   .cv2-blocks,
-  .cv2-offices,
-  .cv2-logos,
-  .cv2-testimonials { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cv2-offices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 1000px) {
@@ -459,9 +355,7 @@
 
 @media (max-width: 760px) {
   .cv2-blocks,
-  .cv2-offices,
-  .cv2-logos,
-  .cv2-testimonials { grid-template-columns: minmax(0, 1fr); }
+  .cv2-offices { grid-template-columns: minmax(0, 1fr); }
 
   .cv2-nav { gap: 6px; }
   .cv2-nav__link { font-size: 13.5px; padding: 0 13px; }

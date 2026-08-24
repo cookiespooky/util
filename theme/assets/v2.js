@@ -109,13 +109,37 @@
     render();
   }
 
-  /* Отправка формы. Технический приём заявок — задача этапа 3,
-     здесь показывается только подтверждение по CONTENT-SPEC.md. */
+  /* Отметка времени для отсева роботов: в разметке её нет, потому что сайт
+     статический и серверное время было бы временем сборки. */
+  function initFormGuard(form) {
+    var stamp = form.querySelector('[data-form-ts]');
+    if (stamp) stamp.value = String(Math.floor(Date.now() / 1000));
+  }
+
+  /* Отправка заявки на бэкенд. Адрес берётся из data-endpoint формы, чтобы
+     не зашивать префикс: сайт живёт и в подкаталоге, и в корне домена.
+
+     Успехом считается ответ ok — сервер сначала пишет заявку в журнал и лишь
+     потом шлёт почту, поэтому «принято» здесь не обманывает даже при
+     недоступном SMTP. Оговорка о том, что заявка не подтверждает возможность
+     приёма отхода, стоит рядом с кнопкой (CONTENT-SPEC.md) и остаётся
+     единственной обратной связью: автоответ клиенту не отправляется. */
   function initSubmit(form) {
     var status = form.querySelector('[data-form-status]');
+    var submitButton = form.querySelector('button[type="submit"]');
+    var endpoint = form.dataset.endpoint;
+    var sending = false;
+
+    function show(message, isError) {
+      if (!status) return;
+      status.textContent = message;
+      status.hidden = false;
+      status.classList.toggle('is-error', !!isError);
+    }
 
     form.addEventListener('submit', function (event) {
       event.preventDefault();
+      if (sending) return;
 
       var phone = form.querySelector('input[name="phone"]');
       var consent = form.querySelector('input[name="privacy-consent"]');
@@ -128,10 +152,42 @@
         consent.focus();
         return;
       }
-      if (!status) return;
 
-      status.textContent = 'Заявка отправлена. Специалист проверит информацию и свяжется с вами для уточнения условий.';
-      status.hidden = false;
+      if (!endpoint) {
+        // Бэкенд не подключён — ведём себя как раньше, чтобы форма на
+        // статичной сборке не выглядела сломанной.
+        show('Заявка отправлена. Специалист проверит информацию и свяжется с вами для уточнения условий.');
+        return;
+      }
+
+      sending = true;
+      if (submitButton) submitButton.disabled = true;
+      show('Отправляем заявку…');
+
+      fetch(endpoint, {
+        method: 'POST',
+        body: new FormData(form)
+      }).then(function (response) {
+        return response.json().catch(function () { return {}; });
+      }).then(function (data) {
+        if (data && data.ok) {
+          form.reset();
+          show('Заявка отправлена. Специалист проверит информацию и свяжется с вами для уточнения условий.');
+          return;
+        }
+
+        if (data && data.error === 'rate_limited') {
+          show('Слишком много заявок подряд. Попробуйте позже или позвоните нам.', true);
+          return;
+        }
+
+        show('Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.', true);
+      }).catch(function () {
+        show('Не удалось отправить заявку. Проверьте соединение или позвоните нам.', true);
+      }).then(function () {
+        sending = false;
+        if (submitButton) submitButton.disabled = false;
+      });
     });
   }
 
@@ -186,7 +242,10 @@
   function initCityFallback() {
     var citySelect = document.querySelector('[data-city-select]');
     if (!citySelect || citySelect.value) return;
-    citySelect.value = 'surgut';
+    /* Город по умолчанию — первый в списке, а не зашитый «Сургут»:
+       список собирается из коллекции городов, порядок задаёт nav_order. */
+    if (!citySelect.options.length) return;
+    citySelect.value = citySelect.options[0].value;
     citySelect.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
@@ -505,6 +564,7 @@
     var form = document.querySelector('[data-v2-form]');
     if (!form) return;
     initDynamicFields(form);
+    initFormGuard(form);
     initSubmit(form);
     initUnknownWasteShortcut(form);
     initAudienceShortcuts(form);

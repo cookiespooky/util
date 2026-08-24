@@ -1,0 +1,21 @@
+{{- /* Плашки клиентов. Контекст — страница партнёров или её элемент в
+       коллекции company_v2, поэтому внутри доступен только .FM:
+       {{ template "v2_logos.html" . }}. Ссылки внешние, .BaseURL не нужен. */ -}}
+{{- if .FM.logos }}
+<section class="v2-section v2-section--surface cv2-logos-section" aria-labelledby="v2-logos-title">
+  <div class="v2-shell">
+    <header class="v2-heading">
+      <span class="v2-eyebrow">{{ .FM.logos_title }}</span>
+      <h2 id="v2-logos-title">{{ .FM.logos_note }}</h2>
+    </header>
+    <div class="cv2-logos">
+      {{- range .FM.logos }}
+      <a class="cv2-logo" href="{{ .url }}" target="_blank" rel="noopener">
+        <strong>{{ .name }}</strong>
+        <span>{{ .role }}</span>
+      </a>
+      {{- end }}
+    </div>
+  </div>
+</section>
+{{- end }}

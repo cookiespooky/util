@@ -94,6 +94,17 @@
             <dt>График</dt>
             <dd>{{ .FM.contact.hours }}</dd>
           </div>
+          {{- if .FM.contact.vk }}
+          <div>
+            <dt>Сообщество</dt>
+            <dd>
+              <a class="ct2-contact__vk" href="{{ .FM.contact.vk }}" target="_blank" rel="noopener">
+                <img src="{{ $.AssetsBase }}/vk-logo.svg" width="20" height="20" alt="ВКонтакте" />
+                <span>ВКонтакте</span>
+              </a>
+            </dd>
+          </div>
+          {{- end }}
         </dl>
 
         {{- if .FM.contact.note }}
@@ -120,30 +131,6 @@
       </div>
     </div>
   </section>
-
-  <!-- 03 · Показатели подразделения -->
-  {{- if .FM.stats }}
-  <section class="v2-section v2-section--muted ct2-stats-section" aria-labelledby="ct2-stats-title">
-    <div class="v2-shell">
-      <header class="v2-heading">
-        <span class="v2-eyebrow">Подразделение в цифрах</span>
-        <h2 id="ct2-stats-title">Чем обеспечено подразделение</h2>
-      </header>
-      <div class="v2-metrics">
-        {{- range .FM.stats }}
-        <article class="v2-metric">
-          <span class="v2-metric__glyph" aria-hidden="true">{{ template "v2_metric_glyph.html" . }}</span>
-          <strong>{{ .value }}</strong>
-          <span>{{ .label }}</span>
-          {{- if .note }}
-          <small>{{ .note }}</small>
-          {{- end }}
-        </article>
-        {{- end }}
-      </div>
-    </div>
-  </section>
-  {{- end }}
 
   <!-- 04 · Какие услуги доступны именно здесь -->
   <section class="v2-section v2-section--surface ct2-services-section" id="services" aria-labelledby="ct2-services-title">
@@ -334,6 +321,8 @@
           <button class="v2-button v2-button--primary" type="submit">Отправить заявку</button>
           <p>Отправка заявки не подтверждает возможность приёма отхода. Специалист проверит сведения, действующую лицензию и техническую возможность выполнения работ.</p>
         </div>
+
+        {{ template "v2_form_guard.html" . }}
 
         <p class="v2-form__status" data-form-status role="status" hidden></p>
       </form>

@@ -116,8 +116,7 @@
 
         <div class="v2-request__contact">
           <span class="v2-eyebrow">Если удобнее позвонить</span>
-          <a class="v2-request__phone" href="tel:+73462555897" data-city-phone>+7 3462 55-58-97</a>
-          <a href="mailto:utilit@bk.ru" data-city-email>utilit@bk.ru</a>
+          {{ template "v2_request_contact.html" . }}
         </div>
       </div>
 
@@ -179,6 +178,8 @@
           <button class="v2-button v2-button--primary" type="submit">Отправить заявку</button>
           <p>Отправка заявки не подтверждает возможность приёма отхода. Специалист проверит сведения, действующую лицензию и техническую возможность выполнения работ.</p>
         </div>
+
+        {{ template "v2_form_guard.html" . }}
 
         <p class="v2-form__status" data-form-status role="status" hidden></p>
       </form>

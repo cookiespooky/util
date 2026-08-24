@@ -34,6 +34,17 @@
                   </span>
                 </a>
                 {{- end }}
+                {{- /* Восьмая карточка — не услуга, а справочник: вопрос о
+                       возможности приёма чаще всего возникает прямо здесь. */ -}}
+                <a class="v2-menu__card v2-menu__card--faq" href="{{ .BaseURL }}/faq/">
+                  <span class="v2-menu__icon" aria-hidden="true">
+                    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="13"/><path d="M12.4 12.4a3.7 3.7 0 1 1 4.6 4.9c-.7.3-1 .9-1 1.7v.6"/><path d="M16 24h.02"/></svg>
+                  </span>
+                  <span class="v2-menu__copy">
+                    <strong>Вопросы и ответы</strong>
+                    <small>Справочник для заказчика</small>
+                  </span>
+                </a>
               </div>
               <div class="v2-menu__foot">
                 <a class="v2-menu__all" href="{{ .BaseURL }}/services/">Все услуги <span aria-hidden="true">→</span></a>
@@ -137,22 +148,30 @@
 
       </nav>
 
+      {{- /* Города и контакты берутся из коллекции cities_v2, то есть из
+             frontmatter страниц подразделений — это единственный источник.
+             Раньше ключи, названия, телефоны и почты были продублированы
+             здесь, в подвале, в main.js и на странице контактов. */ -}}
+      {{- $cities := .Collections.cities_v2.Items }}
+
       <div class="v2-header__actions">
         <!-- Нативный select оставлен как источник состояния: с ним работают
              общие main.js (телефон, email, поле города в форме) и карта.
              Он меняет контекст страницы и не связан с пунктом «Контакты». -->
+        {{- if $cities }}
+        {{- $first := index $cities 0 }}
         <div class="v2-city" data-city-dropdown>
           <select class="v2-city__native" data-city-select tabindex="-1" aria-hidden="true">
-            <option value="surgut">Сургут</option>
-            <option value="tyumen">Тюмень</option>
-            <option value="nyagan">Нягань</option>
+            {{- range $cities }}
+            <option value="{{ .FM.city_key }}">{{ .FM.nav_title }}</option>
+            {{- end }}
           </select>
 
           <button class="v2-city__trigger" type="button" data-city-trigger aria-haspopup="listbox" aria-expanded="false">
             <span class="v2-city__pin" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s7-6.6 7-11.2A7 7 0 1 0 5 10.3c0 4.6 7 11.2 7 11.2z"/><circle cx="12" cy="10" r="2.7"/></svg>
             </span>
-            <span class="v2-city__value" data-city-value>Сургут</span>
+            <span class="v2-city__value" data-city-value>{{ $first.FM.nav_title }}</span>
             <span class="v2-city__chevron" aria-hidden="true">
               <svg viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1.5 6 6.5 11 1.5"/></svg>
             </span>
@@ -160,16 +179,31 @@
           </button>
 
           <ul class="v2-city__menu" data-city-menu role="listbox" aria-label="Города" hidden>
-            <li><button class="v2-city__option" type="button" role="option" aria-selected="true" data-city-option="surgut">Сургут</button></li>
-            <li><button class="v2-city__option" type="button" role="option" aria-selected="false" data-city-option="tyumen">Тюмень</button></li>
-            <li><button class="v2-city__option" type="button" role="option" aria-selected="false" data-city-option="nyagan">Нягань</button></li>
+            {{- range $i, $c := $cities }}
+            <li><button class="v2-city__option" type="button" role="option" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}" data-city-option="{{ $c.FM.city_key }}">{{ $c.FM.nav_title }}</button></li>
+            {{- end }}
           </ul>
         </div>
 
         <span class="v2-header__contact">
-          <a class="v2-header__phone" href="tel:+73462555897" data-city-phone>+7 3462 55-58-97</a>
-          <small class="v2-header__hours">Пн–Пт 08:00–17:00</small>
+          <a class="v2-header__phone" href="tel:{{ (index $first.FM.contact.phones 0).link }}" data-city-phone>{{ (index $first.FM.contact.phones 0).value }}</a>
+          {{- if gt (len $first.FM.contact.phones) 1 }}
+          <a class="v2-header__phone v2-header__phone--extra" href="tel:{{ (index $first.FM.contact.phones 1).link }}" data-city-phone-2>{{ (index $first.FM.contact.phones 1).value }}</a>
+          {{- else }}
+          <a class="v2-header__phone v2-header__phone--extra" href="#" data-city-phone-2 hidden></a>
+          {{- end }}
         </span>
+
+        {{- /* Сообщество компании: адрес берётся из frontmatter подразделения,
+               своей копии ссылки в шапке нет. */ -}}
+        {{- range $cities }}
+        {{- if .FM.contact.vk }}
+        <a class="v2-header__vk" href="{{ .FM.contact.vk }}" target="_blank" rel="noopener" aria-label="Сообщество ВКонтакте">
+          <img src="{{ $.AssetsBase }}/vk-logo.svg" width="24" height="24" alt="" aria-hidden="true" />
+        </a>
+        {{- end }}
+        {{- end }}
+        {{- end }}
 
         <a class="v2-button v2-button--primary v2-header__cta" href="#request">Оставить заявку</a>
 
@@ -191,6 +225,24 @@
          data-path="/{{ .Slug }}/"
          data-kind="{{ .FM.page_kind }}"
          data-snippet="{{ .FM.description }}"></div>
+    {{- end }}
+  </div>
+
+  {{- /* Контакты подразделений для main.js — тем же приёмом, что и поиск.
+         Скрипт больше не хранит собственную копию телефонов и почт: он
+         собирает карту городов отсюда, а сюда они приходят из frontmatter. */ -}}
+  <div hidden data-city-index>
+    {{- range $cities }}
+    <div data-item
+         data-city="{{ .FM.city_key }}"
+         data-title="{{ .FM.nav_title }}"
+         data-phone="{{ (index .FM.contact.phones 0).value }}"
+         data-phone-link="{{ (index .FM.contact.phones 0).link }}"
+         {{- if gt (len .FM.contact.phones) 1 }}
+         data-phone2="{{ (index .FM.contact.phones 1).value }}"
+         data-phone2-link="{{ (index .FM.contact.phones 1).link }}"
+         {{- end }}
+         data-email="{{ .FM.contact.email }}"></div>
     {{- end }}
   </div>
 
@@ -247,8 +299,16 @@
 
       <div class="v2-drawer__contact">
         <span class="v2-eyebrow">Связаться</span>
-        <a href="tel:+73462555897" data-city-phone>+7 3462 55-58-97</a>
-        <a href="mailto:utilit@bk.ru" data-city-email>utilit@bk.ru</a>
+        {{- if $cities }}
+        {{- $first := index $cities 0 }}
+        <a href="tel:{{ (index $first.FM.contact.phones 0).link }}" data-city-phone>{{ (index $first.FM.contact.phones 0).value }}</a>
+        {{- if gt (len $first.FM.contact.phones) 1 }}
+        <a href="tel:{{ (index $first.FM.contact.phones 1).link }}" data-city-phone-2>{{ (index $first.FM.contact.phones 1).value }}</a>
+        {{- else }}
+        <a href="#" data-city-phone-2 hidden></a>
+        {{- end }}
+        <a href="mailto:{{ $first.FM.contact.email }}" data-city-email>{{ $first.FM.contact.email }}</a>
+        {{- end }}
         <a class="v2-button v2-button--primary v2-button--block" href="#request" data-drawer-close>Оставить заявку</a>
       </div>
     </aside>

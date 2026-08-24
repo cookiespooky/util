@@ -42,6 +42,9 @@ fi
 echo "Проверяю wikilinks и Markdown по созданной карте"
 "$NOTEPUB_BIN" validate --config ./config.yaml --rules ./rules.yaml --resolve "$RESOLVE_FILE" --links --markdown
 
+echo "Выгружаю справочники для бэкенда"
+python3 ./scripts/export-backend-data.py
+
 echo "Собираю статический сайт"
 "$NOTEPUB_BIN" build --config ./config.yaml --rules ./rules.yaml --dist ./dist --artifacts ./.notepub/artifacts
 

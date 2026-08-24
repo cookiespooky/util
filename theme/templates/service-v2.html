@@ -93,7 +93,9 @@
     </div>
   </section>
 
-  <!-- 03 · Главный разделитель услуг: с чем именно работаем -->
+  <!-- 03 · Главный разделитель услуг: с чем именно работаем.
+       Секция условная: у кремации состава услуги нет. -->
+  {{- if .FM.kinds }}
   <section class="v2-section v2-section--surface sv2-kinds-section" id="kinds" aria-labelledby="sv2-kinds-title">
     <div class="v2-shell">
       <header class="v2-heading">
@@ -119,9 +121,10 @@
       </div>
     </div>
   </section>
+  {{- end }}
 
   <!-- 04 · Как это происходит по шагам -->
-  <section class="v2-section sv2-process-section" id="process" aria-labelledby="sv2-process-title">
+  <section class="v2-section{{ if not .FM.kinds }} v2-section--surface{{ end }} sv2-process-section" id="process" aria-labelledby="sv2-process-title">
     <div class="v2-shell">
       <header class="v2-heading">
         <span class="v2-eyebrow">Порядок работы</span>
@@ -141,36 +144,37 @@
   </section>
 
   <!-- 05 · Обмен: что от заказчика и что он получает -->
-  <section class="v2-section v2-section--muted sv2-io-section" aria-labelledby="sv2-io-title">
+  <section class="v2-section v2-section--muted sv2-start-section" aria-labelledby="sv2-start-title">
     <div class="v2-shell">
       <header class="v2-heading">
-        <span class="v2-eyebrow">Обмен данными и документами</span>
-        <h2 id="sv2-io-title">Что нужно от вас и что вы получаете</h2>
+        <span class="v2-eyebrow">Сотрудничество</span>
+        <h2 id="sv2-start-title">Начало сотрудничества</h2>
+        <p>Для начала сотрудничества вам необходимо предоставить следующую информацию.</p>
       </header>
 
-      <div class="sv2-io">
-        <div class="sv2-io__col sv2-io__col--in">
-          <span class="sv2-io__title">Нужно для расчёта</span>
-          <ul class="v2-chips">
-            {{- range .FM.inputs }}
-            <li>{{ . }}</li>
-            {{- end }}
-          </ul>
-        </div>
+      {{- /* Перечень намеренно короткий: остальное специалист уточняет после
+             обращения, а длинный список на этом шаге отпугивает. */ -}}
+      <ul class="sv2-start">
+        {{- range .FM.inputs }}
+        <li class="sv2-start__item">
+          <span class="sv2-start__mark" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.2 8.4l3 3 6.6-7"/></svg>
+          </span>
+          <span>{{ . }}</span>
+        </li>
+        {{- end }}
+      </ul>
 
-        <div class="sv2-io__arrow" aria-hidden="true">
-          <svg viewBox="0 0 48 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h40"/><path d="M35 5l7 7-7 7"/></svg>
-        </div>
-
-        <div class="sv2-io__col sv2-io__col--out">
-          <span class="sv2-io__title">Вы получаете</span>
-          <ul class="v2-chips v2-chips--result">
-            {{- range .FM.outputs }}
-            <li>{{ . }}</li>
-            {{- end }}
-          </ul>
-        </div>
+      {{- if .FM.outputs }}
+      <div class="sv2-start__result">
+        <span class="sv2-start__result-title">Документы по итогам работ</span>
+        <ul class="v2-chips v2-chips--result">
+          {{- range .FM.outputs }}
+          <li>{{ . }}</li>
+          {{- end }}
+        </ul>
       </div>
+      {{- end }}
     </div>
   </section>
 
@@ -231,29 +235,7 @@
   </section>
 
   <!-- 08 · Соседние услуги, если посетитель ошибся разделом -->
-  <section class="v2-section sv2-related" aria-labelledby="sv2-related-title">
-    <div class="v2-shell">
-      <header class="v2-heading">
-        <span class="v2-eyebrow">Другие направления</span>
-        <h2 id="sv2-related-title">Нужна другая услуга?</h2>
-        <p>Если отход относится к другому направлению, специалист подскажет подходящий маршрут работ.</p>
-      </header>
-
-      <div class="sv2-related__grid">
-        {{- range .Collections.services_v2.Items }}
-        {{- if ne .Slug $.Page.Slug }}
-        <a class="sv2-related__card" href="{{ $.BaseURL }}/{{ .Slug }}/">
-          <span class="sv2-related__label">{{ .FM.hero_kicker }}</span>
-          <strong>{{ .FM.hero_title }}</strong>
-          <span class="sv2-related__arrow" aria-hidden="true">→</span>
-        </a>
-        {{- end }}
-        {{- end }}
-      </div>
-    </div>
-  </section>
-
-  <!-- 09 · Конверсия: услуга уже подставлена -->
+  <!-- 08 · Конверсия: услуга уже подставлена -->
   <section class="v2-section v2-request" id="request" aria-labelledby="sv2-request-title">
     <div class="v2-shell v2-request__layout">
       <div class="v2-request__aside">
@@ -274,8 +256,7 @@
 
         <div class="v2-request__contact">
           <span class="v2-eyebrow">Если удобнее позвонить</span>
-          <a class="v2-request__phone" href="tel:+73462555897" data-city-phone>+7 3462 55-58-97</a>
-          <a href="mailto:utilit@bk.ru" data-city-email>utilit@bk.ru</a>
+          {{ template "v2_request_contact.html" . }}
         </div>
       </div>
 
@@ -338,8 +319,32 @@
           <p>Отправка заявки не подтверждает возможность приёма отхода. Специалист проверит сведения, действующую лицензию и техническую возможность выполнения работ.</p>
         </div>
 
+        {{ template "v2_form_guard.html" . }}
+
         <p class="v2-form__status" data-form-status role="status" hidden></p>
       </form>
+    </div>
+  </section>
+
+  <section class="v2-section v2-section--surface sv2-related" aria-labelledby="sv2-related-title">
+    <div class="v2-shell">
+      <header class="v2-heading">
+        <span class="v2-eyebrow">Другие направления</span>
+        <h2 id="sv2-related-title">Нужна другая услуга?</h2>
+        <p>Если отход относится к другому направлению, специалист подскажет подходящий маршрут работ.</p>
+      </header>
+
+      <div class="sv2-related__grid">
+        {{- range .Collections.services_v2.Items }}
+        {{- if ne .Slug $.Page.Slug }}
+        <a class="sv2-related__card" href="{{ $.BaseURL }}/{{ .Slug }}/">
+          <span class="sv2-related__label">{{ .FM.hero_kicker }}</span>
+          <strong>{{ .FM.hero_title }}</strong>
+          <span class="sv2-related__arrow" aria-hidden="true">→</span>
+        </a>
+        {{- end }}
+        {{- end }}
+      </div>
     </div>
   </section>
 </article>

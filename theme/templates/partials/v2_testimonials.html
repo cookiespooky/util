@@ -1,0 +1,23 @@
+{{- /* Благодарственные письма. Тот же приём, что и у v2_logos.html:
+       контекст — страница партнёров либо её элемент коллекции. */ -}}
+{{- if .FM.testimonials }}
+<section class="v2-section cv2-testimonials-section" aria-labelledby="v2-testimonials-title">
+  <div class="v2-shell">
+    <header class="v2-heading">
+      <span class="v2-eyebrow">Отзывы</span>
+      <h2 id="v2-testimonials-title">Благодарственные письма</h2>
+    </header>
+    <div class="cv2-testimonials">
+      {{- range .FM.testimonials }}
+      <figure class="cv2-testimonial">
+        <blockquote>{{ .text }}</blockquote>
+        <figcaption>
+          <strong>{{ .org }}</strong>
+          <span>{{ .date }}</span>
+        </figcaption>
+      </figure>
+      {{- end }}
+    </div>
+  </div>
+</section>
+{{- end }}

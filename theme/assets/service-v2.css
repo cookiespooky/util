@@ -187,43 +187,77 @@
 }
 
 /* --------------------------------------------------------------------------
-   05 · Что нужно от вас и что вы получаете
+   05 · Начало сотрудничества: короткий перечень сведений для расчёта
    -------------------------------------------------------------------------- */
 
-.sv2-io {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr);
+/* Пунктов немного и они короткие, поэтому строка плашек, а не колонка:
+   перечень читается одним взглядом и не выглядит анкетой. */
+.sv2-start {
+  display: flex;
+  flex-wrap: wrap;
   gap: 12px;
-  align-items: stretch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.sv2-io__col {
-  padding: 26px;
+.sv2-start__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1 1 240px;
+  padding: 18px 22px;
   border: 1px solid var(--v2-line);
   border-radius: var(--v2-radius);
   background: var(--v2-surface);
+  color: var(--v2-ink);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
 }
 
-.sv2-io__col--in { border-top: 3px solid var(--v2-blue); }
-.sv2-io__col--out { border-top: 3px solid var(--v2-green); }
+.sv2-start__mark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--v2-green-soft);
+  color: var(--v2-green-deep);
+}
 
-.sv2-io__title {
-  display: block;
-  margin-bottom: 18px;
+.sv2-start__mark svg { width: 16px; height: 16px; }
+
+/* Документы — не второй равноправный столбец, а сноска под перечнем:
+   на этом шаге заказчику важно, что предоставить, а не что он получит. */
+.sv2-start__result {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 16px;
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid var(--v2-line);
+}
+
+/* .v2-chips рассчитан на узкую колонку и раскладывается в столбец —
+   здесь плашки идут строкой рядом с подписью. */
+.sv2-start__result .v2-chips {
+  display: flex;
+  flex: 1 1 460px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sv2-start__result-title {
+  flex: none;
   color: var(--v2-ink-subtle);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .09em;
   text-transform: uppercase;
 }
-
-.sv2-io__arrow {
-  display: grid;
-  place-items: center;
-  color: rgba(76, 145, 202, .5);
-}
-
-.sv2-io__arrow svg { width: 38px; height: 20px; }
 
 /* --------------------------------------------------------------------------
    06 · Подготовка и ограничения
@@ -424,8 +458,7 @@
   .sv2-scope__layout,
   .sv2-rules__layout { grid-template-columns: minmax(0, 1fr); }
 
-  .sv2-io { grid-template-columns: minmax(0, 1fr); }
-  .sv2-io__arrow { transform: rotate(90deg); height: 26px; }
+  .sv2-start__item { flex-basis: 100%; }
 
 }
 

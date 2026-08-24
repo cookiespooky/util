@@ -13,17 +13,40 @@
     });
   }
 
-  var cityContacts = {
-    surgut: { phone: '+7 3462 55-58-97', phoneLink: '+73462555897', email: 'utilit@bk.ru' },
-    tyumen: { phone: '+7 3452 59-38-17', phoneLink: '+73452593817', email: 'utilit_tyumen@bk.ru' },
-    novosibirsk: { phone: '+7 383 218-21-84', phoneLink: '+73832182184', email: 'nsk@utilit.tw1.ru.ru' },
-    nyagan: { phone: '+7 3462 55-58-97', phoneLink: '+73462555897', email: 'utilit@bk.ru' }
-  };
+  /* Контакты подразделений приходят разметкой из [data-city-index]: шапка
+     собирает её из frontmatter страниц городов. Своей копии телефонов и почт
+     здесь нет намеренно — иначе она разъезжается с сайтом молча. */
+  var cityContacts = {};
+  var cityOrder = [];
+
+  Array.prototype.forEach.call(
+    document.querySelectorAll('[data-city-index] [data-item]'),
+    function (node) {
+      var key = node.dataset.city;
+      if (!key) return;
+      cityContacts[key] = {
+        phone: node.dataset.phone || '',
+        phoneLink: node.dataset.phoneLink || '',
+        /* Второй номер есть не у всех подразделений: где его нет, элемент
+           в шапке прячется, а не показывает номер соседнего города. */
+        phone2: node.dataset.phone2 || '',
+        phone2Link: node.dataset.phone2Link || '',
+        email: node.dataset.email || '',
+        title: node.dataset.title || ''
+      };
+      cityOrder.push(key);
+    }
+  );
+
+  /* Город по умолчанию — первый в коллекции, а не зашитый «Сургут»:
+     порядок задаётся полем nav_order на страницах подразделений. */
+  var defaultCity = cityOrder[0] || '';
 
   var citySelect = document.querySelector('[data-city-select]');
 
   function applyCity(city) {
-    var contact = cityContacts[city] || cityContacts.surgut;
+    var contact = cityContacts[city] || cityContacts[defaultCity];
+    if (!contact) return;
     localStorage.setItem('utilit-city', city);
     root.setAttribute('data-selected-city', city);
 
@@ -32,6 +55,18 @@
     document.querySelectorAll('[data-city-phone]').forEach(function (link) {
       link.textContent = contact.phone;
       link.href = 'tel:' + contact.phoneLink;
+    });
+
+    document.querySelectorAll('[data-city-phone-2]').forEach(function (link) {
+      if (contact.phone2) {
+        link.textContent = contact.phone2;
+        link.href = 'tel:' + contact.phone2Link;
+        link.hidden = false;
+      } else {
+        link.textContent = '';
+        link.removeAttribute('href');
+        link.hidden = true;
+      }
     });
 
     document.querySelectorAll('[data-city-email]').forEach(function (link) {
@@ -51,11 +86,32 @@
 
   if (citySelect) {
     var savedCity = localStorage.getItem('utilit-city');
-    var initialCity = cityContacts[savedCity] ? savedCity : citySelect.value || 'surgut';
+    var initialCity = cityContacts[savedCity] ? savedCity : citySelect.value || defaultCity;
     applyCity(initialCity);
     citySelect.addEventListener('change', function () {
       applyCity(citySelect.value);
     });
+
+    /* Автоопределение города спрашиваем только при первом визите: свой выбор
+       посетителя переопределять нельзя. Страницы остаются статикой — сервер
+       отдаёт один ключ города, подстановку делает applyCity.
+
+       Ошибки глушим намеренно: без бэкенда (например, на статичном превью)
+       эндпоинта нет, и сайт должен просто остаться на городе по умолчанию. */
+    if (!cityContacts[savedCity] && typeof fetch === 'function') {
+      var base = window.__notepubBaseURL || '';
+      fetch(base + '/api/city.php', { headers: { Accept: 'application/json' } })
+        .then(function (response) {
+          return response.ok ? response.json() : null;
+        })
+        .then(function (data) {
+          if (!data || !data.city || !cityContacts[data.city]) return;
+          // За время запроса посетитель мог выбрать город сам — не мешаем.
+          if (localStorage.getItem('utilit-city') !== initialCity) return;
+          applyCity(data.city);
+        })
+        .catch(function () { /* эндпоинта нет — остаёмся на умолчании */ });
+    }
   }
 
   var modal = document.querySelector('[data-search-modal]');

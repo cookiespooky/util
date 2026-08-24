@@ -52,7 +52,6 @@ fields:
     - checklist
     - checklist_title
     - requisites
-    - offices
     - logos
     - logos_title
     - logos_note
@@ -64,6 +63,9 @@ fields:
     # поля страниц city-v2
     - city_key
     - contact
+    # положение точки на схеме подразделений на главной, в процентах
+    - map_x
+    - map_y
     - services
     - services_note
   defaults:
