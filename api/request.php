@@ -212,11 +212,23 @@ $lines[] = 'Согласие на обработку персональных д
 
 $subject = sprintf('Заявка с сайта — %s, %s', $record['city_title'], $phone);
 
+/* Способ доставки. 'mta' — локальный сервер хостинга, паролей не требует;
+   'smtp' — авторизация на почтовом сервере. Если способ не задан явно, но
+   логин SMTP пуст, отправлять через SMTP бессмысленно — используем MTA. */
+$transport = (string) ($config['transport'] ?? '');
+if ($transport === '') {
+    $transport = ($config['smtp']['username'] ?? '') === '' ? 'mta' : 'smtp';
+}
+
 $sent = false;
 $sendError = '';
 try {
-    $smtp = new Smtp($config['smtp'] ?? []);
-    $smtp->send($to, $cc, $subject, implode("\n", $lines), $email);
+    if ($transport === 'mta') {
+        send_via_local_mta($to, $cc, $subject, implode("\n", $lines), $email, $config);
+    } else {
+        $smtp = new Smtp($config['smtp'] ?? []);
+        $smtp->send($to, $cc, $subject, implode("\n", $lines), $email);
+    }
     $sent = true;
 } catch (Throwable $e) {
     $sendError = $e->getMessage();

@@ -145,6 +145,52 @@ function rate_limit_allow(array $config, string $ip): bool
 }
 
 /** Убирает управляющие символы и переносы — всё, что опасно в заголовках письма. */
+/**
+ * Отправка через локальный MTA хостинга (функция mail()).
+ *
+ * Второй способ доставки помимо SMTP. Нужен там, где нет почтового ящика с
+ * паролем: письмо уходит с самого сервера, а SPF домена уже разрешает его
+ * адрес — на виртуальном хостинге reg.ru запись включает ip4 сервера.
+ *
+ * Конверт помечается тем же адресом, что и заголовок From: иначе проверка
+ * SPF идёт по служебному адресу хостинга и не совпадает с доменом письма.
+ */
+function send_via_local_mta(array $to, array $cc, string $subject, string $body, string $replyTo, array $config): void
+{
+    $from = (string) ($config['mail']['from'] ?? '');
+    if ($from === '') {
+        throw new RuntimeException('не задан mail.from');
+    }
+    $fromName = (string) ($config['mail']['from_name'] ?? 'Сайт');
+
+    $encode = static fn(string $v): string => '=?UTF-8?B?' . base64_encode($v) . '?=';
+
+    $headers = [
+        'From: ' . $encode($fromName) . ' <' . $from . '>',
+        'MIME-Version: 1.0',
+        'Content-Type: text/plain; charset=UTF-8',
+        'Content-Transfer-Encoding: 8bit',
+    ];
+    if ($cc) {
+        $headers[] = 'Cc: ' . implode(', ', $cc);
+    }
+    if ($replyTo !== '') {
+        $headers[] = 'Reply-To: ' . $replyTo;
+    }
+
+    $ok = @mail(
+        implode(', ', $to),
+        $encode($subject),
+        $body,
+        implode("\r\n", $headers),
+        '-f' . $from
+    );
+
+    if (!$ok) {
+        throw new RuntimeException('mail() вернула false');
+    }
+}
+
 function clean_line(string $value, int $max = 300): string
 {
     $value = preg_replace('/[\x00-\x1F\x7F]/u', ' ', $value) ?? '';
