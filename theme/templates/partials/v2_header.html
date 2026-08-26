@@ -178,6 +178,20 @@
             <span class="v2-sr-only">Выберите город</span>
           </button>
 
+          {{- /* Подтверждение автоопределения. Разметка отдаётся всегда, но
+                 показывается только из main.js — и только при первом визите,
+                 когда бэкенд смог определить город. Спрашиваем, а не молча
+                 подставляем: ошибка определения меняла бы телефоны и адрес
+                 подразделения без ведома посетителя. */ -}}
+          <div class="v2-city__confirm" data-city-confirm hidden role="dialog" aria-label="Подтверждение города">
+            <p class="v2-city__confirm-title">Ваш город — <strong data-city-confirm-name></strong>?</p>
+            <p class="v2-city__confirm-note">От города зависят телефон подразделения и условия вывоза.</p>
+            <div class="v2-city__confirm-actions">
+              <button class="v2-button v2-button--primary v2-button--small" type="button" data-city-confirm-yes>Да, верно</button>
+              <button class="v2-button v2-button--secondary v2-button--small" type="button" data-city-confirm-no>Выбрать другой</button>
+            </div>
+          </div>
+
           <ul class="v2-city__menu" data-city-menu role="listbox" aria-label="Города" hidden>
             {{- range $i, $c := $cities }}
             <li><button class="v2-city__option" type="button" role="option" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}" data-city-option="{{ $c.FM.city_key }}">{{ $c.FM.nav_title }}</button></li>

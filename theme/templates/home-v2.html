@@ -358,18 +358,14 @@
   </section>
 
   <!-- 07 · Снятие возражений: документы и правовые рамки -->
-  {{- /* Клиенты и отзывы. Данные берутся со страницы /partners/ через
-         коллекцию company_v2 и рендерятся теми же партиалами, что и там:
-         второй копии текста нет, разметка обычная — без JS. */ -}}
-  {{- range .Collections.company_v2.Items }}
-  {{- if eq .Slug "partners" }}
+  {{- /* Клиенты и отзывы: партиалы получают контекст страницы и сами
+         добирают данные со страницы /partners/ через коллекцию company_v2.
+         Второй копии текста нет, разметка серверная — без JS. */ -}}
   {{ template "v2_logos.html" . }}
   {{ template "v2_testimonials.html" . }}
   <div class="v2-shell v2-partners-more">
-    <a class="v2-button v2-button--secondary" href="{{ $.BaseURL }}/partners/">Все партнёры и отзывы <span aria-hidden="true">→</span></a>
+    <a class="v2-button v2-button--secondary" href="{{ .BaseURL }}/partners/">Все партнёры и отзывы <span aria-hidden="true">→</span></a>
   </div>
-  {{- end }}
-  {{- end }}
 
   <section class="v2-section v2-section--surface v2-docs" aria-labelledby="v2-docs-title">
     <div class="v2-shell v2-docs__layout">

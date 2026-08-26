@@ -504,6 +504,13 @@
       setOpen(menu.hidden);
     });
 
+    /* Город меняет не только этот список: его переключают подтверждение
+       автоопределения и карта подразделений на главной — оба пишут значение
+       в нативный select. Без этой синхронизации подпись в шапке оставалась
+       бы на прежнем городе, хотя телефоны уже сменились. */
+    native.addEventListener('change', syncFromNative);
+    document.addEventListener('utilit:citychange', syncFromNative);
+
     menu.addEventListener('click', function (event) {
       var option = event.target.closest('[data-city-option]');
       if (option) choose(option.dataset.cityOption);

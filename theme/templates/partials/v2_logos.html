@@ -1,19 +1,45 @@
-{{- /* Плашки клиентов. Контекст — страница партнёров или её элемент в
-       коллекции company_v2, поэтому внутри доступен только .FM:
-       {{ template "v2_logos.html" . }}. Ссылки внешние, .BaseURL не нужен. */ -}}
-{{- if .FM.logos }}
+{{- /* Плашки клиентов. Контекст — ВСЕГДА страница, а не элемент коллекции:
+       элементы коллекций имеют тип models.CollectionItem, у которого нет ни
+       .AssetsBase, ни .BaseURL, и обращение к ним роняет рендер страницы.
+       Поэтому данные партиал добирает сам: со своей страницы, а на главной —
+       со страницы партнёров через коллекцию company_v2. */ -}}
+{{- $logos := .FM.logos }}
+{{- $title := .FM.logos_title }}
+{{- $note := .FM.logos_note }}
+{{- if and (not $logos) (eq .Page.Type "home-v2") }}
+  {{- range .Collections.company_v2.Items }}
+  {{- if eq .Slug "partners" }}
+  {{- $logos = .FM.logos }}{{ $title = .FM.logos_title }}{{ $note = .FM.logos_note }}
+  {{- end }}
+  {{- end }}
+{{- end }}
+{{- if $logos }}
 <section class="v2-section v2-section--surface cv2-logos-section" aria-labelledby="v2-logos-title">
   <div class="v2-shell">
     <header class="v2-heading">
-      <span class="v2-eyebrow">{{ .FM.logos_title }}</span>
-      <h2 id="v2-logos-title">{{ .FM.logos_note }}</h2>
+      <span class="v2-eyebrow">{{ $title }}</span>
+      <h2 id="v2-logos-title">{{ $note }}</h2>
     </header>
     <div class="cv2-logos">
-      {{- range .FM.logos }}
+      {{- range $logos }}
+      {{- if .url }}
       <a class="cv2-logo" href="{{ .url }}" target="_blank" rel="noopener">
+        {{- if .image }}
+        <span class="cv2-logo__mark"><img src="{{ $.AssetsBase }}/{{ .image }}" alt="{{ .name }}" loading="lazy" /></span>
+        {{- end }}
         <strong>{{ .name }}</strong>
         <span>{{ .role }}</span>
       </a>
+      {{- else }}
+      {{- /* Без ссылки — плашка не кликабельна, пустой href был бы ловушкой */ -}}
+      <div class="cv2-logo cv2-logo--plain">
+        {{- if .image }}
+        <span class="cv2-logo__mark"><img src="{{ $.AssetsBase }}/{{ .image }}" alt="{{ .name }}" loading="lazy" /></span>
+        {{- end }}
+        <strong>{{ .name }}</strong>
+        <span>{{ .role }}</span>
+      </div>
+      {{- end }}
       {{- end }}
     </div>
   </div>

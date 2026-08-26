@@ -1,6 +1,12 @@
-{{- /* Благодарственные письма. Тот же приём, что и у v2_logos.html:
-       контекст — страница партнёров либо её элемент коллекции. */ -}}
-{{- if .FM.testimonials }}
+{{- /* Благодарственные письма. Контекст — страница (см. v2_logos.html):
+       на главной данные берутся со страницы партнёров через коллекцию. */ -}}
+{{- $items := .FM.testimonials }}
+{{- if and (not $items) (eq .Page.Type "home-v2") }}
+  {{- range .Collections.company_v2.Items }}
+  {{- if eq .Slug "partners" }}{{ $items = .FM.testimonials }}{{ end }}
+  {{- end }}
+{{- end }}
+{{- if $items }}
 <section class="v2-section cv2-testimonials-section" aria-labelledby="v2-testimonials-title">
   <div class="v2-shell">
     <header class="v2-heading">
@@ -8,7 +14,7 @@
       <h2 id="v2-testimonials-title">Благодарственные письма</h2>
     </header>
     <div class="cv2-testimonials">
-      {{- range .FM.testimonials }}
+      {{- range $items }}
       <figure class="cv2-testimonial">
         <blockquote>{{ .text }}</blockquote>
         <figcaption>

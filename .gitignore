@@ -9,3 +9,9 @@ artifacts/
 # Бэкенд: реальный конфиг с паролем и журнал заявок наружу не уходят
 api/config.php
 storage/
+
+# Рабочие файлы, которые не нужны в репозитории
+CLAUDE.md
+backlog.md
+content-v1-backup/
+Manrope/

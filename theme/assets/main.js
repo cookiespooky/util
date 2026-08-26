@@ -94,7 +94,12 @@
 
     /* Автоопределение города спрашиваем только при первом визите: свой выбор
        посетителя переопределять нельзя. Страницы остаются статикой — сервер
-       отдаёт один ключ города, подстановку делает applyCity.
+       отдаёт один ключ города, остальное делает браузер.
+
+       Определённый город НЕ подставляется молча: от города зависят телефон
+       подразделения и условия вывоза, а определение по IP ошибается —
+       мобильные операторы выпускают абонентов через шлюзы в других регионах.
+       Поэтому показываем подтверждение и ждём ответа посетителя.
 
        Ошибки глушим намеренно: без бэкенда (например, на статичном превью)
        эндпоинта нет, и сайт должен просто остаться на городе по умолчанию. */
@@ -108,10 +113,54 @@
           if (!data || !data.city || !cityContacts[data.city]) return;
           // За время запроса посетитель мог выбрать город сам — не мешаем.
           if (localStorage.getItem('utilit-city') !== initialCity) return;
-          applyCity(data.city);
+          // Уже стоит нужный город — спрашивать не о чем.
+          if (data.city === initialCity) return;
+          askCity(data.city);
         })
         .catch(function () { /* эндпоинта нет — остаёмся на умолчании */ });
     }
+  }
+
+  /* Подтверждение автоопределённого города.
+
+     Отказ тоже запоминается: посетитель, закрывший подсказку, не должен
+     видеть её на каждой странице. Записываем текущий город как выбранный —
+     дальше работает обычный переключатель в шапке. */
+  function askCity(city) {
+    var box = document.querySelector('[data-city-confirm]');
+    var contact = cityContacts[city];
+    if (!box || !contact) return;
+
+    var name = box.querySelector('[data-city-confirm-name]');
+    if (name) name.textContent = contact.title || city;
+    box.hidden = false;
+
+    function close() {
+      box.hidden = true;
+      document.removeEventListener('keydown', onKey);
+    }
+
+    function onKey(event) {
+      if (event.key === 'Escape') { close(); localStorage.setItem('utilit-city', citySelect.value); }
+    }
+
+    var yes = box.querySelector('[data-city-confirm-yes]');
+    var no = box.querySelector('[data-city-confirm-no]');
+
+    if (yes) yes.addEventListener('click', function () {
+      applyCity(city);
+      close();
+    });
+
+    if (no) no.addEventListener('click', function () {
+      // Выбор остаётся за посетителем: закрываем подсказку и открываем список.
+      localStorage.setItem('utilit-city', citySelect.value);
+      close();
+      var trigger = document.querySelector('[data-city-trigger]');
+      if (trigger) trigger.click();
+    });
+
+    document.addEventListener('keydown', onKey);
   }
 
   var modal = document.querySelector('[data-search-modal]');

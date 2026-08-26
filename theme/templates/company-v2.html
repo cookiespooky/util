@@ -111,6 +111,26 @@
   {{- end }}
 
   <!-- 03 · Лицензионные документы -->
+  {{- if .FM.gallery }}
+  <section class="v2-section cv2-gallery-section" aria-labelledby="cv2-gallery-title">
+    <div class="v2-shell">
+      <header class="v2-heading">
+        <span class="v2-eyebrow">{{ if .FM.gallery_title }}{{ .FM.gallery_title }}{{ else }}Фотографии{{ end }}</span>
+        <h2 id="cv2-gallery-title">{{ .FM.gallery_note }}</h2>
+      </header>
+      {{- /* Первая фотография крупнее остальных: сетка задаёт ритм,
+             иначе четыре одинаковых прямоугольника читаются как склад. */ -}}
+      <div class="cv2-gallery">
+        {{- range .FM.gallery }}
+        <figure class="cv2-gallery__item">
+          <img src="{{ $.AssetsBase }}/{{ .image }}" alt="{{ .alt }}" loading="lazy" />
+        </figure>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+  {{- end }}
+
   {{- if .FM.documents }}
   <section class="v2-section v2-section--surface cv2-documents-section" id="documents" aria-labelledby="cv2-documents-title">
     <div class="v2-shell">
@@ -123,10 +143,18 @@
       </header>
       <ol class="cv2-documents">
         {{- range .FM.documents }}
-        <li class="cv2-document">
+        <li class="cv2-document{{ if .scan }} cv2-document--scan{{ end }}">
           <span class="cv2-document__kind">{{ .kind }}</span>
           <strong>{{ .title }}</strong>
           <small>{{ .text }}</small>
+          {{- if .scan }}
+          {{- /* Скан открывается в полном размере отдельной вкладкой:
+                 разбирать документ прямо в карточке нечитаемо. */ -}}
+          <a class="cv2-document__scan" href="{{ $.AssetsBase }}/{{ .scan }}" target="_blank" rel="noopener">
+            <img src="{{ $.AssetsBase }}/{{ .scan }}" alt="{{ .title }}" loading="lazy" />
+            <span>Открыть документ<span aria-hidden="true"> →</span></span>
+          </a>
+          {{- end }}
         </li>
         {{- end }}
       </ol>

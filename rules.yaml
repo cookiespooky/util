@@ -46,6 +46,10 @@ fields:
     - audience_title
     - audience_note
     - capabilities
+    # фотографии производства и техники на странице «О компании»
+    - gallery
+    - gallery_title
+    - gallery_note
     - documents
     - documents_title
     - documents_note
