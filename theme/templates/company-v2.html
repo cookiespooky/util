@@ -352,7 +352,12 @@
         </div>
       </div>
 
-      <form class="v2-form" method="post" action="#" novalidate data-v2-form>
+      {{- /* Приёмник заявок берётся из настроек конфига: на боевом домене
+       (config.regru.yaml) он задан и форма отправляет заявку на PHP,
+       на превью GitHub Pages ключа нет — v2.js показывает заглушку,
+       потому что PHP там негде исполнять. */ -}}
+      {{- $endpoint := "" }}{{ if .Settings.request_endpoint }}{{ $endpoint = printf "%s%s" .BaseURL .Settings.request_endpoint }}{{ end }}
+      <form class="v2-form" method="post" action="{{ if $endpoint }}{{ $endpoint }}{{ else }}#{{ end }}" novalidate data-v2-form{{ if $endpoint }} data-endpoint="{{ $endpoint }}"{{ end }}>
         <label class="v2-field">
           <span>Город</span>
           <select class="v2-control" name="city" data-request-city>

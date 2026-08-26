@@ -4,19 +4,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Static corporate site for «Утилитсервис» (waste-handling services, Russian-language). Built with [Notepub](https://github.com/cookiespooky/notepub) — a Go static site generator that turns Markdown + `rules.yaml` into HTML. CI publishes to GitHub Pages at `https://cookiespooky.github.io/util/` (a **project** Pages site, so everything lives under the `/util` path prefix).
+Static corporate site for «Утилитсервис» (waste-handling services, Russian-language). Built with [Notepub](https://github.com/cookiespooky/notepub) — a Go static site generator that turns Markdown + `rules.yaml` into HTML.
+
+**There are two publication targets, and which config you build with decides everything:**
+
+| | GitHub Pages (preview) | reg.ru (production) |
+|---|---|---|
+| Config | `config.yaml` | `config.regru.yaml` |
+| URL | `https://cookiespooky.github.io/util/` — note the `/util` prefix | `https://utilityservice.ru` — site at the domain root |
+| Publish | `./scripts/deploy.sh` → push → GitHub Actions | `./scripts/upload-regru.sh` → rsync over SSH |
+| PHP backend | none — the request form falls back to a stub | `api/` served at `/api/`, form posts for real |
+
+Every internal link and asset path is rendered **absolute** from `base_url`, so a `dist/` built with the wrong config is not merely mis-prefixed — every link on the uploaded site points at the other host. `upload-regru.sh` guards against exactly that.
 
 There is no package manager, no test suite, and no JS build step. Assets are hand-written CSS/JS served as-is.
 
-Alongside the static site there is now a small PHP backend in [api/](api/) (request form + geo-IP city detection). It cannot run on GitHub Pages — it targets a VPS layout described in [api/nginx.sample.conf](api/nginx.sample.conf). Both targets currently coexist; see "Backend" below for what is and isn't wired up.
+Alongside the static site there is a small PHP backend in [api/](api/) (request form + geo-IP city detection). It cannot run on GitHub Pages. [api/nginx.sample.conf](api/nginx.sample.conf) describes a **VPS** layout where `api/` sits beside the static root; the actual host is reg.ru shared hosting under ISPmanager, where there is no access to the server config, so `api/` lives **inside** the document root and everything sensitive in it is closed off by [deploy/htaccess](deploy/htaccess) (uploaded as `.htaccess`). Keep both files in sync when adding an endpoint.
 
 ## Commands
 
 ```bash
 ./scripts/build.sh                 # validate → index → validate links → export backend data → build → check dist
-./scripts/deploy.sh "commit msg"   # build, commit an allowlist of paths, push (CI deploys)
+./scripts/deploy.sh "commit msg"   # build, commit an allowlist of paths, push (CI deploys to Pages)
+REGRU_HOST=u123@server ./scripts/upload-regru.sh   # build for the real domain and rsync to reg.ru
 notepub serve --config ./config.dev.yaml --rules ./rules.yaml   # local preview on :8080
 ```
+
+`build.sh` takes `CONFIG` and `DIST` from the environment (defaults `./config.yaml` and `./dist`), which is how one script serves both targets. `upload-regru.sh` accepts `DRY_RUN=1` and refuses to upload if the built HTML still contains `cookiespooky.github.io`.
 
 Individual pipeline stages (useful for fast iteration; `build.sh` wipes `dist/`, `.notepub/` and `artifacts/` each run):
 
@@ -138,7 +152,7 @@ PHP 8, no composer dependencies, two endpoints:
 
 `api/config.php` holds SMTP credentials and is gitignored; without it `load_config()` falls back to [api/config.sample.php](api/config.sample.php) in a "dry" mode that stores requests but sends nothing. `storage/` (request log + GeoIP database) is gitignored and must not be web-served.
 
-**Not yet wired:** the form templates still render `action="#"` with no `data-endpoint`, and `initSubmit` in [theme/assets/v2.js](theme/assets/v2.js) falls back to the stubbed confirmation message when that attribute is absent. Connecting the backend means setting `data-endpoint` on the `[data-v2-form]` forms in `home-v2.html`, `catalog-v2.html`, `service-v2.html`, `company-v2.html` and `city-v2.html`.
+**How the form is wired:** all five form templates (`home-v2`, `catalog-v2`, `service-v2`, `company-v2`, `city-v2`) build `$endpoint` from `.Settings.request_endpoint` and emit `action` plus `data-endpoint` only when it is set. `initSubmit` in [theme/assets/v2.js](theme/assets/v2.js) falls back to the stubbed confirmation when `data-endpoint` is absent, which is what the Pages preview shows. Note the no-JS path posts straight to `request.php`, which answers with JSON — functional but ugly; a redirect to `/thank-you/` for non-AJAX posts is still missing.
 
 Note `config.sample.php` refers to `cities.generated.json`; the file the code actually reads is `site-data.generated.json`.
 
@@ -148,7 +162,7 @@ Two content sections are shared across page types: [partials/v2_logos.html](them
 
 Single shell: [theme/templates/layout.html](theme/templates/layout.html) — head, header/footer partials, `{{ .Body }}` in `<main>`, deferred scripts. Page templates render an `<article>`; partials in [theme/templates/partials/](theme/templates/partials/) are pulled in with `{{ template "name.html" . }}` — usually the dot is the whole page context, so inside `range` you need `$.BaseURL`. The glyph partials are the exception (see above): they are invoked with a collection item as the dot.
 
-Available in templates: `.Page` (`.Type`, `.Title`, `.Description`, `.Slug`), `.FM` (raw frontmatter — arbitrary nested YAML), `.Body` (rendered Markdown HTML), `.Collections.<name>.Items`, `.BaseURL`, `.AssetsBase`, `.Meta` (`.Robots`, `.OpenGraph`, `.JSONLD`), `.Canonical`, `.SearchMode`.
+Available in templates: `.Page` (`.Type`, `.Title`, `.Description`, `.Slug`), `.FM` (raw frontmatter — arbitrary nested YAML), `.Body` (rendered Markdown HTML), `.Collections.<name>.Items`, `.BaseURL`, `.AssetsBase`, `.Meta` (`.Robots`, `.OpenGraph`, `.JSONLD`), `.Canonical`, `.SearchMode`, and `.Settings` — the `settings:` map from the active config. `.Settings` behaves like a map: an **absent key yields an empty string rather than a template error** (verified), so `{{ if .Settings.foo }}` is a safe way to make output depend on the build target. That is how the request form is wired: `request_endpoint` exists only in `config.regru.yaml`, so the Pages build renders no `data-endpoint` and `v2.js` keeps showing its stub.
 
 Always build internal links as `{{ .BaseURL }}/path/` — bare `/path/` breaks under the `/util` prefix, and nothing in the pipeline will catch it (see the `check-dist.py` note above).
 

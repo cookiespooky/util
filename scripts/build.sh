@@ -6,6 +6,10 @@ cd "$ROOT_DIR"
 
 NOTEPUB_REF="${NOTEPUB_REF:-ff6d7902b9675cca01363b81ab6a3afedcddd565}"
 NOTEPUB_BIN="${NOTEPUB_BIN:-}"
+# Конфиг сборки: config.yaml — превью на GitHub Pages,
+# config.regru.yaml — боевой сайт на своём домене.
+CONFIG="${CONFIG:-./config.yaml}"
+DIST="${DIST:-./dist}"
 
 if [[ -z "$NOTEPUB_BIN" ]]; then
   if command -v notepub >/dev/null 2>&1; then
@@ -24,14 +28,14 @@ fi
 
 # artifacts/ — каталог по умолчанию шага build; чистим, чтобы он не расходился
 # с индексом в .notepub/artifacts
-rm -rf dist .notepub artifacts
-mkdir -p dist
+rm -rf "$DIST" .notepub artifacts
+mkdir -p "$DIST"
 
 echo "Проверяю frontmatter и маршруты"
-"$NOTEPUB_BIN" validate --config ./config.yaml --rules ./rules.yaml
+"$NOTEPUB_BIN" validate --config "$CONFIG" --rules ./rules.yaml
 
 echo "Строю индекс и карту разрешения ссылок"
-"$NOTEPUB_BIN" index --config ./config.yaml --rules ./rules.yaml
+"$NOTEPUB_BIN" index --config "$CONFIG" --rules ./rules.yaml
 
 RESOLVE_FILE="./.notepub/artifacts/resolve.json"
 if [[ ! -f "$RESOLVE_FILE" ]]; then
@@ -40,19 +44,19 @@ if [[ ! -f "$RESOLVE_FILE" ]]; then
 fi
 
 echo "Проверяю wikilinks и Markdown по созданной карте"
-"$NOTEPUB_BIN" validate --config ./config.yaml --rules ./rules.yaml --resolve "$RESOLVE_FILE" --links --markdown
+"$NOTEPUB_BIN" validate --config "$CONFIG" --rules ./rules.yaml --resolve "$RESOLVE_FILE" --links --markdown
 
 echo "Выгружаю справочники для бэкенда"
 python3 ./scripts/export-backend-data.py
 
 echo "Собираю статический сайт"
-"$NOTEPUB_BIN" build --config ./config.yaml --rules ./rules.yaml --dist ./dist --artifacts ./.notepub/artifacts
+"$NOTEPUB_BIN" build --config "$CONFIG" --rules ./rules.yaml --dist "$DIST" --artifacts ./.notepub/artifacts
 
-touch dist/.nojekyll
-if [[ -f dist/404/index.html ]]; then
-  cp dist/404/index.html dist/404.html
+touch "$DIST/.nojekyll"
+if [[ -f "$DIST/404/index.html" ]]; then
+  cp "$DIST/404/index.html" "$DIST/404.html"
 fi
 
-python3 ./scripts/check-dist.py ./dist
+python3 ./scripts/check-dist.py "$DIST"
 
-echo "Готово: $ROOT_DIR/dist"
+echo "Готово: $DIST (конфиг: $CONFIG)"

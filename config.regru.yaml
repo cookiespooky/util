@@ -1,0 +1,75 @@
+# Конфигурация для боевого сайта на своём домене (виртуальный хостинг reg.ru).
+#
+# Отличается от config.yaml только адресами и наличием request_endpoint:
+# config.yaml остаётся конфигурацией превью на GitHub Pages, где нет PHP,
+# поэтому там форма показывает заглушку, а здесь — отправляет заявку.
+site:
+  id: utilit
+  base_url: "https://utilityservice.ru"
+  title: "Утилитсервис"
+  description: "Сбор, транспортирование и обезвреживание отходов для организаций"
+  default_og_image: ""
+  media_base_url: "https://utilityservice.ru/media"
+  host: 127.0.0.1
+
+runtime:
+  mode: "prod"
+  prod:
+    base_url: "https://utilityservice.ru"
+    media_base_url: "https://utilityservice.ru/media"
+  dev:
+    base_url: "http://127.0.0.1:8080"
+    media_base_url: "http://127.0.0.1:8080/media"
+
+content:
+  source: "local"
+  local_dir: "./content"
+
+markdown:
+  html_policy: "safe"
+
+settings:
+  site_title: "Утилитсервис"
+  site_description: "Обращение с отходами для организаций"
+  general_phone: "+7 3462 55-58-97"
+  general_phone_href: "+73462555897"
+  general_email: "utilit@bk.ru"
+  founded_year: "2005"
+  # Путь к приёмнику заявок относительно base_url. Пустое значение или
+  # отсутствие ключа = бэкенда нет, форма показывает заглушку (см. v2.js).
+  request_endpoint: "/api/request.php"
+
+og_type_by_type:
+  home: "website"
+  catalog: "website"
+  service: "website"
+  city: "website"
+  company: "website"
+  legal: "website"
+
+paths:
+  file_root: "./.notepub"
+  artifacts_dir: "./.notepub/artifacts"
+  snapshot_file: "./.notepub/snapshot/objects.json"
+  cache_root: "./.notepub/cache"
+
+theme:
+  dir: "."
+  name: "theme"
+  templates_subdir: "templates"
+  assets_subdir: "assets"
+
+server:
+  listen: "127.0.0.1:8080"
+
+rules_path: "./rules.yaml"
+
+robots:
+  disallow:
+    - "/thank-you/"
+    - "/search/"
+    - "/_partials/"
+
+cache:
+  html_ttl_seconds: 600
+  stale_if_error_seconds: 604800
