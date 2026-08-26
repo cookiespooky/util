@@ -8,7 +8,7 @@ site:
   base_url: "https://utilityservice.ru"
   title: "Утилитсервис"
   description: "Сбор, транспортирование и обезвреживание отходов для организаций"
-  default_og_image: "https://utilityservice.ru/assets/img/og-cover.jpg"
+  default_og_image: "https://utilityservice.ru/assets/img/og-logo.jpg"
   media_base_url: "https://utilityservice.ru/media"
   host: 127.0.0.1
 

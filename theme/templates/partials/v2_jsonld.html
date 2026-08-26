@@ -16,7 +16,7 @@
   "alternateName": "Утилитсервис",
   "url": "{{ .BaseURL }}/",
   "logo": "{{ .AssetsBase }}/logo.svg",
-  "image": "{{ .AssetsBase }}/img/og-cover.jpg",
+  "image": "{{ .AssetsBase }}/img/og-logo.jpg",
   "description": "Сбор, транспортирование и обезвреживание отходов для организаций",
   "foundingDate": "2005",
   "telephone": "{{ (index $head.FM.contact.phones 0).link }}",
@@ -49,7 +49,7 @@
   "parentOrganization": { "@type": "Organization", "name": "ООО «Утилитсервис»" },
   "telephone": "{{ (index .FM.contact.phones 0).link }}",
   "email": "{{ .FM.contact.email }}",
-  "image": "{{ .AssetsBase }}/img/og-cover.jpg",
+  "image": "{{ .AssetsBase }}/img/og-logo.jpg",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "{{ .FM.contact.address }}",
