@@ -2800,7 +2800,26 @@ select.v2-control {
 .v2-footer__vk:hover { opacity: 1; transform: translateY(-1px); }
 
 .v2-header__vk img { width: 24px; height: 24px; border-radius: 7px; }
+
+/* На узких экранах строка шапки перестраивается через order, а у этой
+   ссылки его нет — она встала бы левее логотипа. В ящике ссылка есть,
+   поэтому здесь просто убираем. Правило стоит после базового: иначе
+   его перекроет display выше по файлу. */
+@media (max-width: 1060px) {
+  .v2-header__vk { display: none; }
+}
 .v2-footer__vk img { width: 28px; height: 28px; border-radius: 8px; }
+
+.v2-drawer__vk {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--v2-ink);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.v2-drawer__vk img { width: 24px; height: 24px; border-radius: 7px; }
 
 .ct2-contact__vk {
   display: inline-flex;

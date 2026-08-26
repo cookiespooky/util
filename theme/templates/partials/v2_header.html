@@ -323,6 +323,14 @@
         {{- end }}
         <a href="mailto:{{ $first.FM.contact.email }}" data-city-email>{{ $first.FM.contact.email }}</a>
         {{- end }}
+        {{- range $cities }}
+        {{- if .FM.contact.vk }}
+        <a class="v2-drawer__vk" href="{{ .FM.contact.vk }}" target="_blank" rel="noopener">
+          <img src="{{ $.AssetsBase }}/vk-logo.svg" width="24" height="24" alt="" aria-hidden="true" />
+          <span>Сообщество ВКонтакте</span>
+        </a>
+        {{- end }}
+        {{- end }}
         <a class="v2-button v2-button--primary v2-button--block" href="#request" data-drawer-close>Оставить заявку</a>
       </div>
     </aside>

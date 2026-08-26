@@ -57,6 +57,8 @@ if [[ -f "$DIST/404/index.html" ]]; then
   cp "$DIST/404/index.html" "$DIST/404.html"
 fi
 
+python3 ./scripts/postprocess-dist.py "$DIST"
+
 python3 ./scripts/check-dist.py "$DIST"
 
 echo "Готово: $DIST (конфиг: $CONFIG)"
