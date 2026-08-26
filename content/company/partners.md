@@ -55,6 +55,7 @@ logos:
     role: "сеть клинико-диагностических лабораторий"
     image: "img/partner4.webp"
   - name: "Винзер"
+    url: "https://vzksm.ru/"
     role: "производственное предприятие"
     image: "img/partner5.webp"
   - name: "OilLink"

@@ -3,7 +3,7 @@ site:
   base_url: "https://cookiespooky.github.io/util"
   title: "Утилитсервис"
   description: "Сбор, транспортирование и обезвреживание отходов для организаций"
-  default_og_image: ""
+  default_og_image: "https://cookiespooky.github.io/util/assets/img/og-cover.jpg"
   media_base_url: "https://cookiespooky.github.io/util/media"
   host: 127.0.0.1
 

@@ -3,7 +3,7 @@ site:
   base_url: "http://127.0.0.1:8080"
   title: "Утилитсервис"
   description: "Сбор, транспортирование и обезвреживание отходов для организаций"
-  default_og_image: ""
+  default_og_image: "http://127.0.0.1:8080/assets/img/og-cover.jpg"
   media_base_url: "http://127.0.0.1:8080/media"
   host: 127.0.0.1
 runtime:

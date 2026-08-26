@@ -1,0 +1,108 @@
+{{- /* Микроразметка Schema.org. Notepub своей не формирует: .Meta.JSONLD
+       пуст, поэтому разметка собирается здесь из тех же данных, что и
+       страницы, — контакты берутся из frontmatter подразделений.
+
+       Контекст — страница, партиал вызывается из layout.html. */ -}}
+{{- $cities := .Collections.cities_v2.Items }}
+{{- $head := "" }}{{ if $cities }}{{ $head = index $cities 0 }}{{ end }}
+{{- $url := .BaseURL }}{{ if ne .Page.Type "home-v2" }}{{ $url = printf "%s/%s/" .BaseURL .Page.Slug }}{{ else }}{{ $url = printf "%s/" .BaseURL }}{{ end }}
+
+{{- if $head }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ООО «Утилитсервис»",
+  "alternateName": "Утилитсервис",
+  "url": "{{ .BaseURL }}/",
+  "logo": "{{ .AssetsBase }}/logo.svg",
+  "image": "{{ .AssetsBase }}/img/og-cover.jpg",
+  "description": "Сбор, транспортирование и обезвреживание отходов для организаций",
+  "foundingDate": "2005",
+  "telephone": "{{ (index $head.FM.contact.phones 0).link }}",
+  "email": "{{ $head.FM.contact.email }}",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{ $head.FM.contact.address }}",
+    "addressCountry": "RU"
+  },
+  "areaServed": [
+    {{- range $i, $c := $cities }}{{ if $i }},{{ end }}
+    { "@type": "City", "name": "{{ $c.FM.nav_title }}" }
+    {{- end }}
+  ]
+  {{- range $cities }}{{ if .FM.contact.vk }},
+  "sameAs": ["{{ .FM.contact.vk }}"]
+  {{- end }}{{ end }}
+}
+</script>
+{{- end }}
+
+{{- /* Страница подразделения описывается как отдельная точка обслуживания */ -}}
+{{- if eq .Page.Type "city-v2" }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Утилитсервис — {{ .FM.nav_title }}",
+  "url": "{{ $url }}",
+  "parentOrganization": { "@type": "Organization", "name": "ООО «Утилитсервис»" },
+  "telephone": "{{ (index .FM.contact.phones 0).link }}",
+  "email": "{{ .FM.contact.email }}",
+  "image": "{{ .AssetsBase }}/img/og-cover.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{ .FM.contact.address }}",
+    "addressLocality": "{{ .FM.nav_title }}",
+    "addressCountry": "RU"
+  }
+  {{- if .FM.hours_schema }},
+  "openingHours": "{{ .FM.hours_schema }}"
+  {{- end }}
+}
+</script>
+{{- end }}
+
+{{- /* Услуга: имя и описание берутся с самой страницы */ -}}
+{{- if eq .Page.Type "service-v2" }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "{{ if .FM.hero_title }}{{ .FM.hero_title }}{{ else }}{{ .Page.Title }}{{ end }}",
+  "description": "{{ .Page.Description }}",
+  "url": "{{ $url }}",
+  "serviceType": "Обращение с отходами",
+  "provider": { "@type": "Organization", "name": "ООО «Утилитсервис»", "url": "{{ .BaseURL }}/" },
+  "areaServed": [
+    {{- range $i, $c := $cities }}{{ if $i }},{{ end }}
+    { "@type": "City", "name": "{{ $c.FM.nav_title }}" }
+    {{- end }}
+  ]
+}
+</script>
+{{- end }}
+
+{{- /* Вопросы и ответы: плоский список на страницах услуг и городов,
+       сгруппированный — на странице FAQ. Разметка одна и та же. */ -}}
+{{- if or .FM.faq .FM.faq_groups }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {{- $first := true }}
+    {{- range .FM.faq }}
+    {{- if not $first }},{{ end }}{{ $first = false }}
+    { "@type": "Question", "name": "{{ .q }}", "acceptedAnswer": { "@type": "Answer", "text": "{{ .a }}" } }
+    {{- end }}
+    {{- range .FM.faq_groups }}
+    {{- range .items }}
+    {{- if not $first }},{{ end }}{{ $first = false }}
+    { "@type": "Question", "name": "{{ .q }}", "acceptedAnswer": { "@type": "Answer", "text": "{{ .a }}" } }
+    {{- end }}
+    {{- end }}
+  ]
+}
+</script>
+{{- end }}

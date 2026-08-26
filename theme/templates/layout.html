@@ -12,15 +12,25 @@
   {{- if .Meta.Robots }}
   <meta name="robots" content="{{ .Meta.Robots }}" />
   {{- end }}
-  {{- if .Canonical }}
-  <link rel="canonical" href="{{ .Canonical }}" />
-  {{- end }}
+  {{- /* Notepub отдаёт канонический адрес и og:url без завершающего слэша,
+         хотя страницы лежат каталогами и все ссылки на сайте ведут на «/…/».
+         Считаем адрес сами, иначе канонический указывает на редирект. */ -}}
+  {{- $canonical := printf "%s/" .BaseURL }}
+  {{- if ne .Page.Type "home-v2" }}{{ $canonical = printf "%s/%s/" .BaseURL .Page.Slug }}{{ end }}
+  <link rel="canonical" href="{{ $canonical }}" />
   {{- range .Meta.OpenGraph }}
+  {{- if ne .Key "og:url" }}
   <meta property="{{ .Key }}" content="{{ .Value }}" />
   {{- end }}
+  {{- end }}
+  <meta property="og:url" content="{{ $canonical }}" />
+  <meta property="og:site_name" content="Утилитсервис" />
+  <meta property="og:locale" content="ru_RU" />
+  <meta name="twitter:card" content="summary_large_image" />
   {{- if .Meta.JSONLD }}
   <script type="application/ld+json">{{ .Meta.JSONLD }}</script>
   {{- end }}
+  {{ template "v2_jsonld.html" . }}
 
   <link rel="stylesheet" href="{{ .AssetsBase }}/design-tokens.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/primitives.css" />
