@@ -92,32 +92,38 @@
       applyCity(citySelect.value);
     });
 
-    /* Автоопределение города спрашиваем только при первом визите: свой выбор
-       посетителя переопределять нельзя. Страницы остаются статикой — сервер
-       отдаёт один ключ города, остальное делает браузер.
+    /* Город спрашиваем при первом визите — и когда определить его удалось, и
+       когда нет. Раньше вопрос не показывался, если определённый город совпал
+       с текущим, а текущим по умолчанию стоит первый город по nav_order: гостю
+       из другого города сайт молча подставлял чужой телефон и чужой адрес.
+       Свой выбор посетителя не переопределяем — вопрос только на первом визите.
 
-       Определённый город НЕ подставляется молча: от города зависят телефон
-       подразделения и условия вывоза, а определение по IP ошибается —
-       мобильные операторы выпускают абонентов через шлюзы в других регионах.
-       Поэтому показываем подтверждение и ждём ответа посетителя.
+       Определённый город НЕ подставляется молча даже теперь: от города зависят
+       телефон подразделения и условия вывоза, а определение по IP ошибается —
+       мобильные операторы выпускают абонентов через шлюзы других регионов.
+       Спрашиваем и запоминаем ответ.
 
-       Ошибки глушим намеренно: без бэкенда (например, на статичном превью)
-       эндпоинта нет, и сайт должен просто остаться на городе по умолчанию. */
-    if (!cityContacts[savedCity] && typeof fetch === 'function') {
-      var base = window.__notepubBaseURL || '';
-      fetch(base + '/api/city.php', { headers: { Accept: 'application/json' } })
-        .then(function (response) {
-          return response.ok ? response.json() : null;
-        })
-        .then(function (data) {
-          if (!data || !data.city || !cityContacts[data.city]) return;
-          // За время запроса посетитель мог выбрать город сам — не мешаем.
-          if (localStorage.getItem('utilit-city') !== initialCity) return;
-          // Уже стоит нужный город — спрашивать не о чем.
-          if (data.city === initialCity) return;
-          askCity(data.city);
-        })
-        .catch(function () { /* эндпоинта нет — остаёмся на умолчании */ });
+       Ошибки глушим намеренно: без бэкенда (например, на статичном превью
+       GitHub Pages) эндпоинта нет — тогда просто спрашиваем про город по
+       умолчанию, и посетитель поправит его сам. */
+    if (!cityContacts[savedCity]) {
+      var suggestCity = function (city) {
+        // За время запроса посетитель мог выбрать город сам — не мешаем.
+        if (localStorage.getItem('utilit-city') !== initialCity) return;
+        askCity(cityContacts[city] ? city : initialCity);
+      };
+
+      if (typeof fetch === 'function') {
+        var base = window.__notepubBaseURL || '';
+        fetch(base + '/api/city.php', { headers: { Accept: 'application/json' } })
+          .then(function (response) {
+            return response.ok ? response.json() : null;
+          })
+          .then(function (data) { suggestCity(data && data.city); })
+          .catch(function () { suggestCity(null); });
+      } else {
+        suggestCity(null);
+      }
     }
   }
 

@@ -101,4 +101,41 @@ if ($mmdb !== '' && is_file($mmdb) && class_exists('GeoIp2\Database\Reader')) {
     }
 }
 
+/* --- Источник 3: локальная база SypexGeo --------------------------------- */
+
+/* Фактически город определяет именно этот источник: модуля GeoIP у веб-сервера
+   на этой площадке нет, композера для geoip2 — тоже, так что источники 1 и 2
+   не срабатывают никогда.
+
+   Читатель — один файл без composer и расширений (lib/SxGeo.php, лицензия
+   BSD), база .dat лежит в storage рядом с журналом заявок: 37 МБ, в репозиторий
+   не кладётся и по HTTP не отдаётся. Нет файла — источник просто молчит.
+
+   Отдаём в $resolve русское название города и ISO-код региона: база возвращает
+   их в том же виде, что ждут справочники geo.cities и geo.regions
+   («Сургут», «RU-KHM»). */
+$sxgeo = (string) ($geo['sxgeo_path'] ?? '');
+
+if ($sxgeo !== '' && is_file($sxgeo) && is_file(__DIR__ . '/lib/SxGeo.php')) {
+    require_once __DIR__ . '/lib/SxGeo.php';
+    try {
+        $reader = new SxGeo($sxgeo);
+        $found = $reader->getCityFull(client_ip($config));
+
+        if (is_array($found)) {
+            $match = $resolve(
+                $found['city']['name_ru'] ?? null,
+                $found['region']['iso'] ?? null
+            );
+
+            if ($match !== null) {
+                json_response(['city' => $match['city'], 'source' => 'sxgeo', 'match' => $match['match']]);
+            }
+        }
+    } catch (Throwable $e) {
+        // Битая база или адрес вне её — не повод ронять запрос.
+        error_log('utilit: sxgeo: ' . $e->getMessage());
+    }
+}
+
 json_response(['city' => null, 'source' => 'unknown']);
