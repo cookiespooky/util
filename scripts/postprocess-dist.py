@@ -7,6 +7,13 @@
    разметку со старым оформлением. Приписываем к адресу хеш содержимого:
    меняется файл — меняется адрес, остальное остаётся в кеше.
 
+   Версия проставляется и в разметке, и в url() внутри CSS, причём в CSS
+   раньше: иначе шрифт из @font-face и его же preload в <head> получают
+   разные адреса. При font-display: optional это ломает шрифт целиком —
+   preload греет один адрес, стили запрашивают другой, запрос уходит уже
+   после разбора CSS и не успевает в отведённое окно, а optional означает
+   «не успел — остаёмся на запасном до конца просмотра».
+
 2. Слэш в конце адресов карты сайта. Notepub пишет их без слэша, а
    канонические адреса и все ссылки на сайте — со слэшем; поисковик иначе
    идёт по адресу, который отвечает редиректом.
@@ -32,6 +39,37 @@ def digest(path: pathlib.Path) -> str | None:
             return None
         digests[path] = hashlib.md5(path.read_bytes()).hexdigest()[:8]
     return digests[path]
+
+
+# Ссылки внутри CSS. Обязательно до разметки: правка меняет содержимое
+# файла, а значит и его хеш, который потом уходит в <link>.
+css_ref = re.compile(r'url\(\s*(["\']?)([^"\')]+)\1\s*\)')
+css_stamped = 0
+
+for sheet in sorted((dist / "assets").rglob("*.css")):
+
+    def stamp_css(m: re.Match) -> str:
+        global css_stamped
+        quote, ref = m.group(1), m.group(2).strip()
+        # url(#…) — ссылка на градиент или фильтр в SVG, а не на файл.
+        # data:, внешние адреса и уже помеченные оставляем как есть.
+        if ref.startswith(("#", "data:", "http:", "https:", "//")) or "?" in ref:
+            return m.group(0)
+        # CSS из CSS не размечаем: его хеш пришлось бы считать после его же
+        # правки, а этот проход такого порядка не гарантирует. @import в теме
+        # не используется, так что случай пока умозрительный.
+        if ref.endswith(".css"):
+            return m.group(0)
+        version = digest((sheet.parent / ref).resolve())
+        if version is None:
+            return m.group(0)
+        css_stamped += 1
+        return f"url({quote}{ref}?v={version}{quote})"
+
+    text = sheet.read_text()
+    updated = css_ref.sub(stamp_css, text)
+    if updated != text:
+        sheet.write_text(updated)
 
 
 asset_ref = re.compile(r'((?:href|src)=")([^"]*?/assets/([^"?]+))(")')
@@ -69,4 +107,7 @@ for sitemap in dist.glob("sitemap*.xml"):
     if updated != text:
         sitemap.write_text(updated)
 
-print(f"Проставлено версий ассетов: {stamped}; поправлено адресов в карте сайта: {slashed}")
+print(
+    f"Проставлено версий ассетов: {stamped} в разметке, {css_stamped} в CSS; "
+    f"поправлено адресов в карте сайта: {slashed}"
+)
