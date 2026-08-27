@@ -137,19 +137,79 @@
       status.classList.toggle('is-error', !!isError);
     }
 
+    /* Подпись поля для сообщения об ошибке. Из «Организация — необязательно»
+       берём только название, всё после тире — пояснение. */
+    function fieldLabel(control) {
+      var field = control.closest('.v2-field');
+      var caption = field ? field.querySelector('span') : null;
+      return caption ? caption.textContent.split('—')[0].trim() : 'обязательное поле';
+    }
+
+    function wrapOf(control) {
+      return control.closest('.v2-form__consent') || control.closest('.v2-field');
+    }
+
+    function markInvalid(control, message) {
+      var wrap = wrapOf(control);
+      control.setAttribute('aria-invalid', 'true');
+      if (wrap) wrap.classList.add('is-invalid');
+      show(message, true);
+      control.focus();
+    }
+
+    function clearInvalid(control) {
+      if (!control || !control.removeAttribute) return;
+      control.removeAttribute('aria-invalid');
+      var wrap = wrapOf(control);
+      if (wrap) wrap.classList.remove('is-invalid');
+    }
+
+    /* Своя проверка обязательных полей: на форме стоит novalidate, потому что
+       браузерная подсказка не вписывается в оформление, а на телефоне её
+       легко не заметить. Раньше отправка в этом месте просто прекращалась
+       молча — посетитель видел, что кнопка не работает, и не понимал почему.
+       Сообщение выводим в ту же строку статуса, что и ответ сервера, и
+       подсвечиваем само поле. */
+    function firstProblem() {
+      var controls = form.querySelectorAll('[required]');
+      for (var i = 0; i < controls.length; i++) {
+        var control = controls[i];
+
+        if (control.type === 'checkbox') {
+          if (control.checked) continue;
+          return [control, control.name === 'privacy-consent'
+            ? 'Отметьте согласие на обработку персональных данных — без него заявку принять нельзя.'
+            : 'Отметьте обязательный пункт.'];
+        }
+
+        var value = (control.value || '').trim();
+        if (!value) {
+          return [control, control.name === 'phone'
+            ? 'Укажите телефон — по нему специалист свяжется с вами.'
+            : 'Заполните поле «' + fieldLabel(control) + '».'];
+        }
+        /* Маска доводит номер до одиннадцати цифр; меньше — номер оборван. */
+        if (control.name === 'phone' && value.replace(/\D/g, '').length < 11) {
+          return [control, 'Номер неполный — укажите телефон целиком.'];
+        }
+      }
+      return null;
+    }
+
+    /* Подсветка снимается сразу, как только поле начали исправлять. */
+    form.addEventListener('input', function (event) { clearInvalid(event.target); });
+    form.addEventListener('change', function (event) { clearInvalid(event.target); });
+
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       if (sending) return;
 
-      var phone = form.querySelector('input[name="phone"]');
-      var consent = form.querySelector('input[name="privacy-consent"]');
+      var marked = form.querySelectorAll('[aria-invalid]');
+      for (var i = 0; i < marked.length; i++) clearInvalid(marked[i]);
 
-      if (phone && !phone.value.trim()) {
-        phone.focus();
-        return;
-      }
-      if (consent && !consent.checked) {
-        consent.focus();
+      var problem = firstProblem();
+      if (problem) {
+        markInvalid(problem[0], problem[1]);
         return;
       }
 
@@ -181,6 +241,16 @@
           return;
         }
 
+        /* Сервер проверяет те же поля ещё раз и возвращает 422 со списком.
+           Показываем первую претензию его словами, а не общей ошибкой. */
+        if (data && data.error === 'validation' && data.fields) {
+          var names = Object.keys(data.fields);
+          var control = names.length ? form.querySelector('[name="' + names[0] + '"]') : null;
+          if (control) markInvalid(control, data.fields[names[0]]);
+          else show('Проверьте заполнение формы и отправьте ещё раз.', true);
+          return;
+        }
+
         show('Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.', true);
       }).catch(function () {
         show('Не удалось отправить заявку. Проверьте соединение или позвоните нам.', true);
@@ -188,6 +258,70 @@
         sending = false;
         if (submitButton) submitButton.disabled = false;
       });
+    });
+  }
+
+  /* Маска телефона: +7 999 123-45-67. Любой ввод приводится к одиннадцати
+     цифрам российского номера — «8» в начале и вставка из буфера с пробелами,
+     скобками или префиксом 007 дают одинаковую запись, так что и оператору в
+     письме, и проверке на сервере достаётся один формат.
+
+     Каретку возвращаем по числу цифр слева от неё, а не по числу символов:
+     разделители переставляются при каждом вводе, и по символам курсор
+     уезжал бы при правке в середине номера. */
+  function initPhoneMask(form) {
+    var input = form.querySelector('input[name="phone"]');
+    if (!input) return;
+
+    function digitsOf(raw) {
+      var d = raw.replace(/\D/g, '');
+      if (!d) return '';
+      /* Международный префикс 00 равнозначен плюсу: без этого «007 916…»
+         превращалось бы в номер с двумя лишними нулями внутри. */
+      if (d.slice(0, 2) === '00') d = d.slice(2);
+      if (d.charAt(0) === '8') d = '7' + d.slice(1);
+      else if (d.charAt(0) !== '7') d = '7' + d;
+      return d.slice(0, 11);
+    }
+
+    function format(d) {
+      if (!d) return '';
+      var out = '+7';
+      if (d.length > 1) out += ' ' + d.slice(1, 4);
+      if (d.length > 4) out += ' ' + d.slice(4, 7);
+      if (d.length > 7) out += '-' + d.slice(7, 9);
+      if (d.length > 9) out += '-' + d.slice(9, 11);
+      return out;
+    }
+
+    input.addEventListener('input', function () {
+      var raw = input.value;
+      var caret = input.selectionStart;
+      var atEnd = caret === raw.length;
+      var before = raw.slice(0, caret).replace(/\D/g, '').length;
+
+      /* Если номер начали не с кода страны, семёрку подставили мы —
+         значит цифр слева от каретки стало на одну больше. */
+      var first = raw.replace(/\D/g, '').charAt(0);
+      if (first && first !== '7' && first !== '8') before += 1;
+
+      var value = format(digitsOf(raw));
+      if (value === raw) return;
+      input.value = value;
+
+      if (atEnd) {
+        input.setSelectionRange(value.length, value.length);
+        return;
+      }
+
+      var seen = 0;
+      var pos = value.length;
+      for (var i = 0; i < value.length; i++) {
+        if (value.charAt(i) < '0' || value.charAt(i) > '9') continue;
+        seen += 1;
+        if (seen === before) { pos = i + 1; break; }
+      }
+      input.setSelectionRange(pos, pos);
     });
   }
 
@@ -572,6 +706,7 @@
     if (!form) return;
     initDynamicFields(form);
     initFormGuard(form);
+    initPhoneMask(form);
     initSubmit(form);
     initUnknownWasteShortcut(form);
     initAudienceShortcuts(form);

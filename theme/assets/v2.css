@@ -29,6 +29,13 @@
   --v2-green-deep: #2e8a34;
   --v2-green-soft: #eaf6ea;
 
+  /* Единственный красный на сайте — только для ошибок формы. Правило «не
+     больше двух акцентов в блоке» он не нарушает: одновременно с зелёным
+     статусом успеха не показывается. */
+  --v2-red: #cf3b3b;
+  --v2-red-deep: #a72a2a;
+  --v2-red-soft: #fdeceb;
+
   --v2-ink: #15211d;
   --v2-ink-muted: #45534d;
   --v2-ink-subtle: #6c7a74;
@@ -2380,6 +2387,27 @@ select.v2-control {
 }
 
 .v2-form__status[hidden] { display: none; }
+
+/* Класс переключает v2.js. Без этого правила отказ выглядел подтверждением. */
+.v2-form__status.is-error {
+  background: var(--v2-red-soft);
+  color: var(--v2-red-deep);
+}
+
+/* Поле, из-за которого заявка не ушла. Текста статуса мало: форма длинная,
+   и на узком экране причина оказывается за пределами видимой области. */
+.v2-control[aria-invalid="true"],
+.v2-control[aria-invalid="true"]:focus {
+  border-color: var(--v2-red);
+  box-shadow: 0 0 0 3px rgba(207, 59, 59, .16);
+}
+
+.v2-form__consent.is-invalid .v2-checkbox {
+  border-color: var(--v2-red);
+  box-shadow: 0 0 0 3px rgba(207, 59, 59, .16);
+}
+
+.v2-form__consent.is-invalid:hover .v2-checkbox { border-color: var(--v2-red); }
 
 /* --------------------------------------------------------------------------
    Подвал
