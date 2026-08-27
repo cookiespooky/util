@@ -36,6 +36,18 @@ class SxGeo {
 	protected $regions_db;
 	protected $cities_db;
 
+	/* ПРАВКА ПРОЕКТА: эти семь свойств оригинал создаёт на лету в конструкторе.
+	   С PHP 8.2 динамические свойства объявлены устаревшими, и каждое из них
+	   печатает Deprecated прямо в ответ — до заголовков, ломая JSON эндпоинта.
+	   Объявляем их явно; поведение не меняется. */
+	protected $b_idx_len;
+	protected $block_len;
+	protected $id_len;
+	protected $max_city;
+	protected $max_country;
+	protected $max_region;
+	protected $pack;
+
 	public $id2iso = array(
 		'', 'AP', 'EU', 'AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'CW', 'AO', 'AQ', 'AR', 'AS', 'AT', 'AU',
 		'AW', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BM', 'BN', 'BO', 'BR', 'BS',
