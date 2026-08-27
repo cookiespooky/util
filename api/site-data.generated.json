@@ -5,7 +5,7 @@
       "slug": "surgut",
       "title": "Сургут",
       "full_title": "Сургут и Белый Яр",
-      "email": "utilit@bk.ru",
+      "email": "surgut@utilityservice.ru",
       "phone": "+7 (3462) 55-58-97",
       "phone_link": "+73462555897",
       "order": 1
@@ -15,7 +15,7 @@
       "slug": "tyumen",
       "title": "Тюмень",
       "full_title": "Тюмень",
-      "email": "utilit_tyumen@bk.ru",
+      "email": "tmn@utilityservice.ru",
       "phone": "+7 (3452) 59-38-17",
       "phone_link": "+73452593817",
       "order": 2
@@ -25,7 +25,7 @@
       "slug": "nyagan",
       "title": "Нягань",
       "full_title": "Нягань",
-      "email": "utilit@bk.ru",
+      "email": "nyagan@utilityservice.ru",
       "phone": "+7 (34672) 55-315",
       "phone_link": "+73467255315",
       "order": 3
@@ -41,7 +41,7 @@
     {
       "key": "industrial",
       "slug": "industrial-waste",
-      "title": "Промышленные отходы I–IV классов",
+      "title": "Промышленные отходы I–V классов",
       "order": 2
     },
     {
