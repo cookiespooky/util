@@ -1177,6 +1177,132 @@
   line-height: 1.3;
 }
 
+/* --------------------------------------------------------------------------
+   Схема состава компании: вложенные круги
+   -------------------------------------------------------------------------- */
+
+.v2-rings {
+  display: grid;
+  place-items: center;
+  margin: 0;
+}
+
+.v2-rings__diagram {
+  display: block;
+  width: min(100%, 560px);
+  height: auto;
+  overflow: visible;
+}
+
+/* Круги заливаются непрозрачно и рисуются от большего к меньшему: внутренние
+   должны выглядеть светлее, а полупрозрачные заливки при вложении, наоборот,
+   складывались бы и темнели. */
+/* Оттенки фирменного зелёного #46b749, разбавленного белым: 62 %, 38 %, 18 %.
+   Заливка непрозрачная — у вложенных кругов полупрозрачность складывалась бы,
+   и внутренние выходили бы темнее внешних. */
+.v2-rings__ring--1 { fill: #8cd28e; }
+.v2-rings__ring--2 { fill: #b9e4ba; }
+.v2-rings__ring--3 { fill: #def2de; }
+
+.v2-rings__core {
+  fill: #fff;
+  filter: drop-shadow(0 10px 22px rgba(21, 33, 29, .16));
+}
+
+/* У foreignObject по спецификации overflow: hidden — подпись, переросшая
+   заявленную высоту, обрезалась бы по нижней строке. */
+.v2-rings__diagram foreignObject { overflow: visible; }
+
+.v2-rings__label {
+  box-sizing: border-box;
+  display: grid;
+  gap: 3px;
+  padding: 0 12px;
+  color: var(--v2-ink);
+  font-family: var(--font-family-base);
+  text-align: center;
+}
+
+.v2-rings__label strong {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+}
+
+.v2-rings__label small {
+  color: rgba(21, 33, 29, .78);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* Внутреннее кольцо узкое: там же, где у внешних помещается строка,
+   у него остаётся около 180 px, поэтому шрифт мельче. */
+.v2-rings__label--sm strong { font-size: 14px; }
+.v2-rings__label--sm small { font-size: 11.5px; line-height: 1.2; }
+
+.v2-rings__core-copy {
+  display: grid;
+  gap: 2px;
+  color: var(--v2-ink);
+  font-family: var(--font-family-base);
+  text-align: center;
+}
+
+.v2-rings__core-copy strong {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+.v2-rings__core-copy small {
+  color: var(--v2-ink-muted);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+/* Вертикальный вариант для узких экранов */
+.v2-rings__list {
+  display: none;
+  gap: 4px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.v2-rings__list li {
+  padding: 14px 0 14px 18px;
+  border-left: 2px solid var(--v2-blue-soft);
+}
+
+.v2-rings__list strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -.015em;
+  line-height: 1.3;
+}
+
+.v2-rings__list small {
+  display: block;
+  margin-top: 2px;
+  color: var(--v2-ink-muted);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+@media (max-width: 1060px) {
+  .v2-rings { margin-top: 6px; }
+  .v2-rings__diagram { display: none; }
+  .v2-rings__list { display: grid; max-width: 520px; }
+}
+
 .v2-trust {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

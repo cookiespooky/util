@@ -1,0 +1,69 @@
+{{- /* БЭКАП прежней схемы на главной: четыре круга по окружности вокруг
+       логотипа. Партиал ни откуда не вызывается и в сборку не попадает —
+       хранится, чтобы вариант можно было вернуть. Заменён схемой из
+       вложенных кругов (v2-rings в home-v2.html). */ -}}
+      {{- /* Схема состава компании: четыре опоры вместо прежних шести шагов
+             цикла. Порядок в ней ничего не значит, поэтому ни нумерации,
+             ни соединительной линии в списке для узких экранов нет. */ -}}
+      <figure class="v2-cycle" aria-labelledby="v2-cycle-title">
+        <!-- Узкие экраны: круговая схема нечитаема, показываем те же опоры списком -->
+        <ul class="v2-cycle__list">
+          <li><strong>Производственная база</strong><small>площадки накопления и обезвреживания</small></li>
+          <li><strong>Инсинераторные установки</strong><small>высокотемпературная обработка отходов</small></li>
+          <li><strong>Специализированный транспорт</strong><small>60+ единиц техники под вид отхода</small></li>
+          <li><strong>Разрешённое размещение</strong><small>остатки — специализированным организациям</small></li>
+        </ul>
+
+        <!-- viewBox расширен за пределы 0…720: центр остаётся в 360,360,
+             а поля вокруг дают внешнему кольцу отойти от узлов. -->
+        <svg class="v2-cycle__diagram" viewBox="-40 -40 800 800" role="img" aria-labelledby="v2-cycle-title v2-cycle-desc">
+          <title id="v2-cycle-title">Из чего состоит компания</title>
+          <desc id="v2-cycle-desc">Четыре опоры работы: собственная производственная база, инсинераторные установки, специализированный транспорт и разрешённое размещение остатков.</desc>
+          <defs>
+            <!-- Одна дорожка вместо сегментов: узлы её перекрывают, поэтому
+                 промежутки между ними получаются сами и ничего не надо считать. -->
+            <linearGradient id="v2Track" x1="360" y1="104" x2="360" y2="616" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#4C91CA" /><stop offset="1" stop-color="#46B749" />
+            </linearGradient>
+          </defs>
+
+          <g class="v2-cycle__rings" aria-hidden="true">
+            <circle class="v2-cycle__ring v2-cycle__ring--blue" cx="360" cy="360" r="392" />
+            <circle class="v2-cycle__ring v2-cycle__ring--green" cx="360" cy="360" r="282" />
+            <circle class="v2-cycle__ring v2-cycle__ring--green" cx="360" cy="360" r="178" />
+            <circle class="v2-cycle__ring v2-cycle__ring--ink" cx="360" cy="360" r="116" />
+          </g>
+
+          <circle class="v2-cycle__track" cx="360" cy="360" r="256" stroke="url(#v2Track)" />
+
+          <g class="v2-cycle__center">
+            <circle cx="360" cy="360" r="92" />
+            <image href="{{ .AssetsBase }}/logo.svg" x="323.5" y="331" width="73" height="58" preserveAspectRatio="xMidYMid meet" />
+          </g>
+
+          <g class="v2-cycle__node v2-cycle__node--1" transform="translate(360 104)">
+            <circle r="118" />
+            <foreignObject x="-118" y="-75" width="236" height="150">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><strong>Производственная база</strong><small>площадки накопления и обезвреживания</small></div>
+            </foreignObject>
+          </g>
+          <g class="v2-cycle__node v2-cycle__node--2" transform="translate(616 360)">
+            <circle r="118" />
+            <foreignObject x="-118" y="-75" width="236" height="150">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><strong>Инсинераторные установки</strong><small>высокотемпературная обработка отходов</small></div>
+            </foreignObject>
+          </g>
+          <g class="v2-cycle__node v2-cycle__node--3" transform="translate(360 616)">
+            <circle r="118" />
+            <foreignObject x="-118" y="-75" width="236" height="150">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><strong>Специализированный транспорт</strong><small>60+ единиц техники под вид отхода</small></div>
+            </foreignObject>
+          </g>
+          <g class="v2-cycle__node v2-cycle__node--4" transform="translate(104 360)">
+            <circle r="118" />
+            <foreignObject x="-118" y="-75" width="236" height="150">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="v2-cycle__label"><strong>Разрешённое размещение</strong><small>остатки — специализированным организациям</small></div>
+            </foreignObject>
+          </g>
+        </svg>
+      </figure>

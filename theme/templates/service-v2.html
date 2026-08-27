@@ -114,7 +114,9 @@
           {{- end }}
           <div class="sv2-kind__body">
             <h3>{{ .title }}</h3>
+            {{- if .text }}
             <p>{{ .text }}</p>
+            {{- end }}
           </div>
         </article>
         {{- end }}
@@ -179,8 +181,10 @@
   </section>
 
   <!-- 06 · Снятие возражений: подготовка и честные ограничения -->
+  {{- if or .FM.prepare .FM.limits }}
   <section class="v2-section sv2-rules" aria-labelledby="sv2-rules-title">
     <div class="v2-shell sv2-rules__layout">
+      {{- if .FM.prepare }}
       <div class="sv2-rules__col">
         <header class="v2-heading">
           <span class="v2-eyebrow">Подготовка</span>
@@ -197,7 +201,9 @@
           {{- end }}
         </ol>
       </div>
+      {{- end }}
 
+      {{- if .FM.limits }}
       <div class="sv2-rules__col">
         <header class="v2-heading">
           <span class="v2-eyebrow">Важно учесть</span>
@@ -210,8 +216,10 @@
         </ul>
         <p class="sv2-limits__note">Публикация услуги на сайте не означает автоматический приём любого отхода: специалист проверяет сведения, действующую лицензию и техническую возможность.</p>
       </div>
+      {{- end }}
     </div>
   </section>
+  {{- end }}
 
   <!-- 07 · Частые вопросы по услуге -->
   <section class="v2-section v2-section--surface v2-faq" aria-labelledby="sv2-faq-title">
