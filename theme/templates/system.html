@@ -1,3 +1,16 @@
-<div class="shell system-page">
-  <article class="prose" data-prose>{{ .Body }}</article>
-</div>
+{{- /* Системные страницы: 404, «Заявка отправлена», поиск, согласие.
+       Раньше они рендерились вёрсткой v1 (.shell/.prose), которой на сайте
+       больше нигде нет. В styles.css у .prose h1 стоит color: var(--text-normal),
+       а эта переменная осталась от тёмной темы и равна #ececec — заголовок
+       выходил почти белым на светлом фоне, контраст 1,08:1. Здесь та же
+       оболочка v2, что и на остальных страницах. */ -}}
+<article class="page v2-page v2-system">
+  <section class="v2-subhero" aria-labelledby="sys-title">
+    <div class="v2-shell">
+      <div class="v2-system__copy">
+        <h1 id="sys-title">{{ .Page.Title }}</h1>
+        {{ .Body }}
+      </div>
+    </div>
+  </section>
+</article>

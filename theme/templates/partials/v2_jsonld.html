@@ -53,7 +53,7 @@
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "{{ .FM.contact.address }}",
-    "addressLocality": "{{ .FM.nav_title }}",
+    "addressLocality": "{{ if .FM.locality }}{{ .FM.locality }}{{ else }}{{ .FM.nav_title }}{{ end }}",
     "addressCountry": "RU"
   }
   {{- if .FM.hours_schema }},

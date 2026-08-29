@@ -57,9 +57,10 @@ server:
 rules_path: "./rules.yaml"
 
 robots:
+  # /thank-you/ и /search/ отсюда убраны намеренно: на них стоит noindex в
+  # разметке, а запрет в robots.txt мешает роботу этот noindex прочитать —
+  # страница остаётся в индексе как «заблокирована robots.txt».
   disallow:
-    - "/thank-you/"
-    - "/search/"
     - "/_partials/"
 
 cache:

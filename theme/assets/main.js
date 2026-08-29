@@ -44,10 +44,13 @@
 
   var citySelect = document.querySelector('[data-city-select]');
 
-  function applyCity(city) {
+  /* persist === false — показать город, но не записывать его как выбор
+     посетителя: так ведут себя страницы подразделений, где город задаёт
+     сам адрес страницы, а не человек. */
+  function applyCity(city, persist) {
     var contact = cityContacts[city] || cityContacts[defaultCity];
     if (!contact) return;
-    localStorage.setItem('utilit-city', city);
+    if (persist !== false) localStorage.setItem('utilit-city', city);
     root.setAttribute('data-selected-city', city);
 
     if (citySelect && citySelect.value !== city) citySelect.value = city;
@@ -86,8 +89,19 @@
 
   if (citySelect) {
     var savedCity = localStorage.getItem('utilit-city');
-    var initialCity = cityContacts[savedCity] ? savedCity : citySelect.value || defaultCity;
-    applyCity(initialCity);
+
+    /* Страница подразделения объявляет свой город в разметке. Она уже
+       отдаёт его контакты в HTML, и подменять их сохранённым выбором нельзя:
+       посетитель на /nyagan/ увидел бы тюменский телефон. */
+    var dropdown = document.querySelector('[data-city-dropdown]');
+    var pageCity = dropdown ? dropdown.getAttribute('data-page-city') : null;
+    var onCityPage = !!(pageCity && cityContacts[pageCity]);
+
+    var initialCity = onCityPage
+      ? pageCity
+      : (cityContacts[savedCity] ? savedCity : citySelect.value || defaultCity);
+
+    applyCity(initialCity, !onCityPage);
     citySelect.addEventListener('change', function () {
       applyCity(citySelect.value);
     });
@@ -106,7 +120,7 @@
        Ошибки глушим намеренно: без бэкенда (например, на статичном превью
        GitHub Pages) эндпоинта нет — тогда просто спрашиваем про город по
        умолчанию, и посетитель поправит его сам. */
-    if (!cityContacts[savedCity]) {
+    if (!onCityPage && !cityContacts[savedCity]) {
       var suggestCity = function (city) {
         // За время запроса посетитель мог выбрать город сам — не мешаем.
         if (localStorage.getItem('utilit-city') !== initialCity) return;

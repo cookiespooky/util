@@ -154,16 +154,27 @@
              здесь, в подвале, в main.js и на странице контактов. */ -}}
       {{- $cities := .Collections.cities_v2.Items }}
 
+      {{- /* Город шапки. На странице подразделения — её собственный, на всех
+             остальных — первый по nav_order. Раньше во всём HTML стояли
+             контакты первого города: на /tyumen/ и /nyagan/ до срабатывания
+             JS — а для поискового робота всегда — показывался сургутский
+             телефон. Значение прокидываем в data-page-city, чтобы main.js
+             на этих страницах не подменил его сохранённым выбором. */ -}}
+      {{- $first := index $cities 0 }}
+      {{- $pageCity := "" }}
+      {{- if eq .Page.Type "city-v2" }}
+      {{- range $cities }}{{ if eq .Slug $.Page.Slug }}{{ $first = . }}{{ $pageCity = .FM.city_key }}{{ end }}{{ end }}
+      {{- end }}
+
       <div class="v2-header__actions">
         <!-- Нативный select оставлен как источник состояния: с ним работают
              общие main.js (телефон, email, поле города в форме) и карта.
              Он меняет контекст страницы и не связан с пунктом «Контакты». -->
         {{- if $cities }}
-        {{- $first := index $cities 0 }}
-        <div class="v2-city" data-city-dropdown>
+        <div class="v2-city" data-city-dropdown{{ if $pageCity }} data-page-city="{{ $pageCity }}"{{ end }}>
           <select class="v2-city__native" data-city-select tabindex="-1" aria-hidden="true">
             {{- range $cities }}
-            <option value="{{ .FM.city_key }}">{{ .FM.nav_title }}</option>
+            <option value="{{ .FM.city_key }}"{{ if eq .Slug $first.Slug }} selected{{ end }}>{{ .FM.nav_title }}</option>
             {{- end }}
           </select>
 
@@ -194,7 +205,7 @@
 
           <ul class="v2-city__menu" data-city-menu role="listbox" aria-label="Города" hidden>
             {{- range $i, $c := $cities }}
-            <li><button class="v2-city__option" type="button" role="option" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}" data-city-option="{{ $c.FM.city_key }}">{{ $c.FM.nav_title }}</button></li>
+            <li><button class="v2-city__option" type="button" role="option" aria-selected="{{ if eq $c.Slug $first.Slug }}true{{ else }}false{{ end }}" data-city-option="{{ $c.FM.city_key }}">{{ $c.FM.nav_title }}</button></li>
             {{- end }}
           </ul>
         </div>
@@ -314,7 +325,6 @@
       <div class="v2-drawer__contact">
         <span class="v2-eyebrow">Связаться</span>
         {{- if $cities }}
-        {{- $first := index $cities 0 }}
         <a href="tel:{{ (index $first.FM.contact.phones 0).link }}" data-city-phone>{{ (index $first.FM.contact.phones 0).value }}</a>
         {{- if gt (len $first.FM.contact.phones) 1 }}
         <a href="tel:{{ (index $first.FM.contact.phones 1).link }}" data-city-phone-2>{{ (index $first.FM.contact.phones 1).value }}</a>

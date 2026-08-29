@@ -24,6 +24,7 @@
   /* Брендовые цвета взяты напрямую из logo.svg */
   --v2-blue: #4c91ca;
   --v2-blue-deep: #2f7099;
+  --v2-blue-darker: #245876;
   --v2-blue-soft: #eaf3fa;
   --v2-green: #46b749;
   --v2-green-deep: #2e8a34;
@@ -66,6 +67,7 @@
 .v2-footer {
   --v2-blue: #4c91ca;
   --v2-blue-deep: #2f7099;
+  --v2-blue-darker: #245876;
   --v2-blue-soft: #eaf3fa;
   --v2-green: #46b749;
   --v2-green-deep: #2e8a34;
@@ -197,14 +199,18 @@
   transition: background .16s ease, border-color .16s ease, color .16s ease;
 }
 
+/* Фон кнопки — --v2-blue-deep, а не --v2-blue: у светлого брендового синего
+   контраст с белым текстом 3,38:1, ниже требуемых WCAG AA 4,5:1. У deep —
+   5,39:1. Светлый синий остаётся акцентом в схемах и заголовках, где текстом
+   он не работает. */
 .v2-button--primary {
-  background: var(--v2-blue);
+  background: var(--v2-blue-deep);
   color: #fff;
 }
 
 .v2-button--primary:hover,
 .v2-button--primary:focus-visible {
-  background: var(--v2-blue-deep);
+  background: var(--v2-blue-darker);
   color: #fff;
 }
 
@@ -1207,13 +1213,39 @@
 /* Оттенки фирменного зелёного #46b749, разбавленного белым: 62 %, 38 %, 18 %.
    Заливка непрозрачная — у вложенных кругов полупрозрачность складывалась бы,
    и внутренние выходили бы темнее внешних. */
-.v2-rings__ring--1 { fill: #8cd28e; }
-.v2-rings__ring--2 { fill: #b9e4ba; }
-.v2-rings__ring--3 { fill: #def2de; }
+/* Объём даёт тень каждого круга, а не только центрального: круги рисуются от
+   большего к меньшему, поэтому тень внутреннего ложится на тот, что за ним, и
+   стопка читается как уровни. Радиус размытия уменьшается вместе с кругом —
+   у маленького широкая тень выглядела бы грязным пятном. Значения в единицах
+   viewBox (720), на экране это примерно 0,78 от указанного.
+
+   Тонкая светлая обводка приподнимает край: без неё соседние оттенки зелёного
+   на стыке сливаются, и тень читается как размытие, а не как объём. */
+.v2-rings__ring {
+  stroke: rgba(255, 255, 255, .38);
+  stroke-width: 1.5;
+}
+
+.v2-rings__ring--1 {
+  fill: #8cd28e;
+  filter: drop-shadow(0 16px 30px rgba(21, 33, 29, .20));
+}
+
+.v2-rings__ring--2 {
+  fill: #b9e4ba;
+  filter: drop-shadow(0 13px 24px rgba(21, 33, 29, .17));
+}
+
+.v2-rings__ring--3 {
+  fill: #def2de;
+  filter: drop-shadow(0 10px 18px rgba(21, 33, 29, .14));
+}
 
 .v2-rings__core {
   fill: #fff;
-  filter: drop-shadow(0 10px 22px rgba(21, 33, 29, .16));
+  stroke: rgba(21, 33, 29, .05);
+  stroke-width: 1;
+  filter: drop-shadow(0 8px 16px rgba(21, 33, 29, .18));
 }
 
 /* У foreignObject по спецификации overflow: hidden — подпись, переросшая
@@ -2387,6 +2419,38 @@ select.v2-control {
 }
 
 .v2-form__status[hidden] { display: none; }
+
+/* --------------------------------------------------------------------------
+   Системные страницы: 404, «Заявка отправлена», поиск, согласие
+   ------------------------------------------------------------------------ */
+
+.v2-system__copy {
+  max-width: 720px;
+  color: var(--v2-ink-muted);
+}
+
+.v2-system__copy h1 {
+  margin: 0 0 14px;
+  color: var(--v2-ink);
+  font-size: clamp(30px, 5vw, 44px);
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}
+
+.v2-system__copy h2 {
+  margin: 32px 0 10px;
+  color: var(--v2-ink);
+  font-size: 21px;
+}
+
+.v2-system__copy p { margin: 0 0 14px; font-size: 16px; line-height: 1.6; }
+.v2-system__copy ul { margin: 0 0 14px; padding-left: 20px; }
+.v2-system__copy li { margin: 6px 0; line-height: 1.6; }
+
+.v2-system__copy a {
+  color: var(--v2-blue-deep);
+  text-underline-offset: 3px;
+}
 
 /* Класс переключает v2.js. Без этого правила отказ выглядел подтверждением. */
 .v2-form__status.is-error {

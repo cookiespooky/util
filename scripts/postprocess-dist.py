@@ -72,6 +72,34 @@ for sheet in sorted((dist / "assets").rglob("*.css")):
         sheet.write_text(updated)
 
 
+# Внутренние ссылки без завершающего слэша. Notepub так отдаёт результат
+# разрешения [[wikilinks]]: «/services» вместо «/services/». Страницы лежат
+# каталогами, и каждая такая ссылка стоит посетителю лишнего редиректа, а
+# роботу — лишнего обхода. Правим только адреса своего сайта: базовый адрес
+# берём из data-base-url, который layout.html пишет в <html>.
+base_ref = re.compile(r'(<html[^>]*\sdata-base-url=")([^"]+)(")')
+slashed_links = 0
+
+
+def close_links(text: str) -> str:
+    global slashed_links
+    found = base_ref.search(text)
+    if not found:
+        return text
+    base = found.group(2).rstrip('/')
+
+    # Последний сегмент без точки, без «?», «#» и без слэша на конце — это
+    # адрес страницы. Всё остальное (ассеты, якоря, внешние адреса) не трогаем.
+    link = re.compile(r'(href=")(' + re.escape(base) + r'/[A-Za-z0-9_\-/]+)(")')
+
+    def stamp(m: re.Match) -> str:
+        global slashed_links
+        slashed_links += 1
+        return f'{m.group(1)}{m.group(2)}/{m.group(3)}'
+
+    return link.sub(stamp, text)
+
+
 asset_ref = re.compile(r'((?:href|src)=")([^"]*?/assets/([^"?]+))(")')
 stamped = 0
 
@@ -87,7 +115,7 @@ for page in dist.rglob("*.html"):
         stamped += 1
         return f"{m.group(1)}{m.group(2)}?v={version}{m.group(4)}"
 
-    updated = asset_ref.sub(stamp, text)
+    updated = close_links(asset_ref.sub(stamp, text))
     if updated != text:
         page.write_text(updated)
 
@@ -109,5 +137,6 @@ for sitemap in dist.glob("sitemap*.xml"):
 
 print(
     f"Проставлено версий ассетов: {stamped} в разметке, {css_stamped} в CSS; "
+    f"внутренних ссылок со слэшем: {slashed_links}; "
     f"поправлено адресов в карте сайта: {slashed}"
 )

@@ -44,7 +44,7 @@ server:
   listen: "127.0.0.1:8080"
 rules_path: "./rules.yaml"
 robots:
-  disallow: ["/thank-you/", "/search/", "/_partials/"]
+  disallow: ["/_partials/"]  # см. комментарий в config.yaml
 cache:
   html_ttl_seconds: 600
   stale_if_error_seconds: 604800

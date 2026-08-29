@@ -25,7 +25,12 @@
          Считаем адрес сами, иначе канонический указывает на редирект. */ -}}
   {{- $canonical := printf "%s/" .BaseURL }}
   {{- if ne .Page.Type "home-v2" }}{{ $canonical = printf "%s/%s/" .BaseURL .Page.Slug }}{{ end }}
+  {{- /* У страниц с noindex канонического адреса нет. Особенно у /404/: она
+         отвечает 200, и self-canonical предлагал поисковику считать её
+         полноценной страницей — при том что рядом стоит noindex. */ -}}
+  {{- if not .FM.noindex }}
   <link rel="canonical" href="{{ $canonical }}" />
+  {{- end }}
   {{- range .Meta.OpenGraph }}
   {{- if ne .Key "og:url" }}
   <meta property="{{ .Key }}" content="{{ .Value }}" />

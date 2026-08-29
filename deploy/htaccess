@@ -39,6 +39,24 @@ RedirectMatch 404 ^/api/site-data\.generated\.json$
 RedirectMatch 404 ^/api/nginx\.sample\.conf$
 RedirectMatch 404 ^/storage(/|$)
 
+# --- Защитные заголовки ----------------------------------------------------
+# HSTS без includeSubDomains намеренно: сертификат почтового поддомена пока
+# не выпущен, и директива сломала бы к нему доступ по HTTPS. Добавить, когда
+# сертификат будет на месте.
+#
+# Полноценный Content-Security-Policy здесь не задаётся: в разметке есть
+# инлайновые <script> и JSON-LD, для них нужны nonce или хеши, а это отдельная
+# работа. Ограничиваемся запретом встраивания сайта в чужие фреймы —
+# frame-ancestors, современная замена X-Frame-Options.
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=()"
+  Header always set Content-Security-Policy "frame-ancestors 'self'"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
 # --- Кеш ассетов -----------------------------------------------------------
 # Имена файлов без хеша, поэтому длинный кеш опасен: после выкладки посетитель
 # получит новую разметку со старым CSS. Короткий срок плюс ETag.
