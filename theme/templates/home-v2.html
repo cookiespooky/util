@@ -39,6 +39,36 @@
           <title id="v2-rings-title">Из чего состоит компания</title>
           <desc id="v2-rings-desc">Вложенные круги: производственная база, более шестидесяти единиц спецтранспорта, инсинераторные установки и в центре — сама компания.</desc>
 
+          {{- /* Градиенты поверхности. Плоская заливка читается как бумажный
+                 кружок: объём появляется, когда у круга светлее верхняя дуга
+                 и темнее нижний край. Круги выровнены по нижнему краю, поэтому
+                 у внешних видна как раз верхняя дуга — там и ставим свет.
+                 Координаты в долях габарита каждого круга (по умолчанию
+                 objectBoundingBox), так что одно описание работает для всех
+                 размеров. */ -}}
+          <defs>
+            <linearGradient id="v2-ring-grad-1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#a8dfaa" />
+              <stop offset=".55" stop-color="#8cd28e" />
+              <stop offset="1" stop-color="#74c477" />
+            </linearGradient>
+            <linearGradient id="v2-ring-grad-2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#cfeed0" />
+              <stop offset=".55" stop-color="#b9e4ba" />
+              <stop offset="1" stop-color="#a3d7a5" />
+            </linearGradient>
+            <linearGradient id="v2-ring-grad-3" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f0faf0" />
+              <stop offset=".55" stop-color="#def2de" />
+              <stop offset="1" stop-color="#c9e9ca" />
+            </linearGradient>
+            <linearGradient id="v2-core-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fff" />
+              <stop offset=".6" stop-color="#fff" />
+              <stop offset="1" stop-color="#eef5f1" />
+            </linearGradient>
+          </defs>
+
           <circle class="v2-rings__ring v2-rings__ring--1" cx="360" cy="348" r="300" />
           <circle class="v2-rings__ring v2-rings__ring--2" cx="360" cy="423" r="225" />
           <circle class="v2-rings__ring v2-rings__ring--3" cx="360" cy="493" r="155" />

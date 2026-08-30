@@ -1226,26 +1226,38 @@
   stroke-width: 1.5;
 }
 
+/* Тень у каждого круга двойная: короткая жёсткая «контактная» под самым
+   краем и широкая рассеянная под ней. Одна широкая тень читается как ореол,
+   а пара — как предмет, лежащий на поверхности: край прижат, объём мягкий.
+   Обе уменьшаются вместе с кругом. */
 .v2-rings__ring--1 {
-  fill: #8cd28e;
-  filter: drop-shadow(0 16px 30px rgba(21, 33, 29, .20));
+  fill: url(#v2-ring-grad-1);
+  filter:
+    drop-shadow(0 5px 7px rgba(21, 33, 29, .17))
+    drop-shadow(0 20px 34px rgba(21, 33, 29, .21));
 }
 
 .v2-rings__ring--2 {
-  fill: #b9e4ba;
-  filter: drop-shadow(0 13px 24px rgba(21, 33, 29, .17));
+  fill: url(#v2-ring-grad-2);
+  filter:
+    drop-shadow(0 4px 6px rgba(21, 33, 29, .15))
+    drop-shadow(0 16px 27px rgba(21, 33, 29, .18));
 }
 
 .v2-rings__ring--3 {
-  fill: #def2de;
-  filter: drop-shadow(0 10px 18px rgba(21, 33, 29, .14));
+  fill: url(#v2-ring-grad-3);
+  filter:
+    drop-shadow(0 3px 5px rgba(21, 33, 29, .13))
+    drop-shadow(0 12px 20px rgba(21, 33, 29, .15));
 }
 
 .v2-rings__core {
-  fill: #fff;
-  stroke: rgba(21, 33, 29, .05);
+  fill: url(#v2-core-grad);
+  stroke: rgba(21, 33, 29, .06);
   stroke-width: 1;
-  filter: drop-shadow(0 8px 16px rgba(21, 33, 29, .18));
+  filter:
+    drop-shadow(0 2px 4px rgba(21, 33, 29, .14))
+    drop-shadow(0 10px 20px rgba(21, 33, 29, .20));
 }
 
 /* У foreignObject по спецификации overflow: hidden — подпись, переросшая
