@@ -126,6 +126,7 @@
      единственной обратной связью: автоответ клиенту не отправляется. */
   function initSubmit(form) {
     var status = form.querySelector('[data-form-status]');
+    var serviceSelect = form.querySelector('[data-request-service]');
     var submitButton = form.querySelector('button[type="submit"]');
     var endpoint = form.dataset.endpoint;
     var sending = false;
@@ -232,6 +233,14 @@
       }).then(function (data) {
         if (data && data.ok) {
           form.reset();
+          /* reset() возвращает значения к разметке, но событий не шлёт, и
+             форма остаётся в рассогласованном виде для второй заявки:
+             список услуг вернулся к исходному, а блок уточняющих полей
+             показывает вопросы прежней услуги — оператор получил бы
+             уточнения, не совпадающие со строкой «Услуга». Отметку времени
+             reset() тоже стирает, а её ставит скрипт, а не разметка. */
+          if (serviceSelect) serviceSelect.dispatchEvent(new Event('change'));
+          initFormGuard(form);
           show('Заявка отправлена. Специалист проверит информацию и свяжется с вами для уточнения условий.');
           return;
         }
