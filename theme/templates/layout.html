@@ -98,6 +98,7 @@
   <link rel="stylesheet" href="{{ .AssetsBase }}/design-consistency.css" />
 
   <title>{{ .Title }}</title>
+  {{ template "v2_metrika.html" . }}
 </head>
 <body{{ if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") (eq .Page.Type "legal") (eq .Page.Type "system") }} class="v2-body"{{ end }}>
   <a class="skip-link" href="#content">К содержанию</a>

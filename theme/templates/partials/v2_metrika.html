@@ -1,0 +1,34 @@
+{{- /* Счётчик Яндекс.Метрики.
+
+       Включается наличием metrika_id в settings активного конфига — тем же
+       приёмом, что и приёмник заявок: на превью GitHub Pages ключа нет, и
+       счётчик туда не попадает, поэтому статистику не портят сборки для
+       согласования. Пустое значение равносильно отсутствию ключа.
+
+       webvisor выключен намеренно. Он записывает сеанс посетителя, а на
+       каждой странице стоит форма с телефоном, почтой и названием
+       организации — это персональные данные, и их запись нужно отдельно
+       обосновать в политике. Включать осознанно, а не по умолчанию.
+
+       Инлайновый скрипт: сниппет обязан выполниться до загрузки tag.js,
+       чтобы очередь вызовов ym() не потерялась. В CSP он проходит по
+       'unsafe-inline' — см. комментарий в deploy/htaccess. */ -}}
+{{- if .Settings.metrika_id }}
+<script>
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();
+  for (var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+  /* Number() обязателен: внутри <script> Go экранирует значение по контексту
+     и подставляет его строковым литералом — ym("123") вместо ym(123). */
+  ym(Number({{ .Settings.metrika_id }}), "init", {
+    clickmap: true,
+    trackLinks: true,
+    accurateTrackBounce: true,
+    webvisor: false
+  });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/{{ .Settings.metrika_id }}" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+{{- end }}

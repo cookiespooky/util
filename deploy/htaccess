@@ -44,30 +44,42 @@ RedirectMatch 404 ^/storage(/|$)
 # не выпущен, и директива сломала бы к нему доступ по HTTPS. Добавить, когда
 # сертификат будет на месте.
 #
-# Content-Security-Policy задан без хешей — намеренно, и вот граница.
+# Content-Security-Policy. Разбор по директивам, потому что каждая тут
+# выбрана под конкретную особенность сайта, а не по общему списку.
 #
-# script-src разрешает 'unsafe-inline', потому что в разметке есть инлайновые
-# <script> (настройки страницы и JSON-LD), а их содержимое различается от
-# страницы к странице: один заголовок на весь сайт попостраничные хеши не
-# вместит. Инъекцию инлайна такая политика не остановит — зато остановит
-# внедрение чужого <script src>, а это самый вероятный сценарий: сторонних
-# скриптов на сайте нет ни одного, значит любой внешний источник заведомо
-# лишний. Строгий script-src с хешами потребует генерации <meta> на каждую
-# страницу в postprocess-dist.py — отдельная работа, см. backlog.md.
+# default-src 'self' — базовое правило: всё своё. Ниже только исключения.
 #
-# form-action закрывает главное для этого сайта: заявку нельзя увести на
-# чужой сервер, даже если разметку подменят. base-uri и object-src стоят
-# ноль и убирают два классических приёма развития инъекции.
+# script-src разрешает 'unsafe-inline' сознательно. Инлайновых блоков два:
+# JSON-LD (содержимое различается от страницы к странице) и сниппет Метрики.
+# Попостраничные хеши в один заголовок на весь сайт не помещаются, для них
+# нужна генерация <meta> на каждую страницу в postprocess-dist.py — отдельная
+# работа, см. backlog.md. Инъекцию инлайна такая политика не остановит, зато
+# остановит внедрение чужого <script src>: своих внешних скриптов у сайта
+# нет ни одного, кроме перечисленных здесь.
 #
-# Директивы для стилей, картинок и шрифтов не заданы намеренно: default-src
-# здесь нет, поэтому неуказанное не ограничивается, и добавление ассета не
-# уронит страницу молча.
+# frame-src открыт для yandex.ru — на страницах подразделений стоят виджеты
+# Яндекс.Карт (city-v2.html). Без этой строки карты просто исчезнут.
+#
+# connect-src и img-src ограничивают, КУДА страница может отправить данные.
+# На каждой странице форма с телефоном и почтой, поэтому это важнее строгости
+# script-src: даже если чужой код окажется на странице, увезти собранное ему
+# будет некуда.
+#
+# style-src допускает 'unsafe-inline' из-за атрибутов style= в разметке;
+# отдельных <style> в шаблонах нет.
+#
+# mc.yandex.ru прописан заранее, чтобы включение Метрики сводилось к вводу
+# номера счётчика в config.regru.yaml. Пока номер пуст, счётчика на страницах
+# нет вовсе. Если после включения счётчик не заработает — смотреть консоль
+# браузера: нарушение CSP называет заблокированный адрес прямо. Вероятный
+# кандидат — Вебвизор, ему может потребоваться 'unsafe-eval'; включать его
+# отдельным решением, он записывает сеанс, а на страницах персональные данные.
 <IfModule mod_headers.c>
   Header always set Strict-Transport-Security "max-age=31536000"
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=()"
-  Header always set Content-Security-Policy "frame-ancestors 'self'; form-action 'self'; base-uri 'none'; object-src 'none'; script-src 'self' 'unsafe-inline'"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://mc.yandex.ru; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://mc.yandex.ru; font-src 'self'; connect-src 'self' https://mc.yandex.ru; frame-src https://yandex.ru https://mc.yandex.ru; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'self'"
   Header always set X-Frame-Options "SAMEORIGIN"
 </IfModule>
 
