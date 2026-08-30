@@ -23,7 +23,11 @@ $siteData = load_site_data();
 
 header('Content-Type: application/json; charset=utf-8');
 
-if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET') {
+/* HEAD принимаем наравне с GET: по стандарту это тот же запрос без тела,
+   и сервер, отвечающий на GET, обязан отвечать на HEAD. Отказ ломал внешний
+   мониторинг — сервисы проверки доступности по умолчанию шлют именно HEAD и
+   получали 405, то есть «сайт лежит» на совершенно живом эндпоинте. */
+if (!in_array($_SERVER['REQUEST_METHOD'] ?? '', ['GET', 'HEAD'], true)) {
     json_response(['city' => null, 'error' => 'method_not_allowed'], 405);
 }
 

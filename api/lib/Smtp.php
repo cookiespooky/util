@@ -110,6 +110,20 @@ final class Smtp
             $this->command('EHLO ' . $this->heloName(), 250);
         }
 
+        /* Авторизация только по защищённому каналу. Способ доставки задаётся
+           строкой в config.php, и любое значение кроме 'ssl' и 'tls' даёт
+           открытое соединение — в которое AUTH LOGIN отправил бы логин и
+           пароль ящика простым base64. Опечатка в конфиге не должна тихо
+           превращаться в утечку пароля, поэтому лучше не отправить письмо. */
+        if ($this->config['username'] !== ''
+            && !in_array($this->config['encryption'], ['ssl', 'tls'], true)) {
+            throw new SmtpException(
+                'Отказ авторизоваться по незашифрованному каналу: '
+                . "encryption должно быть 'ssl' или 'tls', сейчас "
+                . var_export($this->config['encryption'], true)
+            );
+        }
+
         if ($this->config['username'] !== '') {
             $this->command('AUTH LOGIN', 334);
             $this->command(base64_encode($this->config['username']), 334);

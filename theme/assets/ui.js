@@ -28,7 +28,7 @@
     consent.className = 'ds-consent';
     consent.innerHTML = '<input type="checkbox" name="privacy-consent" autocomplete="off" required>' +
       '<span class="ds-consent-copy">Я согласен на <a href="' +
-      ((window.__notepubBaseURL || '').replace(/\/$/, '')) +
+      ((document.documentElement.getAttribute('data-base-url') || '').replace(/\/$/, '')) +
       '/privacy/">обработку персональных данных</a>. Согласие не отмечено заранее: пользователь принимает решение самостоятельно.</span>';
     actions.parentNode.insertBefore(consent, actions);
   }

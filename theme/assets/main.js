@@ -128,7 +128,7 @@
       };
 
       if (typeof fetch === 'function') {
-        var base = window.__notepubBaseURL || '';
+        /* base вычислен в начале файла из data-base-url на <html>. */
         fetch(base + '/api/city.php', { headers: { Accept: 'application/json' } })
           .then(function (response) {
             return response.ok ? response.json() : null;

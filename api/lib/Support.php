@@ -128,26 +128,87 @@ function rate_limit_allow(array $config, string $ip): bool
         return true;
     }
 
+    rate_limit_sweep($dir, $window);
+
     $file = $dir . '/' . sha1($ip) . '.json';
     $now = time();
 
-    $hits = [];
-    if (is_file($file)) {
-        $decoded = json_decode((string) file_get_contents($file), true);
-        if (is_array($decoded)) {
-            $hits = $decoded;
+    /* Блокировка держится на всё чтение и запись сразу. Раньше читали одним
+       вызовом, а писали другим, и LOCK_EX стоял только на записи: два
+       параллельных запроса читали одно состояние и каждый дописывал своё,
+       так что фактический порог оказывался выше заданного. */
+    $handle = @fopen($file, 'c+');
+    if ($handle === false) {
+        // Счётчик недоступен — приём заявки важнее точности лимита.
+        return true;
+    }
+
+    try {
+        if (!flock($handle, LOCK_EX)) {
+            return true;
+        }
+
+        $decoded = json_decode((string) stream_get_contents($handle), true);
+        $hits = is_array($decoded) ? $decoded : [];
+        $hits = array_values(array_filter(
+            $hits,
+            static fn($t) => is_int($t) && $t > $now - $window
+        ));
+
+        if (count($hits) >= $max) {
+            return false;
+        }
+
+        $hits[] = $now;
+
+        ftruncate($handle, 0);
+        rewind($handle);
+        fwrite($handle, json_encode($hits));
+        fflush($handle);
+
+        return true;
+    } finally {
+        flock($handle, LOCK_UN);
+        fclose($handle);
+    }
+}
+
+/**
+ * Уборка отслуживших счётчиков.
+ *
+ * На каждый новый адрес заводится файл, и раньше он не удалялся никогда.
+ * За двенадцатью байтами счётчика стоит целый блок файловой системы, так что
+ * на длинной дистанции — и особенно под перебором адресов — каталог растёт
+ * без предела и вместе с ним расход места на аккаунте.
+ *
+ * Ходить по каталогу на каждой заявке дорого и незачем: чистим в среднем
+ * один запрос из ста. Порог — два окна лимита: файл старше уже не влияет
+ * ни на одно решение.
+ */
+function rate_limit_sweep(string $dir, int $window): void
+{
+    if (random_int(1, 100) !== 1) {
+        return;
+    }
+
+    $deadline = time() - max($window, 60) * 2;
+    $handle = @opendir($dir);
+    if ($handle === false) {
+        return;
+    }
+
+    while (($name = readdir($handle)) !== false) {
+        if (!str_ends_with($name, '.json')) {
+            continue;
+        }
+        $path = $dir . '/' . $name;
+        $mtime = @filemtime($path);
+        if ($mtime !== false && $mtime < $deadline) {
+            @unlink($path);
         }
     }
 
-    $hits = array_values(array_filter($hits, static fn($t) => is_int($t) && $t > $now - $window));
-
-    if (count($hits) >= $max) {
-        return false;
-    }
-
-    $hits[] = $now;
-    @file_put_contents($file, json_encode($hits), LOCK_EX);
-    return true;
+    closedir($handle);
 }
 
 /** Убирает управляющие символы и переносы — всё, что опасно в заголовках письма. */

@@ -420,7 +420,7 @@
       }
     );
 
-    var base = window.__notepubBaseURL || '';
+    var base = document.documentElement.getAttribute('data-base-url') || '';
     var active = -1;
 
     /* Поле вынуто из потока и прижато к правому краю своего контейнера,

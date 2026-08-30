@@ -97,10 +97,6 @@
   <link rel="stylesheet" href="{{ .AssetsBase }}/request-forms.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/design-consistency.css" />
 
-  <script>
-    window.__notepubSearchMode = "{{ .SearchMode }}";
-    window.__notepubBaseURL = "{{ .BaseURL }}";
-  </script>
   <title>{{ .Title }}</title>
 </head>
 <body{{ if or (eq .Page.Type "home-v2") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") (eq .Page.Type "legal") (eq .Page.Type "system") }} class="v2-body"{{ end }}>
