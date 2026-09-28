@@ -1,7 +1,7 @@
 {{- /* Благодарственные письма. Контекст — страница (см. v2_logos.html):
        на главной данные берутся со страницы партнёров через коллекцию. */ -}}
 {{- $items := .FM.testimonials }}
-{{- if and (not $items) (eq .Page.Type "home-v2") }}
+{{- if and (not $items) (or (eq .Page.Type "home-v2") (eq .Page.Type "home-v3")) }}
   {{- range .Collections.company_v2.Items }}
   {{- if eq .Slug "partners" }}{{ $items = .FM.testimonials }}{{ end }}
   {{- end }}

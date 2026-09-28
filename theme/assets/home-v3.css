@@ -1,0 +1,652 @@
+/* ============================================================================
+   home-v3 — визуальный слой черновика новой главной (/home-new/).
+
+   Подключается только к типу home-v3 поверх v2.css и ничего не меняет на
+   остальных страницах: все правила начинаются с .home-v3. Претензия
+   заказчика — «плоско, нет визуала»; ответ без перекраски: палитра и каркас
+   v2 остаются, добавляются объём (тени, подъём при наведении), ритм фонов
+   секций, кольца у иконок, картинка в hero и схемы вместо текстовых блоков.
+   ========================================================================= */
+
+.home-v3 {
+  /* «Шрифт ярче» (заказчик, 27.09): вторичный текст темнее, чем в v2
+     (#45534d и #6c7a74), — контраст с фоном выше, серый не «выцветает». */
+  --v2-ink-muted: #2c3833;
+  --v2-ink-subtle: #4a5751;
+  --h3-green-wash: #f0f7f1;
+  --h3-shadow: 0 1px 2px rgba(21, 33, 29, .05), 0 6px 18px -4px rgba(21, 33, 29, .1);
+  --h3-shadow-hover: 0 2px 4px rgba(21, 33, 29, .06), 0 16px 32px -8px rgba(21, 33, 29, .18);
+  --h3-line-soft: rgba(21, 33, 29, .06);
+}
+
+/* Основной текст плотнее: 500 вместо 400. :where обнуляет специфичность —
+   правила с классами (чипы, подписи, кнопки) сохраняют своё начертание. */
+:where(.home-v3) :where(p, small, li, dd) { font-weight: 500; }
+
+/* --------------------------------------------------------------------------
+   Ритм фонов: белый / светло-зелёный / серый вместо одного серого.
+   Партиалы логотипов и отзывов общие со страницей партнёров, поэтому их
+   фон меняется здесь, а не в разметке.
+   -------------------------------------------------------------------------- */
+
+.home-v3 .h3-section--green,
+.home-v3 .cv2-testimonials-section { background: var(--h3-green-wash); }
+.home-v3 .v2-faq { background: var(--v2-surface); }
+
+/* Кнопка «Все партнёры и отзывы» стоит между секциями, в узкой оболочке, и
+   без этого давала серую полосу между зелёными отзывами и белым FAQ.
+   Фон дотягивается до краёв экрана тенью, clip-path режет её по вертикали. */
+.home-v3 .v2-partners-more {
+  background: var(--h3-green-wash);
+  box-shadow: 0 0 0 100vmax var(--h3-green-wash);
+  clip-path: inset(0 -100vmax);
+}
+
+/* --------------------------------------------------------------------------
+   Объём карточек: мягкая двухслойная тень всегда, подъём при наведении.
+   -------------------------------------------------------------------------- */
+
+.home-v3 .v2-audience__grid li,
+.home-v3 .v2-service,
+.home-v3 .cv2-logo,
+.home-v3 .cv2-testimonial,
+.home-v3 .v2-faq__item {
+  border-color: var(--h3-line-soft);
+  box-shadow: var(--h3-shadow);
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-v3 .v2-audience__grid li:hover,
+  .home-v3 .v2-service:hover,
+  .home-v3 .cv2-logo:hover {
+    box-shadow: var(--h3-shadow-hover);
+    transform: translateY(-3px);
+  }
+}
+
+/* Стрелка в углу карточки «Кому подходит»: вся карточка — ссылка */
+.home-v3 .v2-audience__grid li { padding-right: 48px; }
+
+.home-v3 .v2-audience__grid li::after {
+  content: "→";
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  color: var(--v2-blue);
+  font-weight: 700;
+  transition: transform .18s ease;
+}
+
+.home-v3 .v2-audience__grid li:hover::after { transform: translateX(3px); }
+
+/* --------------------------------------------------------------------------
+   Иконки в кольцах: белый круг, тонкое кольцо цвета карточки и ореол.
+   -------------------------------------------------------------------------- */
+
+.home-v3 .v2-service__glyph {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    inset 0 0 0 1.5px var(--v2-accent, var(--v2-blue)),
+    0 0 0 6px var(--v2-accent-soft, var(--v2-blue-soft)),
+    0 6px 14px -4px rgba(21, 33, 29, .16);
+}
+
+.home-v3 .v2-trust__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: inset 0 0 0 1.5px var(--v2-blue), 0 0 0 5px var(--v2-blue-soft);
+}
+
+.home-v3 .v2-trust li:nth-child(3) .v2-trust__icon,
+.home-v3 .v2-trust li:nth-child(4) .v2-trust__icon {
+  background: #fff;
+  box-shadow: inset 0 0 0 1.5px var(--v2-green), 0 0 0 5px var(--v2-green-soft);
+}
+
+/* Показатели: одна карточка с тенью, крупные цифры */
+.home-v3 .v2-trust {
+  border-color: var(--h3-line-soft);
+  box-shadow: var(--h3-shadow);
+}
+
+.home-v3 .v2-trust li {
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  padding: 22px 22px;
+}
+
+.home-v3 .v2-trust strong {
+  font-size: clamp(19px, 1.7vw, 23px);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.15;
+}
+
+/* --------------------------------------------------------------------------
+   01 · Hero: картинка заказчика с выносками
+   -------------------------------------------------------------------------- */
+
+.h3-scene {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  margin: 0;
+  justify-self: end;
+}
+
+.h3-scene__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--v2-radius-lg);
+  box-shadow: 0 2px 6px rgba(21, 33, 29, .06), 0 24px 48px -16px rgba(21, 33, 29, .24);
+}
+
+/* Линии рисует home-v3.js в пикселях фигуры; --len — длина линии, по ней
+   анимируется прорисовка. */
+.h3-scene__leaders {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.h3-scene__leaders path {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 1px 1.5px rgba(21, 33, 29, .35));
+  stroke-dasharray: var(--len, 0);
+  stroke-dashoffset: var(--len, 0);
+  transition: stroke-dashoffset .6s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* Точка на объекте: зелёное ядро в белом кольце, один пульс при появлении */
+.h3-scene__pin {
+  position: absolute;
+  left: var(--px);
+  top: var(--py);
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border-radius: 50%;
+  background: var(--v2-green);
+  box-shadow: 0 0 0 3px #fff, 0 2px 6px rgba(21, 33, 29, .35);
+  transform: scale(0);
+  transition: transform .35s cubic-bezier(.3, 1.6, .5, 1);
+}
+
+.h3-scene__pin::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.h3-scene__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.h3-callout {
+  position: absolute;
+  left: var(--cx);
+  top: var(--cy);
+  display: grid;
+  grid-template-columns: 8px auto;
+  gap: 2px 9px;
+  align-items: baseline;
+  width: max-content;
+  padding: 9px 14px 10px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 1px 2px rgba(21, 33, 29, .06), 0 10px 24px -6px rgba(21, 33, 29, .18);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .4s ease, transform .4s cubic-bezier(.2, .8, .2, 1), box-shadow .2s ease;
+}
+
+.h3-callout::before {
+  content: "";
+  grid-row: 1;
+  align-self: center;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--v2-green);
+}
+
+.h3-callout strong {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  line-height: 1.3;
+}
+
+.h3-callout small {
+  grid-column: 2;
+  color: var(--v2-ink-subtle);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.h3-callout__num { display: none; }
+
+/* Появление по очереди: карточка → линия к объекту → точка */
+.h3-scene.is-in .h3-callout { opacity: 1; transform: none; }
+.h3-scene.is-in .h3-scene__leaders path { stroke-dashoffset: 0; }
+.h3-scene.is-in .h3-scene__pin { transform: scale(1); }
+.h3-scene.is-in .h3-scene__pin::after { animation: h3-pulse 1.4s ease-out 1 forwards; animation-delay: inherit; }
+
+.h3-callout[data-n="1"] { transition-delay: .2s; }
+.h3-callout[data-n="2"] { transition-delay: .75s; }
+.h3-callout[data-n="3"] { transition-delay: 1.3s; }
+.h3-scene__leaders path[data-n="1"] { transition-delay: .45s; }
+.h3-scene__leaders path[data-n="2"] { transition-delay: 1s; }
+.h3-scene__leaders path[data-n="3"] { transition-delay: 1.55s; }
+.h3-scene__pin[data-n="1"] { transition-delay: 1s; animation-delay: 1s; }
+.h3-scene__pin[data-n="2"] { transition-delay: 1.55s; animation-delay: 1.55s; }
+.h3-scene__pin[data-n="3"] { transition-delay: 2.1s; animation-delay: 2.1s; }
+
+@keyframes h3-pulse {
+  from { opacity: .9; transform: scale(1); }
+  to { opacity: 0; transform: scale(2.6); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .h3-scene.is-in .h3-callout:hover {
+    box-shadow: 0 1px 2px rgba(21, 33, 29, .06), 0 16px 32px -8px rgba(21, 33, 29, .26);
+    transform: translateY(-2px);
+    transition-delay: 0s;
+  }
+}
+
+/* Без JS (или до его запуска) выноски видны сразу, без линий */
+.h3-scene:not([data-h3-ready]) .h3-callout { opacity: 1; transform: none; }
+.h3-scene:not([data-h3-ready]) .h3-scene__pin { transform: scale(1); }
+
+/* --------------------------------------------------------------------------
+   04 · Процесс: маршрут этапов и дорожка документов
+   -------------------------------------------------------------------------- */
+
+.h3-route {
+  display: grid;
+  gap: 18px;
+}
+
+.h3-route__label {
+  display: block;
+  color: var(--v2-ink-subtle);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.h3-route__label--lane { margin-top: 18px; }
+
+.h3-route__in {
+  display: grid;
+  gap: 12px;
+  padding: 22px 24px;
+  border-radius: var(--v2-radius);
+  background: var(--v2-blue-soft);
+  box-shadow: inset 0 0 0 1px rgba(76, 145, 202, .18);
+}
+
+.h3-route__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.h3-route__chips li {
+  background: var(--v2-surface);
+  box-shadow: 0 1px 2px rgba(21, 33, 29, .05);
+}
+
+.h3-route__hint {
+  margin: 0;
+  color: var(--v2-ink-subtle);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Этапы: пять колонок, линия через центры узлов от синего к зелёному */
+.h3-steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.h3-steps::before {
+  content: "";
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  right: calc(20% - 14px);
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--v2-blue), var(--v2-green));
+  opacity: .55;
+}
+
+.h3-step {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 6px;
+}
+
+.h3-step__node {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--c-deep);
+  box-shadow:
+    inset 0 0 0 1.5px var(--c),
+    0 0 0 6px var(--c-soft),
+    0 8px 18px -6px rgba(21, 33, 29, .22);
+}
+
+.h3-step__node svg { width: 25px; height: 25px; }
+
+.h3-step__num {
+  color: var(--c-deep);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .06em;
+}
+
+.h3-step strong {
+  font-size: 16.5px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  line-height: 1.25;
+}
+
+.h3-step small {
+  color: var(--v2-ink-muted);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+/* Развилка шага 05: две ветки от одного ствола */
+.h3-fork {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  margin: 2px 0 0;
+  padding: 0 0 0 16px;
+  list-style: none;
+}
+
+.h3-fork::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0;
+  bottom: 14px;
+  border-left: 1.5px solid var(--c);
+}
+
+.h3-fork li {
+  position: relative;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: var(--c-soft);
+  color: var(--v2-ink-muted);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.h3-fork li::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  width: 12px;
+  border-top: 1.5px solid var(--c);
+}
+
+/* Документы: та же сетка из пяти колонок, карточка стоит под своим этапом.
+   Пунктир по верху связывает дорожку, короткий штрих — карточку с этапом. */
+.h3-docs {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  gap: 12px 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.h3-docs::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  border-top: 2px dashed rgba(70, 183, 73, .35);
+}
+
+.h3-doc {
+  grid-column: var(--col);
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  padding: 16px 18px;
+  border-top: 3px solid var(--v2-green);
+  border-radius: 12px;
+  background: var(--v2-surface);
+  box-shadow: var(--h3-shadow);
+}
+
+.h3-doc span {
+  color: var(--v2-green-deep);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.h3-doc strong {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+.h3-doc small {
+  color: var(--v2-ink-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.h3-route__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 24px;
+  margin-top: 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--v2-line);
+}
+
+.h3-route__foot p {
+  max-width: 70ch;
+  margin: 0;
+  color: var(--v2-ink-subtle);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* --------------------------------------------------------------------------
+   06 · География: настоящая карта, города — таблетки с тенью
+   -------------------------------------------------------------------------- */
+
+.home-v3 .v2-geo__board { align-items: start; }
+
+.home-v3 .v2-geo__map {
+  min-height: 0;
+  aspect-ratio: 1000 / 626;
+  border-color: var(--h3-line-soft);
+  background: #f5f7f6;
+  box-shadow: var(--h3-shadow);
+}
+
+.h3-geo__base {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.home-v3 .v2-geo__links { stroke-width: 2; opacity: .9; }
+
+/* Точка таблетки стоит на городе: сдвиг на центр точки, а не на центр таблетки */
+.home-v3 .v2-geo__node {
+  padding: 10px 34px 10px 32px;
+  border-color: transparent;
+  box-shadow: 0 1px 2px rgba(21, 33, 29, .06), 0 8px 20px -6px rgba(21, 33, 29, .22);
+  transform: translate(-17.5px, -50%);
+}
+
+.home-v3 .v2-geo__node::after {
+  content: "→";
+  position: absolute;
+  right: 13px;
+  top: 50%;
+  color: var(--v2-ink-subtle);
+  transform: translateY(-50%);
+}
+
+.home-v3 .v2-geo__node.is-active {
+  border-color: var(--v2-green);
+  box-shadow: 0 0 0 6px rgba(70, 183, 73, .16), 0 8px 20px -6px rgba(21, 33, 29, .22);
+}
+
+.home-v3 .v2-geo__info { box-shadow: var(--h3-shadow); }
+
+/* --------------------------------------------------------------------------
+   Адаптив
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1060px) {
+  .h3-scene { justify-self: start; }
+
+  /* Этапы и документы — вертикальной лентой: линия слева через узлы */
+  .h3-steps { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+
+  .h3-steps::before {
+    top: 28px;
+    bottom: 28px;
+    left: 26.5px;
+    right: auto;
+    width: 3px;
+    height: auto;
+    background: linear-gradient(180deg, var(--v2-blue), var(--v2-green));
+  }
+
+  .h3-step {
+    grid-template-columns: 56px minmax(0, 1fr);
+    column-gap: 18px;
+  }
+
+  .h3-step__node { grid-row: 1 / span 4; margin-bottom: 0; }
+
+  .h3-docs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .h3-doc { grid-column: auto; }
+  .h3-docs::before { display: none; }
+}
+
+@media (max-width: 720px) {
+  .home-v3 .v2-audience__grid li::after { top: 24px; }
+
+  /* Выноски: на картинке номера, карточки — списком под ней */
+  .h3-scene__leaders { display: none; }
+
+  /* top в процентах считался бы от высоты фигуры вместе со списком, а
+     margin — от ширины; картинка квадратная, ширина = её высоте */
+  .h3-scene__pin {
+    top: 0;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    margin: calc(var(--py) - 13px) 0 0 -13px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .h3-scene__pin::before { content: attr(data-n); }
+
+  .h3-scene__list { display: grid; gap: 8px; margin-top: 14px; }
+
+  .h3-callout {
+    position: static;
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: 2px 12px;
+    width: auto;
+    padding: 12px 14px;
+    white-space: normal;
+  }
+
+  .h3-callout::before { display: none; }
+
+  .h3-callout__num {
+    display: grid;
+    grid-row: 1 / span 2;
+    place-items: center;
+    align-self: start;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--v2-green);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .h3-docs { grid-template-columns: minmax(0, 1fr); }
+
+  .home-v3 .v2-geo__map { min-height: 0; }
+  .home-v3 .v2-geo__node { min-height: 32px; padding: 7px 12px 7px 26px; font-size: 12px; transform: translate(-14.5px, -50%); }
+  .home-v3 .v2-geo__node::before { left: 10px; width: 8px; height: 8px; }
+  .home-v3 .v2-geo__node::after { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .h3-callout,
+  .h3-scene__leaders path,
+  .h3-scene__pin { transition: none !important; }
+  .h3-scene__pin::after { display: none; }
+  .home-v3 .v2-audience__grid li:hover,
+  .home-v3 .v2-service:hover,
+  .home-v3 .cv2-logo:hover { transform: none; }
+}

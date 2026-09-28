@@ -93,6 +93,13 @@ types:
     template: "home-v2.html"
     permalink: "/"
     include_in: { sitemap: true, search: false }
+  # Черновик новой главной для согласования с заказчиком: тот же каркас, что у
+  # home-v2, плюс визуальный слой home-v3.css. noindex, вне карты сайта и
+  # поиска. После согласования переносится в home-v2 и удаляется.
+  home-v3:
+    template: "home-v3.html"
+    permalink: "/{{ slug }}/"
+    include_in: { sitemap: false, search: false }
   catalog-v2:
     template: "catalog-v2.html"
     permalink: "/{{ slug }}/"
@@ -156,8 +163,8 @@ links:
   - name: "related"
     kind: "field"
     field: "related"
-    from_types: ["home", "home-concept", "home-v2", "catalog", "catalog-v2", "service", "service-v2", "company-v2", "city-v2", "city", "company", "legal", "design", "system"]
-    to_types: ["home", "home-concept", "home-v2", "catalog", "catalog-v2", "service", "service-v2", "company-v2", "city-v2", "city", "company", "legal", "design", "system"]
+    from_types: ["home", "home-concept", "home-v2", "home-v3", "catalog", "catalog-v2", "service", "service-v2", "company-v2", "city-v2", "city", "company", "legal", "design", "system"]
+    to_types: ["home", "home-concept", "home-v2", "home-v3", "catalog", "catalog-v2", "service", "service-v2", "company-v2", "city-v2", "city", "company", "legal", "design", "system"]
     to: "slug"
     value_syntax: "auto"
     resolve:
@@ -167,9 +174,9 @@ links:
       case: "insensitive"
   - name: "wiki"
     kind: "wikilinks"
-    from_types: ["home", "home-concept", "home-v2", "catalog", "catalog-v2", "service", "service-v2", "company-v2", "city-v2", "city", "company", "legal", "design", "partial", "system"]
+    from_types: ["home", "home-concept", "home-v2", "home-v3", "catalog", "catalog-v2", "service", "service-v2", "company-v2", "city-v2", "city", "company", "legal", "design", "partial", "system"]
     resolve_by: "wikimap"
-    to_types: ["home", "home-concept", "home-v2", "catalog", "catalog-v2", "service", "service-v2", "company-v2", "city-v2", "city", "company", "legal", "design", "partial", "system"]
+    to_types: ["home", "home-concept", "home-v2", "home-v3", "catalog", "catalog-v2", "service", "service-v2", "company-v2", "city-v2", "city", "company", "legal", "design", "partial", "system"]
     resolve:
       order: ["path", "filename", "slug"]
       ambiguity: "error"

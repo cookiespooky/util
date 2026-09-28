@@ -6,7 +6,7 @@
 {{- $logos := .FM.logos }}
 {{- $title := .FM.logos_title }}
 {{- $note := .FM.logos_note }}
-{{- if and (not $logos) (eq .Page.Type "home-v2") }}
+{{- if and (not $logos) (or (eq .Page.Type "home-v2") (eq .Page.Type "home-v3")) }}
   {{- range .Collections.company_v2.Items }}
   {{- if eq .Slug "partners" }}
   {{- $logos = .FM.logos }}{{ $title = .FM.logos_title }}{{ $note = .FM.logos_note }}
