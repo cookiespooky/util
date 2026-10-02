@@ -3029,6 +3029,15 @@ select.v2-control {
 .v2-header__vk:hover,
 .v2-footer__vk:hover { opacity: 1; transform: translateY(-1px); }
 
+/* Значок MAX без ссылки (contact.max без max_url) ведёт себя как кнопка ВК,
+   включая курсор, — по просьбе заказчика. */
+.v2-header__vk,
+.v2-footer__vk { cursor: pointer; }
+
+/* Значок только для своего города (data-city-only, см. main.js): у ссылок
+   задан display, и без этого правила атрибут hidden их не прячет. */
+[data-city-only][hidden] { display: none; }
+
 .v2-header__vk img { width: 24px; height: 24px; border-radius: 7px; }
 
 /* На узких экранах строка шапки перестраивается через order, а у этой
@@ -3139,6 +3148,16 @@ select.v2-control {
 
 .cv2-gallery__item:hover img { transform: scale(1.03); }
 
+/* Крупная плитка не должна задавать высоту строк своим снимком: вертикальное
+   фото печи растянуло бы обе строки и обрезало соседей. Высоту дают соседние
+   плитки, а снимок заполняет её, кадр — по нижней части: оранжевые направляющие и дверцы печи. */
+.cv2-gallery__item:first-child { position: relative; min-height: 180px; }
+.cv2-gallery__item:first-child img {
+  position: absolute;
+  inset: 0;
+  object-position: 50% 88%;
+}
+
 /* Карточка документа со сканом: превью прижато вправо и не растягивает
    карточку по высоте вместе с соседними. */
 .cv2-document__scan {
@@ -3175,12 +3194,12 @@ select.v2-control {
 
 @media (max-width: 900px) {
   .cv2-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .cv2-gallery__item:first-child { grid-column: span 2; grid-row: auto; }
+  .cv2-gallery__item:first-child { grid-column: span 2; grid-row: auto; aspect-ratio: 16 / 10; }
 }
 
 @media (max-width: 560px) {
   .cv2-gallery { grid-template-columns: minmax(0, 1fr); }
-  .cv2-gallery__item:first-child { grid-column: auto; }
+  .cv2-gallery__item:first-child { grid-column: auto; aspect-ratio: 4 / 3; }
 }
 
 /* --------------------------------------------------------------------------

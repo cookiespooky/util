@@ -228,6 +228,23 @@
         </a>
         {{- end }}
         {{- end }}
+        {{- /* MAX — из frontmatter: contact.max включает значок, contact.max_url
+               (ссылка на профиль max.ru/…) делает его ссылкой на чат. Пока
+               ссылки нет, значок — просто пометка.
+               MAX есть не у всех подразделений, поэтому значок привязан к
+               городу: в разметке он скрыт, main.js показывает его, только
+               когда выбран этот город (data-city-only). */ -}}
+        {{- range $cities }}
+        {{- if .FM.contact.max_url }}
+        <a class="v2-header__vk" href="{{ .FM.contact.max_url }}" target="_blank" rel="noopener" aria-label="Написать в MAX" data-city-only="{{ .FM.city_key }}" hidden>
+          <img src="{{ $.AssetsBase }}/max-logo.png" width="24" height="24" alt="" aria-hidden="true" />
+        </a>
+        {{- else if .FM.contact.max }}
+        <span class="v2-header__vk" title="Мы есть в MAX" data-city-only="{{ .FM.city_key }}" hidden>
+          <img src="{{ $.AssetsBase }}/max-logo.png" width="24" height="24" alt="MAX" />
+        </span>
+        {{- end }}
+        {{- end }}
         {{- end }}
 
         <a class="v2-button v2-button--primary v2-header__cta" href="#request">Оставить заявку</a>
@@ -339,6 +356,19 @@
           <img src="{{ $.AssetsBase }}/vk-logo.svg" width="24" height="24" alt="" aria-hidden="true" />
           <span>Сообщество ВКонтакте</span>
         </a>
+        {{- end }}
+        {{- end }}
+        {{- range $cities }}
+        {{- if .FM.contact.max_url }}
+        <a class="v2-drawer__vk" href="{{ .FM.contact.max_url }}" target="_blank" rel="noopener" data-city-only="{{ .FM.city_key }}" hidden>
+          <img src="{{ $.AssetsBase }}/max-logo.png" width="24" height="24" alt="" aria-hidden="true" />
+          <span>Написать в MAX</span>
+        </a>
+        {{- else if .FM.contact.max }}
+        <span class="v2-drawer__vk" data-city-only="{{ .FM.city_key }}" hidden>
+          <img src="{{ $.AssetsBase }}/max-logo.png" width="24" height="24" alt="" aria-hidden="true" />
+          <span>Мы есть в MAX</span>
+        </span>
         {{- end }}
         {{- end }}
         <a class="v2-button v2-button--primary v2-button--block" href="#request" data-drawer-close>Оставить заявку</a>

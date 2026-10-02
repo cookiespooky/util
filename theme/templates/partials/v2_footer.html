@@ -19,6 +19,17 @@
         </a>
         {{- end }}
         {{- end }}
+        {{- range .Collections.cities_v2.Items }}
+        {{- if .FM.contact.max_url }}
+        <a class="v2-footer__vk" href="{{ .FM.contact.max_url }}" target="_blank" rel="noopener" aria-label="Написать в MAX" data-city-only="{{ .FM.city_key }}" hidden>
+          <img src="{{ $.AssetsBase }}/max-logo.png" width="28" height="28" alt="" aria-hidden="true" />
+        </a>
+        {{- else if .FM.contact.max }}
+        <span class="v2-footer__vk" title="Мы есть в MAX" data-city-only="{{ .FM.city_key }}" hidden>
+          <img src="{{ $.AssetsBase }}/max-logo.png" width="28" height="28" alt="MAX" />
+        </span>
+        {{- end }}
+        {{- end }}
       </div>
     </div>
 

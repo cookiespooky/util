@@ -84,6 +84,12 @@
       if (hasOption) select.value = city;
     });
 
+    /* То, что есть только у одного подразделения (значок MAX — у Тюмени),
+       в разметке скрыто и показывается, когда выбран именно этот город. */
+    document.querySelectorAll('[data-city-only]').forEach(function (node) {
+      node.hidden = node.dataset.cityOnly !== city;
+    });
+
     document.dispatchEvent(new CustomEvent('utilit:citychange', { detail: { city: city } }));
   }
 

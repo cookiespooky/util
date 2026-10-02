@@ -105,6 +105,24 @@
             </dd>
           </div>
           {{- end }}
+          {{- if or .FM.contact.max_url .FM.contact.max }}
+          <div>
+            <dt>Мессенджер</dt>
+            <dd>
+              {{- if .FM.contact.max_url }}
+              <a class="ct2-contact__vk" href="{{ .FM.contact.max_url }}" target="_blank" rel="noopener">
+                <img src="{{ $.AssetsBase }}/max-logo.png" width="20" height="20" alt="MAX" />
+                <span>Написать в MAX</span>
+              </a>
+              {{- else }}
+              <span class="ct2-contact__vk">
+                <img src="{{ $.AssetsBase }}/max-logo.png" width="20" height="20" alt="MAX" />
+                <span>MAX</span>
+              </span>
+              {{- end }}
+            </dd>
+          </div>
+          {{- end }}
         </dl>
 
         {{- if .FM.contact.note }}
