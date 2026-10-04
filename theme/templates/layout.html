@@ -65,6 +65,7 @@
   <link rel="stylesheet" href="{{ .AssetsBase }}/v2.css" />
   {{- end }}
   {{- if eq .Page.Type "home-v3" }}
+  <link rel="preload" as="font" type="font/woff2" href="{{ .AssetsBase }}/fonts/wordmark-opensans-600.woff2" crossorigin />
   <link rel="stylesheet" href="{{ .AssetsBase }}/home-v3.css" />
   {{- end }}
   {{- if or (eq .Page.Type "service-v2") (eq .Page.Type "catalog-v2") }}

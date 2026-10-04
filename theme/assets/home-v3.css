@@ -662,30 +662,44 @@
 .v2-header__bar .v2-logo__mark { width: 60px; height: 48px; }
 .v2-header__bar .v2-logo__copy small { display: none; }
 
+/* Шрифт названия — правка заказчика 02.10: крупный Manrope «топорный», просят
+   как в фирменном знаке (пример — фото логотипа: заглавные, гуманистический
+   гротеск). Open Sans SemiBold, в файле только буквы слова «Утилитсервис»
+   (2 КБ, лицензия OFL 1.1). swap, а не optional, как у основного шрифта: слово
+   одно, подмена не двигает раскладку заметно, а запасной шрифт заглавными
+   выглядел бы чужим весь просмотр. */
+@font-face {
+  font-family: "Utilit Wordmark";
+  src: url("fonts/wordmark-opensans-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 .v2-header__bar .v2-logo__copy strong {
-  font-size: 38px;
-  font-weight: 700;
+  font-family: "Utilit Wordmark", "Open Sans", "Segoe UI", Arial, sans-serif;
+  font-size: 30px;
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: -.03em;
-  /* Строка центрируется по кеглю, а слово почти целиком из строчных: их
-     середина лежит ниже середины кегля, и название на глаз сползало под
-     центр знака и пунктов меню (замер: 3–5 px). Сдвиг в em — работает на
-     всех трёх размерах. */
+  letter-spacing: .035em;
+  text-transform: uppercase;
+  /* Заглавные стоят выше середины кегля — сдвиг вниз возвращает слово на
+     центр знака и пунктов меню. В em — работает на всех трёх размерах. */
   position: relative;
-  top: -.09em;
+  top: .03em;
 }
 
 /* Уже 1480px крупное название начинает теснить меню (рядом с ним иконки
    ВК и MAX, телефон) — два шага меньше. */
 @media (max-width: 1480px) {
   .v2-header__bar .v2-logo__mark { width: 50px; height: 40px; }
-  .v2-header__bar .v2-logo__copy strong { font-size: 31px; }
+  .v2-header__bar .v2-logo__copy strong { font-size: 25px; }
 }
 
 @media (max-width: 1280px) {
   .v2-header__bar .v2-logo { gap: 9px; }
   .v2-header__bar .v2-logo__mark { width: 44px; height: 35px; }
-  .v2-header__bar .v2-logo__copy strong { font-size: 25px; }
+  .v2-header__bar .v2-logo__copy strong { font-size: 21px; }
 }
 
 /* Уже 720px v2.css прячет название совсем — в строке нет места, остаётся
