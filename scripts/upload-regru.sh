@@ -38,8 +38,9 @@ fi
 echo "Собираю сайт для https://utilityservice.ru"
 CONFIG=./config.regru.yaml DIST="$DIST_DIR" ./scripts/build.sh
 
-# Сборка на GitHub Pages не должна утечь на боевой домен: проверяем явно.
-if grep -rq "cookiespooky.github.io" "$DIST_DIR/index.html"; then
+# Сборка для превью не должна утечь на боевой домен: проверяем явно. Превью живёт на
+# antonlozhkin.ru/util (туда GitHub Pages переадресует cookiespooky.github.io/util).
+if grep -rqE "cookiespooky\.github\.io|antonlozhkin\.ru/util" "$DIST_DIR/index.html"; then
   echo "Ошибка: в сборке остались адреса GitHub Pages — проверьте CONFIG." >&2
   exit 1
 fi

@@ -1,17 +1,21 @@
 site:
+  # Адрес превью. GitHub Pages отдаёт репозиторий на своём домене владельца: cookiespooky.github.io/util
+  # отвечает 301 на antonlozhkin.ru/util. Пока здесь стоял github.io, каждый ассет шёл через переадресацию, а
+  # preload шрифта и url() в CSS расходились по адресам — Manrope с font-display: optional на холодной загрузке
+  # не успевал, и страница оставалась в запасном шрифте до следующих перезагрузок (замечено 04.10).
   id: utilit
-  base_url: "https://cookiespooky.github.io/util"
+  base_url: "https://antonlozhkin.ru/util"
   title: "Утилитсервис"
   description: "Сбор, транспортирование и обезвреживание отходов для организаций"
-  default_og_image: "https://cookiespooky.github.io/util/assets/img/og-logo.jpg"
-  media_base_url: "https://cookiespooky.github.io/util/media"
+  default_og_image: "https://antonlozhkin.ru/util/assets/img/og-logo.jpg"
+  media_base_url: "https://antonlozhkin.ru/util/media"
   host: 127.0.0.1
 
 runtime:
   mode: "prod"
   prod:
-    base_url: "https://cookiespooky.github.io/util"
-    media_base_url: "https://cookiespooky.github.io/util/media"
+    base_url: "https://antonlozhkin.ru/util"
+    media_base_url: "https://antonlozhkin.ru/util/media"
   dev:
     base_url: "http://127.0.0.1:8080"
     media_base_url: "http://127.0.0.1:8080/media"
