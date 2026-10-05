@@ -3156,10 +3156,12 @@ select.v2-control {
    половина, а четвёртое фото висело одно в третьей строке. */
 .cv2-gallery__item:first-child { grid-row: span 2; aspect-ratio: auto; }
 
-/* Фотографий четыре — последняя растягивается на две колонки и закрывает
-   прямоугольник. При пяти она обычная плитка, и сетка 1 + 2×2 цельная сама. */
-.cv2-gallery__item:last-child:nth-child(4) { grid-column: span 2; aspect-ratio: auto; }
-.cv2-gallery__item:last-child:nth-child(4) img { object-position: 50% 62%; }
+/* Фотографий четыре — вторая растягивается на две колонки и закрывает
+   прямоугольник сверху, две последние встают под ней (правка заказчика 05.10:
+   кабины наверх, машины вниз). При пяти она обычная плитка, и сетка 1 + 2×2
+   цельная сама. */
+.cv2-gallery__item:nth-child(2):nth-last-child(3) { grid-column: span 2; aspect-ratio: auto; }
+.cv2-gallery__item:nth-child(2):nth-last-child(3) img { object-position: 50% 62%; }
 
 /* Карточка документа со сканом: превью прижато вправо и не растягивает
    карточку по высоте вместе с соседними. */
@@ -3195,17 +3197,21 @@ select.v2-control {
   background: #fff;
 }
 
-/* Две колонки: печь слева на две строки, две плитки справа, четвёртая — во всю
-   ширину под ними. При пяти фото пятая встаёт рядом с четвёртой. */
+/* Две колонки: широкая плитка — во всю ширину первой строкой (рядом с печью
+   ей двух колонок не хватает, без order она ушла бы вниз и оставила дыру),
+   под ней печь слева на две строки и две плитки справа. */
 @media (max-width: 900px) {
-  .cv2-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Строки своей высоты: при равных широкая плитка задала бы высоту и двум
+     нижним, а плитки 4:3 в них не растягиваются — оставались пустые полосы. */
+  .cv2-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; }
+  .cv2-gallery__item:nth-child(2):nth-last-child(3) { order: -1; aspect-ratio: 2 / 1; }
 }
 
 /* Одна колонка: у каждой плитки свои пропорции, печь остаётся вертикальной. */
 @media (max-width: 560px) {
   .cv2-gallery { grid-template-columns: minmax(0, 1fr); grid-auto-rows: auto; }
   .cv2-gallery__item:first-child { grid-row: auto; aspect-ratio: 2 / 3; }
-  .cv2-gallery__item:last-child:nth-child(4) { grid-column: auto; aspect-ratio: 4 / 3; }
+  .cv2-gallery__item:nth-child(2):nth-last-child(3) { grid-column: auto; aspect-ratio: 4 / 3; order: 0; }
 }
 
 /* --------------------------------------------------------------------------
