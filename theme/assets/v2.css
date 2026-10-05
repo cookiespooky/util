@@ -3275,3 +3275,153 @@ select.v2-control {
     width: auto;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Логотип в шапке — правка заказчика при согласовании главной (30.09):
+   без подписи «обращение с отходами», знак крупнее, название по высоте знака.
+   С 05.10 — на всех страницах (до того правило жило в home-v3.css и шапка
+   главной отличалась от остальных). Ящик на мобильном со своим .v2-logo не
+   задет — правило привязано к строке шапки.
+   -------------------------------------------------------------------------- */
+
+.v2-header__bar .v2-logo { gap: 12px; }
+.v2-header__bar .v2-logo__mark { width: 60px; height: 48px; }
+.v2-header__bar .v2-logo__copy small { display: none; }
+
+/* Шрифт названия — правка заказчика 02.10: крупный Manrope «топорный», просят
+   как в фирменном знаке (пример — фото логотипа: заглавные, гуманистический
+   гротеск). Open Sans SemiBold, в файле только буквы слова «Утилитсервис»
+   (2 КБ, лицензия OFL 1.1). swap, а не optional, как у основного шрифта: слово
+   одно, подмена не двигает раскладку заметно, а запасной шрифт заглавными
+   выглядел бы чужим весь просмотр. */
+@font-face {
+  font-family: "Utilit Wordmark";
+  src: url("fonts/wordmark-opensans-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+.v2-header__bar .v2-logo__copy strong {
+  font-family: "Utilit Wordmark", "Open Sans", "Segoe UI", Arial, sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+  /* Сдвига нет: середина заглавных и так приходится на середину строки шапки,
+     знака и заглавных букв меню (замер 04.10 на трёх ширинах: расхождение до
+     полупикселя). Сдвиг .03em, стоявший здесь, опускал слово на пиксель. Низ
+     букв при этом на 7 px ниже, чем у меню: слово вдвое крупнее, и выровнять
+     сразу и середины, и нижние края нельзя. */
+}
+
+/* Уже 1480px крупное название начинает теснить меню (рядом с ним иконки
+   ВК и MAX, телефон) — два шага меньше. */
+@media (max-width: 1480px) {
+  .v2-header__bar .v2-logo__mark { width: 50px; height: 40px; }
+  .v2-header__bar .v2-logo__copy strong { font-size: 25px; }
+}
+
+@media (max-width: 1280px) {
+  .v2-header__bar .v2-logo { gap: 9px; }
+  .v2-header__bar .v2-logo__mark { width: 44px; height: 35px; }
+  .v2-header__bar .v2-logo__copy strong { font-size: 21px; }
+}
+
+/* Уже 720px v2.css прячет название совсем — в строке нет места, остаётся
+   знак (он тоже крупнее, из правила выше). */
+
+/* ==========================================================================
+   Оформление согласованной главной — на всех страницах (05.10.2026).
+
+   Главная получила объём и плотный текст в home-v3.css, где всё привязано к
+   .home-v3. Здесь то же самое для остальных типов страниц: без этого сайт
+   после переноса главной распадался на «новую» главную и «плоские»
+   внутренние. Селекторы начинаются с .v2-page — постраничные файлы
+   (service-v2.css, company-v2.css, city-v2.css) грузятся позже и иначе
+   перебили бы рамку своим сокращённым border.
+   ========================================================================== */
+
+.v2-page {
+  /* «Шрифт ярче» (заказчик, 27.09): вторичный текст темнее */
+  --v2-ink-muted: #2c3833;
+  --v2-ink-subtle: #4a5751;
+  --h3-green-wash: #f0f7f1;
+  --h3-shadow: 0 1px 2px rgba(21, 33, 29, .05), 0 6px 18px -4px rgba(21, 33, 29, .1);
+  --h3-shadow-hover: 0 2px 4px rgba(21, 33, 29, .06), 0 16px 32px -8px rgba(21, 33, 29, .18);
+  --h3-line-soft: rgba(21, 33, 29, .06);
+}
+
+/* Основной текст плотнее: 500 вместо 400. :where обнуляет специфичность —
+   правила с классами (чипы, подписи, кнопки) сохраняют своё начертание. */
+:where(.v2-page) :where(p, small, li, dd) { font-weight: 500; }
+
+/* Карточки: мягкая двухслойная тень вместо одной рамки */
+.v2-page .v2-audience__grid li,
+.v2-page .v2-service,
+.v2-page .v2-trust,
+.v2-page .v2-facts,
+.v2-page .v2-flow__col,
+.v2-page .v2-metric,
+.v2-page .v2-docs__stack li,
+.v2-page .v2-faq__item,
+.v2-page .cv2-logo,
+.v2-page .cv2-testimonial,
+.v2-page .cv2-block,
+.v2-page .cv2-document,
+.v2-page .cv2-requisites,
+.v2-page .cv2-office,
+.v2-page .sv2-format,
+.v2-page .sv2-kind,
+.v2-page .sv2-step,
+.v2-page .sv2-start__item,
+.v2-page .sv2-related__card,
+.v2-page .sv2-pricing__list li,
+.v2-page .ct2-contact,
+.v2-page .ct2-map__frame,
+.v2-page .ct2-other {
+  border-color: var(--h3-line-soft);
+  box-shadow: var(--h3-shadow);
+}
+
+/* Подъём при наведении — только у карточек-ссылок */
+.v2-page .v2-service,
+.v2-page .cv2-logo,
+.v2-page .sv2-related__card,
+.v2-page .ct2-other {
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .v2-page .v2-service:hover,
+  .v2-page .cv2-logo:hover,
+  .v2-page .sv2-related__card:hover,
+  .v2-page .ct2-other:hover {
+    box-shadow: var(--h3-shadow-hover);
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-page .v2-service:hover,
+  .v2-page .cv2-logo:hover,
+  .v2-page .sv2-related__card:hover,
+  .v2-page .ct2-other:hover { transform: none; }
+}
+
+/* Иконки услуг в кольцах — как на главной (каталог услуг) */
+.v2-page .v2-service__glyph {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    inset 0 0 0 1.5px var(--v2-accent, var(--v2-blue)),
+    0 0 0 6px var(--v2-accent-soft, var(--v2-blue-soft)),
+    0 6px 14px -4px rgba(21, 33, 29, .16);
+}
+
+/* Ритм фонов: отзывы на светло-зелёном, как на главной */
+.v2-page .cv2-testimonials-section { background: var(--h3-green-wash); }
+

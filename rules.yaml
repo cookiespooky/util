@@ -93,11 +93,12 @@ types:
     template: "home-v2.html"
     permalink: "/"
     include_in: { sitemap: true, search: false }
-  # Черновик новой главной для согласования с заказчиком: тот же каркас, что у
-  # home-v2, плюс визуальный слой home-v3.css. noindex, вне карты сайта и
-  # поиска. После согласования переносится в home-v2 и удаляется.
+  # Бывший черновик главной: 05.10.2026 перенесён в home-v2. Тип оставлен, чтобы
+  # ссылка /home-new/, которая была у заказчика, не отвечала 404: тот же шаблон,
+  # noindex, вне карты сайта и поиска. Удалить вместе с content/home-new.md,
+  # когда ссылка больше не нужна.
   home-v3:
-    template: "home-v3.html"
+    template: "home-v2.html"
     permalink: "/{{ slug }}/"
     include_in: { sitemap: false, search: false }
   catalog-v2:

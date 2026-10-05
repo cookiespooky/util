@@ -62,10 +62,10 @@
   <link rel="stylesheet" href="{{ .AssetsBase }}/home-concept.css" />
   {{- end }}
   {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "home-v3") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") (eq .Page.Type "legal") (eq .Page.Type "system") }}
+  <link rel="preload" as="font" type="font/woff2" href="{{ .AssetsBase }}/fonts/wordmark-opensans-600.woff2" crossorigin />
   <link rel="stylesheet" href="{{ .AssetsBase }}/v2.css" />
   {{- end }}
-  {{- if eq .Page.Type "home-v3" }}
-  <link rel="preload" as="font" type="font/woff2" href="{{ .AssetsBase }}/fonts/wordmark-opensans-600.woff2" crossorigin />
+  {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "home-v3") }}
   <link rel="stylesheet" href="{{ .AssetsBase }}/home-v3.css" />
   {{- end }}
   {{- if or (eq .Page.Type "service-v2") (eq .Page.Type "catalog-v2") }}
@@ -133,7 +133,7 @@
   {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "home-v3") }}
   <script src="{{ .AssetsBase }}/action-components.js" defer></script>
   {{- end }}
-  {{- if eq .Page.Type "home-v3" }}
+  {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "home-v3") }}
   <script src="{{ .AssetsBase }}/home-v3.js" defer></script>
   {{- end }}
   {{- if or (eq .Page.Type "home-v2") (eq .Page.Type "home-v3") (eq .Page.Type "catalog-v2") (eq .Page.Type "service-v2") (eq .Page.Type "company-v2") (eq .Page.Type "city-v2") (eq .Page.Type "legal") (eq .Page.Type "system") }}
